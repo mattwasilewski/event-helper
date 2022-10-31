@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserDao {
-    void addUser(User user);
+    void createUser(User user);
     Optional<User> getUserById(UUID id);
     List<User> getAllUsers();
     void deleteUser(UUID id);
