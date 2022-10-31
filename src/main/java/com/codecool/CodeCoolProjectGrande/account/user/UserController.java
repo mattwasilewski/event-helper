@@ -1,13 +1,15 @@
 package com.codecool.CodeCoolProjectGrande.account.user;
 
 
+import lombok.Data;
 import org.springframework.stereotype.Controller;
 
 import java.util.UUID;
 
 @Controller
+@Data
 public class UserController {
-    private final UserDaoMem users = new UserDaoMem();
+    private UserDaoMem users = new UserDaoMem();
 
     public UserController() {
         users.addUser(new User(UUID.randomUUID(),
