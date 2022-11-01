@@ -3,24 +3,33 @@ package com.codecool.CodeCoolProjectGrande.account.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Controller
 @RestController
+@RequestMapping("/api/users/")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping()
     public List<User> getUsers(){
         return userService.getAllUsers();
     }
 
-
+    @GetMapping("{userId}")
+    public Optional<User> getUserById(@PathVariable UUID userId) {
+            return userService.getUserById(userId);
+    }
+    @PostMapping("create-user")
+    public void createUser(@RequestBody User user) {
+        userService.createUser(user);
+    }
 }
