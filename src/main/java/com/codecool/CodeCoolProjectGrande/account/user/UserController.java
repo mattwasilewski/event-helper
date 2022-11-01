@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RestController
+@ResponseBody
 @RequestMapping("/api/users/")
 public class UserController {
     private final UserService userService;

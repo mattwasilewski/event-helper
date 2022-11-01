@@ -12,7 +12,7 @@ import java.util.UUID;
 
 
 @Controller
-@RestController
+@ResponseBody
 @RequestMapping("/api/events/")
 public class EventController {
 
