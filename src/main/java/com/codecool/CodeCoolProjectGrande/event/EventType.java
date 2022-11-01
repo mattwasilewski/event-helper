@@ -1,4 +1,8 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-public class EventType {
+public enum EventType {
+    FESTIVAL,
+    CONCERT,
+    EXHIBITION,
+    PARTY
 }
