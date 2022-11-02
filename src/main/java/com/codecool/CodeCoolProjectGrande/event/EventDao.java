@@ -12,4 +12,5 @@ public interface EventDao {
     List<Event> getAllEvents();
     void deleteEvent(UUID id);
     void editEvent(UUID id, String name, String description, int price);
+    //init
 }
