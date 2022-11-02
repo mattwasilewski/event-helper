@@ -2,9 +2,11 @@ package com.codecool.CodeCoolProjectGrande.event;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class EventService implements EventDao {
 
@@ -22,6 +24,17 @@ public class EventService implements EventDao {
     @Override
     public List<Event> getAllEvents() {
         return EventRepository.EVENTS_IN_MEMORY;
+    }
+
+    @Override
+    public  List<Event> sortEvents(String sortBy) {    // TODO dokończyć sortowanie po dacie
+        switch (sortBy) {
+            case "name" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getName)).toList(); }
+            case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice)).toList(); }
+            case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate, Comparator.nullsLast(Comparator.reverseOrder()))).toList(); }
+            case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType)).toList(); }
+            default -> { return EventRepository.EVENTS_IN_MEMORY; }
+        }
     }
 
     @Override
