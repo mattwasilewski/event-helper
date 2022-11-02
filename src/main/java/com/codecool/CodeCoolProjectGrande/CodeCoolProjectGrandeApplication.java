@@ -1,6 +1,5 @@
 package com.codecool.CodeCoolProjectGrande;
 
-import com.codecool.CodeCoolProjectGrande.account.user.UserController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;

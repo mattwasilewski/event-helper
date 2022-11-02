@@ -1,7 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-import com.codecool.CodeCoolProjectGrande.account.user.User;
-import com.codecool.CodeCoolProjectGrande.account.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

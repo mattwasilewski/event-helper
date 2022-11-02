@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.account.user;
+package com.codecool.CodeCoolProjectGrande.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

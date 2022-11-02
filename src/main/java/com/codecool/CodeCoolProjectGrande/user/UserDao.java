@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.account.user;
+package com.codecool.CodeCoolProjectGrande.user;
 
 import java.util.List;
 import java.util.Optional;
