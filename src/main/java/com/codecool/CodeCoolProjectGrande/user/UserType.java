@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.account.user;
+package com.codecool.CodeCoolProjectGrande.user;
 
 public enum UserType {
     USER,

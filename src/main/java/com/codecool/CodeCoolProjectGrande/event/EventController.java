@@ -1,7 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-import com.codecool.CodeCoolProjectGrande.account.user.User;
-import com.codecool.CodeCoolProjectGrande.account.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

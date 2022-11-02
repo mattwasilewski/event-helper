@@ -1,7 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-import com.codecool.CodeCoolProjectGrande.account.user.User;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

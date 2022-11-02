@@ -1,9 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-import com.codecool.CodeCoolProjectGrande.account.user.User;
-import org.attoparser.trace.MarkupTraceEvent;
-
-import java.time.LocalDate;
 import java.util.*;
 
 public interface EventRepository {
