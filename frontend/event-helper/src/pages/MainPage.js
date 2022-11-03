@@ -6,6 +6,8 @@ export default function MainPage() {
         <div>
             <Navbar/>
             <h1>Newest Events</h1>
+            <NewestEvents/>
+            <h1>Recommended Events</h1>
         </div>
     )
 
