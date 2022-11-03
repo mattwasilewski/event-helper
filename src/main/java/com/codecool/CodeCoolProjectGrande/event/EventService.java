@@ -34,6 +34,7 @@ public class EventService implements EventDao {
                 case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice)).toList(); }
                 case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate)).toList(); }
                 case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType)).toList(); }
+                default -> { return EventRepository.EVENTS_IN_MEMORY; }
             }
         } else {
             switch (sortBy) {
@@ -41,9 +42,9 @@ public class EventService implements EventDao {
                 case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice).reversed()).toList(); }
                 case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate).reversed()).toList(); }
                 case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType).reversed()).toList(); }
+                default -> { return EventRepository.EVENTS_IN_MEMORY; }
             }
         }
-        return EventRepository.EVENTS_IN_MEMORY;
     }
 
     @Override
