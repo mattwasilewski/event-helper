@@ -16,7 +16,7 @@ public class UserService implements UserDao {
 
     @Override
     public Optional<User> getUserById(UUID id) {
-        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getUserId() == id).findFirst();
+        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 
     @Override
