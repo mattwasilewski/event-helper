@@ -27,14 +27,23 @@ public class EventService implements EventDao {
     }
 
     @Override
-    public  List<Event> sortEvents(String sortBy) {    // TODO dokończyć sortowanie po dacie
-        switch (sortBy) {
-            case "name" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getName)).toList(); }
-            case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice)).toList(); }
-            case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate, Comparator.nullsLast(Comparator.reverseOrder()))).toList(); }
-            case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType)).toList(); }
-            default -> { return EventRepository.EVENTS_IN_MEMORY; }
+    public  List<Event> sortEvents(String sortBy, boolean ascending) {
+        if (ascending) {
+            switch (sortBy) {
+                case "name" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getName)).toList(); }
+                case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice)).toList(); }
+                case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate)).toList(); }
+                case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType)).toList(); }
+            }
+        } else {
+            switch (sortBy) {
+                case "name" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getName).reversed()).toList(); }
+                case "price" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparingInt(Event::getPrice).reversed()).toList(); }
+                case "date" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getDate).reversed()).toList(); }
+                case "eventType" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getEventType).reversed()).toList(); }
+            }
         }
+        return EventRepository.EVENTS_IN_MEMORY;
     }
 
     @Override
