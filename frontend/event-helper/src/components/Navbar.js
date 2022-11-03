@@ -1,4 +1,4 @@
-import logo from "../assets/logo3.png";
+import logo from "../assets/event-helper-logo.png";
 
 export default function Navbar() {
     return (
