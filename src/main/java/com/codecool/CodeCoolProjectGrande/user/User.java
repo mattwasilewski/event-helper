@@ -17,6 +17,6 @@ public class User {
     private UserType userType;
     private String imgUrl;
     private String location;
-    private String resetToken;
+    private UUID resetToken;
 
 }

@@ -31,7 +31,7 @@ public class PasswordController {
     public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
         Optional<User> user = userService.getUserByEmail(userEmail);
         if (userService.getUserByEmail(userEmail).isPresent()) {
-            String resetToken = UUID.randomUUID().toString();
+            UUID resetToken = UUID.randomUUID();
             System.out.println(resetToken + "forgotpass");
             userService.updateUserToken(userEmail, resetToken);
             String appUrl = request.getScheme() + "://" + request.getServerName();
@@ -48,7 +48,7 @@ public class PasswordController {
     }
 
     @GetMapping("/reset-password")
-    public void resetPasswordPage(@RequestParam("token") String token) {
+    public void resetPasswordPage(@RequestParam("token") UUID token) {
         System.out.println(token + "resetpasspge");
         Optional<User> user = userService.getUserByResetToken(token);
         if (user.isPresent()) { // Token found in DB
@@ -59,7 +59,7 @@ public class PasswordController {
     }
 
     @PostMapping("/reset-password")
-    public void setNewPassword(@RequestParam("token") String token, @RequestParam("password") String password){
+    public void setNewPassword(@RequestParam("token") UUID token, @RequestParam("password") String password){
         Optional<User> user = userService.getUserByResetToken(token);
         if (user.isPresent()){
             User resetUser = user.get();
