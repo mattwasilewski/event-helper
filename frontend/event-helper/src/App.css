@@ -112,3 +112,71 @@ img {
     text-align: center;
   }
 }
+.event-tile{
+  width: 200px;
+  height: 230px;
+  background-color: white;
+  display: inline-block;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 25px;
+  box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.1);
+}
+.event-photo-tile{
+  width: 189px;
+  height: 140px;
+  background: url("assets/event.png") ;
+  border-radius: 25px;
+}
+.event-rating-tile{
+  width: 40px;
+  height: 20px;
+  background-color: white;
+  border-radius: 25px;
+  margin: 10px;
+  float: right;
+  font-weight: bold;
+  font-size: 10px;
+}
+.material-symbols-outlined {
+   font-variation-settings:
+           'FILL' 1,
+           'wght' 400,
+           'GRAD' 0,
+           'opsz' 20
+ }
+.location-symbol{
+  color: rgba(220, 96, 96, 0.89);
+  float: left;
+  display: flex;
+}
+.location-text{
+  display: flex;
+  margin-top: 5px;
+}
+.star{
+  color: #FFD700;
+  font-size: 12px;
+  float: left;
+  height: 20px;
+  width: 15px;
+  border-radius: 10px;
+  vertical-align: center;
+}
+.event-location-tile{
+  float: left;
+  text-align: center;
+  font-size: 15px;
+  margin: 10px;
+}
+.rating{
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+.event-name-tile{
+  float: left;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 20px;
+}
