@@ -6,9 +6,13 @@ import java.util.UUID;
 
 public interface UserDao {
     void createUser(User user);
-    Optional<User> getUserById(String id);
+    Optional<User> getUserById(UUID id);
     List<User> getAllUsers();
-    void deleteUser(String id);
-    void editUser(String id, String name, String password, String email);
+    void deleteUser(UUID id);
+    void editUser(UUID id, String name, String password, String email);
     Optional<User> getUserByEmail(String email);
+
+    Optional<User> getUserByResetToken(String resetToken);
+
+    void updateUserToken(String email, String token);
 }

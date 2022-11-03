@@ -15,8 +15,8 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public Optional<User> getUserById(String id) {
-        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getUserId() == id).findFirst();
+    public Optional<User> getUserById(UUID id) {
+        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public void deleteUser(String id) {
+    public void deleteUser(UUID id) {
         if (getUserById(id).isPresent()){
             UserRepository.USERS_IN_MEMORY.remove(getUserById(id).get());
         } else {
@@ -34,7 +34,7 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public void editUser(String id, String name, String password, String email) {
+    public void editUser(UUID id, String name, String password, String email) {
         if (getUserById(id).isPresent()) {
             getUserById(id).get().setName(name);
             getUserById(id).get().setPassword(password);
@@ -46,12 +46,23 @@ public class UserService implements UserDao {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getEmail() == email).findFirst();
+        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 
-    public void updateUserToken(String email, UUID token){
-        if (getUserByEmail(email).isPresent()){
-            getUserByEmail(email).get().setResetToken(token.toString());
+    @Override
+    public Optional<User> getUserByResetToken(String resetToken) {
+        System.out.println(resetToken + " getuserbyresettoken");
+        UserRepository.USERS_IN_MEMORY.forEach(user -> System.out.println(user.toString()));
+        return UserRepository.USERS_IN_MEMORY.stream()
+                .filter(user -> user.getResetToken().equals(resetToken)).findFirst();
+
+    }
+    @Override
+    public void updateUserToken(String email, String token){
+        System.out.println(token + " updateUser");
+        if (getUserByEmail(email).isPresent()){;
+            getUserByEmail(email).get().setResetToken(token);
+            System.out.println(getUserByEmail(email).get().getResetToken() + " update2");
         }
     }
 
