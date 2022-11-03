@@ -15,7 +15,7 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public Optional<User> getUserById(UUID id) {
+    public Optional<User> getUserById(String id) {
         return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getUserId() == id).findFirst();
     }
 
@@ -25,7 +25,7 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUser(String id) {
         if (getUserById(id).isPresent()){
             UserRepository.USERS_IN_MEMORY.remove(getUserById(id).get());
         } else {
@@ -34,13 +34,24 @@ public class UserService implements UserDao {
     }
 
     @Override
-    public void editUser(UUID id, String name, String password, String email) {
+    public void editUser(String id, String name, String password, String email) {
         if (getUserById(id).isPresent()) {
             getUserById(id).get().setName(name);
             getUserById(id).get().setPassword(password);
             getUserById(id).get().setEmail(email);
         } else {
             System.out.println("Place for logger");
+        }
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getEmail() == email).findFirst();
+    }
+
+    public void updateUserToken(String email, UUID token){
+        if (getUserByEmail(email).isPresent()){
+            getUserByEmail(email).get().setResetToken(token.toString());
         }
     }
 
