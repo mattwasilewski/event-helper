@@ -7,10 +7,10 @@
 }
 body{
   margin:0;
-}
-.nav{
   background-color: #fefaec;
   color: #212832;
+}
+.nav{
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -36,17 +36,23 @@ body{
   align-items: center;
   padding: .25rem;
 }
-
-html {
+.welcome-page{
+  height: 100vh;
+  background-color: #2a2826;
+}
+.welcome-page-gif-section{
   background: url("assets/second.gif") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-
+.welcome-page-logo{
+  margin-top: 11%;
+  height: 25%;
+  width: 25%;
+}
 img {
-  /*margin-top: 11%;*/
   height: 100%;
   width: 100%;
 }
