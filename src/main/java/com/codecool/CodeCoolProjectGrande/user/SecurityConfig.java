@@ -39,8 +39,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/homepage")
-                .hasRole("ADMIN")
+                .antMatchers("/homepage","/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/",
+                        "/configuration/security",
+                        "/swagger-ui/",
+                        "/webjars/**")
+//                .hasRole("ADMIN")
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
