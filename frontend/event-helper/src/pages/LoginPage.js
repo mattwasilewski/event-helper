@@ -1,5 +1,6 @@
 import LoginForm from "../components/LoginForm";
 import React, {useState} from "react";
+import Navbar from "../components/Navbar";
 
 export default function LoginPage() {
 
@@ -32,6 +33,7 @@ export default function LoginPage() {
 
     return (
         <div>
+            <Navbar/>
             {(user.name !== "") ? (
                 <div className="welcome">
                     <h2>Welcome, <span>{user.name}</span></h2>

@@ -180,3 +180,15 @@ img {
   font-weight: bold;
   font-size: 20px;
 }
+.container-left {
+  background: yellow;
+  float: left;
+  width: 50%;
+}
+.container-right {
+  float: right;
+  width: 50%;
+}
+.text-left {
+  text-align: left;
+}
