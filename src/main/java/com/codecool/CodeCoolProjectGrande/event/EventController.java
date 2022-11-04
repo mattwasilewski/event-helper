@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Controller
 @ResponseBody
+@CrossOrigin
 @RequestMapping("/api/events/")
 public class EventController {
 
@@ -35,4 +34,13 @@ public class EventController {
     public void createUser(@RequestBody Event event) {
         eventService.createEvent(event);
     }
+
+    @GetMapping("/sort/{sortBy}&{ascending}")
+    public List<Event> sortEvents(@PathVariable("sortBy") String sortBy, @PathVariable("ascending") boolean ascending) {
+        System.out.println("Sort by dziala, sortuje po: " + sortBy + ", ascending: " + ascending);
+        return eventService.sortEvents(sortBy, ascending);
+    }
+
 }
+
+
