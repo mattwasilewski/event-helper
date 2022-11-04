@@ -2,7 +2,6 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public Optional<User> getUserById(@PathVariable UUID userId) {
+    public Optional<User> getUserByID(@PathVariable UUID userId) {
             return userService.getUserById(userId);
     }
     @PostMapping("/user")

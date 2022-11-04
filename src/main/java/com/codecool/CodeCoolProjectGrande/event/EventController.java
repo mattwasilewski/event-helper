@@ -37,7 +37,6 @@ public class EventController {
 
     @GetMapping("/sort/{sortBy}&{ascending}")
     public List<Event> sortEvents(@PathVariable("sortBy") String sortBy, @PathVariable("ascending") boolean ascending) {
-        System.out.println("Sort by dziala, sortuje po: " + sortBy + ", ascending: " + ascending);
         return eventService.sortEvents(sortBy, ascending);
     }
 

@@ -1,11 +1,9 @@
 package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
-import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 public class PasswordService {

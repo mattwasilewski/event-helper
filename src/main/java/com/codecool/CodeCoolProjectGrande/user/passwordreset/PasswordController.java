@@ -2,17 +2,13 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
 
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
+
 @RestController
 public class PasswordController {
 

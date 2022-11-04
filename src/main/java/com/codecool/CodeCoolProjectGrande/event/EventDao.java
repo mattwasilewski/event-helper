@@ -11,5 +11,5 @@ public interface EventDao {
     List<Event> sortEvents(String sortBy, boolean ascending);
     void deleteEvent(UUID id);
     void editEvent(UUID id, String name, String description, int price);
-    //init
+
 }
