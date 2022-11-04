@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+</head>
+<body>
+    <h1 style="text-align: center">Login page</h1>
+    <main>
+        <!--/*@thymesVar id="user" type="com.codecool.CodeCoolProjectGrande.user.User"*/-->
+        <form action="#" method="post" th:action="@{/projects}" th:object="${user}">
+            <fieldset>
+                <legend>Login</legend>
+                <label> Email
+                    <input type="text" />
+                </label>
+                <label> Password
+                    <input type="text" />
+                </label>
+            </fieldset>
+            <button type="submit">Login</button>
+
+        </form>
+    </main>
+</body>
+</html>

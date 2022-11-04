@@ -2,11 +2,12 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class User {
     private UUID userId;
@@ -17,6 +18,5 @@ public class User {
     private UserType userType;
     private String imgUrl;
     private String location;
-    private UUID resetToken;
 
 }
