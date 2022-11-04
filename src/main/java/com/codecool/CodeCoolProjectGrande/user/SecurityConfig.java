@@ -33,17 +33,20 @@ public class SecurityConfig {
                 .password(passwordEncoder().encode("devkarol"))
                 .roles("USER")
                 .build();
-        UserDetails admin = User.withUsername("michalandmateusz")
-                .password(passwordEncoder().encode("adminPass"))
+        UserDetails admin = User.withUsername("admin")
+                .password(passwordEncoder().encode("adminpass"))
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 
+    //the working solution
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/homepage")
+                .hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -53,6 +56,8 @@ public class SecurityConfig {
                 .permitAll();
         return http.build();
     }
+
+
 
 
 
