@@ -13,7 +13,6 @@ export default function LoginPage() {
     const [error, setError] = useState("");
 
     const Login = details => {
-        //console.log(details);
         if (details.name === userData.name && details.password === userData.password) {
             console.log("Logged in!")
             setUser({

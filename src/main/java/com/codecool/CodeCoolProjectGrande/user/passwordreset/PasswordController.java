@@ -2,17 +2,13 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
 
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
+
 @RestController
 public class PasswordController {
 
@@ -32,7 +28,7 @@ public class PasswordController {
     @PostMapping("/forgot-password")
     public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
         Optional<User> user = userService.getUserByEmail(userEmail);
-        if (userService.getUserByEmail(userEmail).isPresent()) {
+        if (user.isPresent()) {
             ResetPasswordToken token = new ResetPasswordToken(user.get());
             passwordService.addToken(token);
             String appUrl = request.getScheme() + "://" + request.getServerName();
@@ -42,7 +38,7 @@ public class PasswordController {
             passwordResetEmail.setSubject("Password Reset Request");
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
                     + "/reset?token=" + token.getTokenID());
-            System.out.println(token.getTokenID());
+            System.out.println(token.getTokenID());                  // TODO only one walid token
         }
 
     }
@@ -57,7 +53,7 @@ public class PasswordController {
         }
     }
 
-    @PostMapping("/reset-password")
+    @PostMapping("/reset-password")     // TODO change password to request body
     public void setNewPassword(@RequestParam("token") String token, @RequestParam("password") String password){
         Optional<ResetPasswordToken> resetToken = passwordService.getTokenByTokenId(token);
         resetToken.ifPresent(resetPasswordToken -> resetPasswordToken.getUser().setPassword(password));

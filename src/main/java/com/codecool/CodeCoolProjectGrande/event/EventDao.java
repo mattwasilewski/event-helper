@@ -8,8 +8,8 @@ public interface EventDao {
     void createEvent(Event event);
     Optional<Event> getEventByID(UUID id);
     List<Event> getAllEvents();
-    List<Event> sortEvents(String sortBy, boolean ascending);
+    List<Event> getSortedEvents(String sortBy, boolean ascending);
     void deleteEvent(UUID id);
     void editEvent(UUID id, String name, String description, int price);
-    //init
+
 }

@@ -17,7 +17,7 @@ public class ResetPasswordToken {
         this.user = user;
         createdDate = new Date();
         tokenID = UUID.randomUUID().toString();
-
+            // TODO token status validation
     }
 
 }

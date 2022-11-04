@@ -2,7 +2,6 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
