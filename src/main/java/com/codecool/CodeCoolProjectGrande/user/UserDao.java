@@ -12,7 +12,4 @@ public interface UserDao {
     void editUser(UUID id, String name, String password, String email);
     Optional<User> getUserByEmail(String email);
 
-    Optional<User> getUserByResetToken(UUID resetToken);
-
-    void updateUserToken(String email, UUID token);
 }
