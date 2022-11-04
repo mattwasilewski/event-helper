@@ -9,27 +9,28 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Controller
-@ResponseBody
-@RequestMapping("/api/users/")
+@RestController
 public class UserController {
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public List<User> getUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/user/{userId}")
     public Optional<User> getUserById(@PathVariable UUID userId) {
             return userService.getUserById(userId);
     }
-    @PostMapping("create-user")
+    @PostMapping("/user")
     public void createUser(@RequestBody User user) {
         userService.createUser(user);
     }
+
+
 }

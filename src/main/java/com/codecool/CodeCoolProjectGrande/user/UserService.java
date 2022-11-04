@@ -44,4 +44,11 @@ public class UserService implements UserDao {
         }
     }
 
-}
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return UserRepository.USERS_IN_MEMORY.stream().filter(user -> user.getEmail().equals(email)).findFirst();
+    }
+
+
+    }
+

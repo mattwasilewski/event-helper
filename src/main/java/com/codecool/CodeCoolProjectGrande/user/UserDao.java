@@ -10,4 +10,6 @@ public interface UserDao {
     List<User> getAllUsers();
     void deleteUser(UUID id);
     void editUser(UUID id, String name, String password, String email);
+    Optional<User> getUserByEmail(String email);
+
 }
