@@ -2,18 +2,22 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Data
-@RequiredArgsConstructor
 public class ResetPasswordToken {
 
-    private final String tokenID = UUID.randomUUID().toString();
+    private String tokenID;
     private User user;
-    private final Date createdDate;
+    private Date createdDate;
 
+    public ResetPasswordToken(User user){
+        this.user = user;
+        createdDate = new Date();
+        tokenID = UUID.randomUUID().toString();
+
+    }
 
 }
