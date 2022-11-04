@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,14 +40,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/homepage")
-                .hasRole("ADMIN")
+                .antMatchers("/**")
+                .permitAll().anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/homepage", true)
-                .permitAll();
+                .csrf().disable();
         return http.build();
     }
 
