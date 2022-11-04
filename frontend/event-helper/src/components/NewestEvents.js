@@ -13,7 +13,7 @@ export default function NewestEvents() {
 
     return (
         <>  {events.map((event) => {return <div className="event-tile">
-            <div className="event-photo-tile">
+        <div className="event-photo-tile">
                 <div className="event-rating-tile">
                     <div className="star">★</div>
                     <div className="rating">4.4</div>

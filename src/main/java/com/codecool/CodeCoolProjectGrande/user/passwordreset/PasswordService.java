@@ -15,7 +15,6 @@ public class PasswordService {
 
 
     public Optional<ResetPasswordToken> getTokenByTokenId(String token) {
-        UserRepository.USERS_IN_MEMORY.forEach(user -> System.out.println(user.toString()));
         return ResetTokenRepository.TOKENS_IN_MEMORY.stream().filter(element -> element.getTokenID().equals(token)).findFirst();
 
     }
