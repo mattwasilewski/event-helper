@@ -9,6 +9,7 @@ import java.util.*;
 
 @Controller
 @ResponseBody
+@CrossOrigin
 @RequestMapping("/api/events/")
 public class EventController {
 
