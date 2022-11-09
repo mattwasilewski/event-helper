@@ -2,15 +2,23 @@ package com.codecool.CodeCoolProjectGrande.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Entity
+@Table(name = "events")
 public class Event {
-    private UUID eventID;
+
+    @Id
+    @GeneratedValue
+    private UUID eventId;
     private String name;
     private String description;
     private String logo;
@@ -20,7 +28,9 @@ public class Event {
     private boolean verification;
     private LocalDate date;
     private boolean toVerification;
+    @Enumerated
     private EventType eventType;
-    private UUID userID;
+    private UUID userId;
+
 
 }
