@@ -18,7 +18,7 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public Optional<Event> getEventByID(UUID id) {
-        return EventRepository.EVENTS_IN_MEMORY.stream().filter(event -> event.getEventID().equals(id)).findFirst();
+        return EventRepository.EVENTS_IN_MEMORY.stream().filter(event -> event.getEventId().equals(id)).findFirst();
     }
 
     @Override
