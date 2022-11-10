@@ -10,25 +10,27 @@ import java.util.UUID;
 
 @RestController
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/users")
     public List<User> getUsers(){
-        return userService.getAllUsers();
+        return userServiceImpl.getUsers();
     }
 
     @GetMapping("/user/{userId}")
     public Optional<User> getUserByID(@PathVariable UUID userId) {
-            return userService.getUserById(userId);
+            return userServiceImpl.getUserById(userId);
     }
     @PostMapping("/user")
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
+    public void createUser(@RequestParam("name") String name,
+                           @RequestParam("password") String password,
+                           @RequestParam("email") String email) {
+        userServiceImpl.createUser(new User(name, password, email));
     }
 
 

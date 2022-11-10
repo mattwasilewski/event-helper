@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -15,8 +16,8 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
-    private UUID userId;
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID userId = UUID.randomUUID();
     private String name;
     private int age;
     private String password;
@@ -26,4 +27,9 @@ public class User {
     private String imgUrl;
     private String location;
 
+    public User(String name, String password, String email) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
 }
