@@ -13,16 +13,16 @@ import java.util.*;
 @RequestMapping("/api/events/")
 public class EventController {
 
-    private final EventDaoImpl eventDaoImpl;
+    private final EventServiceImpl eventDaoImpl;
 
     @Autowired
-    public EventController(EventDaoImpl eventDaoImpl) {
+    public EventController(EventServiceImpl eventDaoImpl) {
         this.eventDaoImpl = eventDaoImpl;
     }
 
     @GetMapping()
     public List<Event> getEvents(){
-        return eventDaoImpl.getAllEvents();
+        return eventDaoImpl.getEvents();
     }
 
     @GetMapping("{eventID}")
@@ -31,8 +31,10 @@ public class EventController {
     }
 
     @PostMapping("create-event")
-    public void createUser(@RequestBody Event event) {
-        eventDaoImpl.createEvent(event);
+    public void createUser(@RequestParam("name") String name,
+                           @RequestParam("description") String description,
+                           @RequestParam("logo") String logo) {
+        eventDaoImpl.createEvent(new Event(name, description, logo));
     }
 
     @GetMapping("/sort/{sortBy}&{ascending}")
