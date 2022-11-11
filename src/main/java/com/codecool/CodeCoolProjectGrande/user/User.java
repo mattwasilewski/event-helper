@@ -22,14 +22,7 @@ public class User {
     private int age;
     private String password;
     private String email;
-    @Enumerated
     private UserType userType;
     private String imgUrl;
     private String location;
-
-    public User(String name, String password, String email) {
-        this.name = name;
-        this.password = password;
-        this.email = email;
-    }
 }
