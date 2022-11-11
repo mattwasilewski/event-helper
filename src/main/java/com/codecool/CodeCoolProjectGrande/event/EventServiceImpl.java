@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -36,24 +37,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public  List<Event> getSortedEvents(String sortBy, boolean ascending) {
-        List<Event> events = getEvents();
         if (ascending) {
-            switch (sortBy) {
-                case "name" -> { return events.stream().sorted(Comparator.comparing(Event::getName)).toList(); }
-                case "price" -> { return events.stream().sorted(Comparator.comparingInt(Event::getPrice)).toList(); }
-                case "date" -> { return events.stream().sorted(Comparator.comparing(Event::getDate)).toList(); }
-                case "eventType" -> { return events.stream().sorted(Comparator.comparing(Event::getEventType)).toList(); }
-                default -> { return events; }
-            }
-        } else {
-            switch (sortBy) {
-                case "name" -> { return events.stream().sorted(Comparator.comparing(Event::getName).reversed()).toList(); }
-                case "price" -> { return events.stream().sorted(Comparator.comparingInt(Event::getPrice).reversed()).toList(); }
-                case "date" -> { return events.stream().sorted(Comparator.comparing(Event::getDate).reversed()).toList(); }
-                case "eventType" -> { return events.stream().sorted(Comparator.comparing(Event::getEventType).reversed()).toList(); }
-                default -> { return events; }
-            }
+            return eventRepository.findAll(Sort.by(sortBy).ascending());
         }
+        return eventRepository.findAll(Sort.by(sortBy).descending());
     }
 
     @Override
