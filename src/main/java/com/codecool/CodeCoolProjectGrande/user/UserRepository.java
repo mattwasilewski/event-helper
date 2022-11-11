@@ -5,6 +5,9 @@ import java.util.*;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByUserId(UUID uuid);
+
+
+
 //    List<User> USERS_IN_MEMORY = new ArrayList<>(Arrays.asList(new User(UUID.randomUUID(),
 //            "Karol", 22, "haslo", "mejl@gmail.com", UserType.USER, "url", "Krakow"),
 //        new User(UUID.randomUUID(),

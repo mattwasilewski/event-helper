@@ -31,10 +31,11 @@ public class EventController {
     }
 
     @PostMapping("create-event")
-    public void createUser(@RequestParam("name") String name,
-                           @RequestParam("description") String description,
-                           @RequestParam("logo") String logo) {
-        eventDaoImpl.createEvent(new Event(name, description, logo));
+    public void createEvent(@RequestParam("name") String name,
+                            @RequestParam("description") String description,
+                            @RequestParam("logo") String logo,
+                            @RequestParam("event-type") EventType eventType) {
+        eventDaoImpl.createEvent(new Event(name, description, logo, eventType));
     }
 
     @GetMapping("/sort/{sortBy}&{ascending}")
