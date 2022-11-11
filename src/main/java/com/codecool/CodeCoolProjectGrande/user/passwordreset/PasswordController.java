@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class PasswordController {
@@ -16,13 +17,13 @@ public class PasswordController {
 
     private EmailService emailService;
     private UserServiceImpl userServiceImpl;
-    private PasswordService passwordService;
+    private PasswordServiceImpl passwordServiceImpl;
 
     @Autowired
-    public PasswordController(EmailService emailService, UserServiceImpl userServiceImpl, PasswordService passwordService) {
+    public PasswordController(EmailService emailService, UserServiceImpl userServiceImpl, PasswordServiceImpl passwordServiceImpl) {
         this.emailService = emailService;
         this.userServiceImpl = userServiceImpl;
-        this.passwordService = passwordService;
+        this.passwordServiceImpl = passwordServiceImpl;
     }
 
     @PostMapping("/forgot-password")
@@ -30,24 +31,27 @@ public class PasswordController {
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);
         if (user.isPresent()) {
             System.out.println(user.get());
-            ResetPasswordToken token = new ResetPasswordToken(user.get());
-            passwordService.addToken(token);
+            ResetPasswordToken token = new ResetPasswordToken();
+            token.setUser(user.get());
+            passwordServiceImpl.addToken(token);
             String appUrl = request.getScheme() + "://" + request.getServerName();
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("support@demo.com");
             passwordResetEmail.setTo(user.get().getEmail());
             passwordResetEmail.setSubject("Password Reset Request");
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
-                    + "/reset?token=" + token.getTokenID());
-            emailService.sendEmail(passwordResetEmail);
-            System.out.println(token.getTokenID());                  // TODO only one walid token
+                    + "/reset-password/?token=" + token.getTokenId());
+            emailService.sendEmail(passwordResetEmail);// TODO only one walid token
+            token.setUser(user.get());
+            System.out.println(token.getTokenId());
+
         }
 
     }
 
     @GetMapping("/reset-password")
     public void resetPasswordPage(@RequestParam("token") String token) {
-        Optional<ResetPasswordToken> resetToken = passwordService.getTokenByTokenId(token);
+        Optional<ResetPasswordToken> resetToken = passwordServiceImpl.getTokenByTokenId(token);
         if (resetToken.isPresent()) { // Token found in DB
             System.out.println("Add parameter token: " + token);
         } else { // Token not found in DB
@@ -55,10 +59,14 @@ public class PasswordController {
         }
     }
 
-    @PostMapping("/reset-password")     // TODO change password to request body
-    public void setNewPassword(@RequestParam("token") String token, @RequestParam("password") String password){
-        Optional<ResetPasswordToken> resetToken = passwordService.getTokenByTokenId(token);
-        resetToken.ifPresent(resetPasswordToken -> resetPasswordToken.getUser().setPassword(password));
+    @PutMapping("/reset-password/{token}")     // TODO change password to request body
+    public void setNewPassword(@PathVariable("token") String token, @RequestParam("password") String password){
+        Optional<ResetPasswordToken> resetToken = passwordServiceImpl.getTokenByTokenId(token);
+        if (resetToken.isPresent()) {
+            resetToken.get().getUser().setPassword(password);
+            userServiceImpl.updatePassword(resetToken.get().getUser());
+        }
+
 
         }
     }

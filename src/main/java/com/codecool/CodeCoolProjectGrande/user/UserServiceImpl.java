@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,13 @@ public class UserServiceImpl implements UserService {
         return getUsers().stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 
-
+    @Override
+    @Modifying
+    public void updatePassword(User user) {
+        user.setPassword(user.getPassword());
+        userRepository.save(user);
     }
+
+
+}
 

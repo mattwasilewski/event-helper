@@ -1,6 +1,8 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
+import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "users")
+@Builder
 public class User {
 
     @Id
