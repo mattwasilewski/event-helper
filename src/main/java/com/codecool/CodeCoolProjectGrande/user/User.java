@@ -28,4 +28,11 @@ public class User {
     private UserType userType;
     private String imgUrl;
     private String location;
+    @JoinColumn(name = "tokenId")
+    @OneToOne(cascade=CascadeType.ALL)
+    private ResetPasswordToken resetPasswordToken;
+
+    public void updateUserToken(User user) {
+        setResetPasswordToken(user.getResetPasswordToken());
+    }
 }

@@ -2,6 +2,7 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,15 +12,13 @@ import java.util.UUID;
 @Entity
 public class ResetPasswordToken {
     @Id
-    private String tokenId;
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID tokenId;
     private Date createdDate;
-    @JoinColumn(unique = true)
-    @OneToOne
-    private User user;
 
     public ResetPasswordToken(){
         createdDate = new Date();
-        tokenId = UUID.randomUUID().toString();
+        tokenId = UUID.randomUUID();
             // TODO token status validation
     }
 

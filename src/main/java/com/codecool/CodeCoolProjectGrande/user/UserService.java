@@ -1,5 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
+import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +13,8 @@ public interface UserService {
     void deleteUser(UUID id);
     void editUser(UUID id, String name, String password, String email);
     Optional<User> getUserByEmail(String email);
-    void updatePassword(User user);
+    void saveUser(User user);
+    Optional<User> getUserByToken(UUID token);
+
 
 }
