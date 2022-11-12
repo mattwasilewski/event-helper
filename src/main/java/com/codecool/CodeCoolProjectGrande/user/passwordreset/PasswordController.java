@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,9 +63,15 @@ public class PasswordController {
     public void setNewPassword(@PathVariable("token") UUID token, @RequestParam("password") String password){
         Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) {
-            user.get().setPassword(password);
-            user.get().setResetPasswordToken(null);
-            userServiceImpl.saveUser(user.get());
+            if (!user.get().getResetPasswordToken().isExpired(new Date())) {
+                user.get().setPassword(password);
+                user.get().setResetPasswordToken(null);
+                userServiceImpl.saveUser(user.get());
+            } else {
+                user.get().setResetPasswordToken(null);
+                System.out.println("Token expired");
+            }
+
         }
 
 

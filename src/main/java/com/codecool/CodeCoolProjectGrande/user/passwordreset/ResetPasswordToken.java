@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,4 +23,12 @@ public class ResetPasswordToken {
             // TODO token status validation
     }
 
+    public boolean isExpired(Date accessDate){
+        int expirationDays = 1;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.createdDate);
+        calendar.add(Calendar.DAY_OF_MONTH, expirationDays);
+        Date expirationTime = calendar.getTime();
+        return accessDate.after(expirationTime);
+    }
 }
