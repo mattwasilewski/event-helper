@@ -20,7 +20,6 @@ public class ResetPasswordToken {
     public ResetPasswordToken(){
         createdDate = new Date();
         tokenId = UUID.randomUUID();
-            // TODO token status validation
     }
 
     public boolean isExpired(Date accessDate){
