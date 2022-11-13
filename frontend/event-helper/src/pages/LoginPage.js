@@ -41,7 +41,7 @@ export default function LoginPage() {
             ) : (
                 <LoginForm Login={Login} error={error} />
             )}
-
+        <ForgotPasswordForm/>
         </div>
     )
 

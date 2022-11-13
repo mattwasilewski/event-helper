@@ -28,6 +28,8 @@ public class PasswordController {
         this.userServiceImpl = userServiceImpl;
     }
 
+
+    @CrossOrigin
     @PostMapping("/forgot-password")
     public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);

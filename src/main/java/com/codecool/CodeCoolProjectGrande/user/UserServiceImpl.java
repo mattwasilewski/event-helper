@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        return getUsers().stream().filter(user -> user.getEmail().equals(email)).findFirst();
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
