@@ -2,11 +2,7 @@ import {useState} from "react";
 
 
 function ForgotPasswordForm() {
-    let headers = new Headers();
 
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append('Origin','http://localhost:3000');
     const[email,setEmail]=useState('')
 
     const sendEmail = async () =>{
@@ -21,9 +17,8 @@ function ForgotPasswordForm() {
         setEmail(data);
     }
 
-    return(<form
-        className="forgot-password-form"
-        noValidate
+    return(
+        <form
         onSubmit={ sendEmail }
     >
         <input
@@ -34,7 +29,8 @@ function ForgotPasswordForm() {
             required={true}
         />
         <button value="Submit">Reset Password</button>
-    </form>)
+    </form>
+    )
 }
 
 export default ForgotPasswordForm;

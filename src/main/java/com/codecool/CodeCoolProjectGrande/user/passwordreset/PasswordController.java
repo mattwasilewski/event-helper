@@ -52,8 +52,7 @@ public class PasswordController {
 
     @GetMapping("/reset-password")
     public void resetPasswordPage(@RequestParam("token") UUID token) {
-        Optional<User> user = userServiceImpl.getUsers().stream()
-                .filter(user1 -> user1.getResetPasswordToken().getTokenId().equals(token)).findFirst();
+        Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) { // Token found in DB
             System.out.println("Add parameter token: " + token);
         } else { // Token not found in DB
@@ -65,12 +64,13 @@ public class PasswordController {
     public void setNewPassword(@PathVariable("token") UUID token, @RequestParam("password") String password){
         Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) {
-            if (!user.get().getResetPasswordToken().isExpired(new Date())) {
-                user.get().setPassword(password);
-                user.get().setResetPasswordToken(null);
-                userServiceImpl.saveUser(user.get());
+            User resetUser = user.get();
+            if (!resetUser.getResetPasswordToken().isExpired(new Date())) {
+                resetUser.setPassword(password);
+                resetUser.setResetPasswordToken(null);
+                userServiceImpl.saveUser(resetUser);
             } else {
-                user.get().setResetPasswordToken(null);
+                resetUser.setResetPasswordToken(null);
                 System.out.println("Token expired");
             }
 
