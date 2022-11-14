@@ -12,15 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin
 public class RegisterController {
     private UserRepository userRepository;
+    private SecurityConfig securityConfig;
 
     @Autowired
-    public RegisterController(UserRepository userRepository) {
+    public RegisterController(UserRepository userRepository, SecurityConfig securityConfig) {
         this.userRepository = userRepository;
+        this.securityConfig = securityConfig;
     }
 
     @PostMapping("/registration")
     public ResponseEntity registerAccount(@RequestBody User user){
         System.out.println(user);
+//        securityConfig.passwordEncoder().encode(user.getPassword());
+        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }
