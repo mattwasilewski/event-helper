@@ -4,6 +4,7 @@ import WelcomePage from "./pages/WelcomePage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import {useState} from "react";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="/home" element={<MainPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
                 </Routes>
             </Router>
         </div>
