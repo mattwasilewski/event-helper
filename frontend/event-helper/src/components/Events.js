@@ -1,9 +1,10 @@
 import React,{useEffect,useState} from "react";
 
-export default function NewestEvents() {
-    const [events,setEvents] = useState([]);
+export default function Events(props) {
+    const [events,setEvents] = useState([], props.sortBy);
 
-    useEffect(()=>{getEvents().then(r=> console.log(r));},[]);
+    useEffect(()=>{
+        getEvents().then(r=> console.log(r));},[]);
 
     const getEvents = async () =>{
         const response = await fetch(`http://localhost:8080/api/events/`);
@@ -24,6 +25,7 @@ export default function NewestEvents() {
                 <span className="material-symbols-outlined location-symbol">location_on</span>
                 <div className="location-text">{event.location}</div>
             </div>
+            <h1>{props.sortBy}</h1>
         </div>})}
         </>
     )
