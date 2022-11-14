@@ -1,5 +1,8 @@
 import React, {useState} from "react";
+import "../register.css"
 import img from "../assets/login-img.png";
+import logo from "../assets/logociemne.png";
+import switchMode from "../assets/dark-switch.png"
 
 function RegistrationForm() {
 
@@ -81,31 +84,47 @@ function RegistrationForm() {
     }
 
     return (
-        <div className="form">
-            <div className="form-body">
-                <div className="name">
-                    <label className="form__label" htmlFor="name">Name </label>
-                    <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
-                           id="name" placeholder="Name"/>
+        <div className="form" >
+            <div class="register-page">
+                    <div id="left-site">
+                        <div id="logo">
+                            <img src={logo} alt="logo"/>
+                        </div>
+                        <div id="switch-mode">
+                            <img src={switchMode} alt=""/>
+                        </div>
+                        <div className="form-body" id="register-form">
+                            <p id="register-word">Register: </p>
+
+                            <div className="name" id="name-input">
+                                <label className="form__label" htmlFor="name">Name</label>
+                                <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
+                                       id="name" placeholder="Name"/>
+                            </div>
+                            <div className="age" id="age-input">
+                                <label className="form__label" htmlFor="age">Age </label>
+                                <input type="number" name="" id="age" value={age} className="form__input"
+                                       onChange={(e) => handleInputChange(e)} />
+                            </div>
+                            <div className="email" id="email-input">
+                                <label className="form__label" htmlFor="email">Email </label>
+                                <input type="email" id="email" className="form__input" value={email}
+                                       onChange={(e) => handleInputChange(e)} placeholder="Email"/>
+                            </div>
+                            <div className="password" id="password-input">
+                                <label className="form__label" htmlFor="password">Password </label>
+                                <input className="form__input" type="password" id="password" value={password} min={4}
+                                       onChange={(e) => handleInputChange(e)} placeholder="Password"/>
+                            </div>
+                        </div>
+                   </div>
+                <div id="right-site">
+
                 </div>
-                <div className="age">
-                    <label className="form__label" htmlFor="age">Age </label>
-                    <input type="number" name="" id="age" value={age} className="form__input"
-                           onChange={(e) => handleInputChange(e)} />
+
+                <div className="footer" id="signup-btn">
+                    <button onClick={() => handleSubmit()} type="submit" className="btn" >Register</button>
                 </div>
-                <div className="email">
-                    <label className="form__label" htmlFor="email">Email </label>
-                    <input type="email" id="email" className="form__input" value={email}
-                           onChange={(e) => handleInputChange(e)} placeholder="Email"/>
-                </div>
-                <div className="password">
-                    <label className="form__label" htmlFor="password">Password </label>
-                    <input className="form__input" type="password" id="password" value={password} min={4}
-                           onChange={(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
-            </div>
-            <div className="footer">
-                <button onClick={() => handleSubmit()} type="submit" className="btn">Register</button>
             </div>
         </div>
     )
