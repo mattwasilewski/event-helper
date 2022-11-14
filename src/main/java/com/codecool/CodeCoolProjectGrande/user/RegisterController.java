@@ -23,7 +23,6 @@ public class RegisterController {
     @PostMapping("/registration")
     public ResponseEntity registerAccount(@RequestBody User user){
         System.out.println(user);
-//        securityConfig.passwordEncoder().encode(user.getPassword());
         user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
