@@ -33,4 +33,10 @@ public class Event {
     private EventType eventType;
     private UUID userId;
 
+    public Event(String name, String description, String logo, EventType eventType) {
+        this.name = name;
+        this.description = description;
+        this.logo = logo;
+        this.eventType =eventType;
+    }
 }
