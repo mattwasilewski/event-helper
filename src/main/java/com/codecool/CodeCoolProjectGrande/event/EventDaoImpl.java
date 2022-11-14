@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class EventService implements EventDao {
+public class EventDaoImpl implements EventDao {
 
 
     @Override
@@ -27,7 +27,7 @@ public class EventService implements EventDao {
     }
 
     @Override
-    public  List<Event> sortEvents(String sortBy, boolean ascending) {
+    public  List<Event> getSortedEvents(String sortBy, boolean ascending) {
         if (ascending) {
             switch (sortBy) {
                 case "name" -> { return EventRepository.EVENTS_IN_MEMORY.stream().sorted(Comparator.comparing(Event::getName)).toList(); }
