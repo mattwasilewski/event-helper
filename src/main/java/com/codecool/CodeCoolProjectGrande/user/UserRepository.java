@@ -1,13 +1,14 @@
 package com.codecool.CodeCoolProjectGrande.user;
+import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
-
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findUserByUserId(UUID uuid);
-
-
-
+    Optional<User> findUserByUserId(UUID id);
+    Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByResetPasswordTokenTokenId(UUID token);
 //    List<User> USERS_IN_MEMORY = new ArrayList<>(Arrays.asList(new User(UUID.randomUUID(),
 //            "Karol", 22, "haslo", "mejl@gmail.com", UserType.USER, "url", "Krakow"),
 //        new User(UUID.randomUUID(),
