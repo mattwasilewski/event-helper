@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,8 +18,8 @@ import java.util.UUID;
 public class Event {
 
     @Id
-    @GeneratedValue
-    private UUID eventId;
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID eventId = UUID.randomUUID();
     private String name;
     private String description;
     private String logo;
@@ -31,6 +32,5 @@ public class Event {
     @Enumerated
     private EventType eventType;
     private UUID userId;
-
 
 }
