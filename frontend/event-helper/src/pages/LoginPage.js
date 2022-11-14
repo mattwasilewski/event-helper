@@ -1,6 +1,7 @@
 import LoginForm from "../components/LoginForm";
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
+import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 export default function LoginPage() {
 
@@ -41,7 +42,7 @@ export default function LoginPage() {
             ) : (
                 <LoginForm Login={Login} error={error} />
             )}
-
+        <ForgotPasswordForm/>
         </div>
     )
 

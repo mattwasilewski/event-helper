@@ -2,6 +2,8 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +29,9 @@ public class UserController {
             return userServiceImpl.getUserById(userId);
     }
     @PostMapping("/user")
-    public void createUser(@RequestParam("name") String name,
-                           @RequestParam("password") String password,
-                           @RequestParam("email") String email) {
-        userServiceImpl.createUser(new User(name, password, email));
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+            userServiceImpl.createUser(user);
+            return new ResponseEntity<>("User added", HttpStatus.OK);
     }
 
 
