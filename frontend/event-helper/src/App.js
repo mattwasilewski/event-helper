@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import {useState} from "react";
 import RegisterPage from "./pages/RegisterPage";
 import RegistrationForm from "./components/RegistrationForm";
+import EventPage from "./pages/EventPage";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/home" element={<MainPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
+                    <Route path="/event1" element={<EventPage/>}/>
                 </Routes>
             </Router>
         </div>
