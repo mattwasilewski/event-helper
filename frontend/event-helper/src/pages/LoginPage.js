@@ -45,6 +45,7 @@ export default function LoginPage() {
                 <LoginForm Login={Login} error={error} />
             )}
         <ForgotPasswordForm/>
+        <a href={"/admin"}> Admin </a>
         </div>
     )
 
