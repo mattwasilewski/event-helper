@@ -1,17 +1,17 @@
 import Navbar from "../components/Navbar";
-import Events from "../components/Events";
-import {Test} from "../components/Test";
+import {Events} from "../components/Events";
 import React, {useState} from "react";
 
 export default function MainPage() {
 
     const [sortBy, setSortBy] = useState("name");
+    const [asc, setAsc] = useState("ascending");
 
     return (
         <div>
             <Navbar/>
             <h1>Newest Events</h1>
-            <Events sortBy={"nic xD"}/>
+            <Events sortBy="name" asc="ascending"/>
             <h1>Recommended Events</h1>
             <h1>All events</h1>
             <nav className="nav">
@@ -22,9 +22,13 @@ export default function MainPage() {
                         <option value="price">price</option>
                         <option value="category">category</option>
                     </select>
+                    <select name="asc" id="asc" onChange={(event) => setAsc(event.currentTarget.value)}>
+                        <option value="ascending">ascending</option>
+                        <option value="descending">descending</option>
+                    </select>
                 </div>
             </nav>
-            <Test sortBy={sortBy} />
+            <Events sortBy={sortBy} asc={asc} />
         </div>
     )
 
