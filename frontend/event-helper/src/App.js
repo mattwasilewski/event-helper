@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
+import AddEventPage from "./pages/AddEventPage";
 import {useState} from "react";
 import RegisterPage from "./pages/RegisterPage";
 import RegistrationForm from "./components/RegistrationForm";
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/home" element={<MainPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegistrationForm/>}/>
+                    <Route path="/add-event" element={<AddEventPage/>}/>
                 </Routes>
             </Router>
         </div>
