@@ -10,5 +10,8 @@ public interface EventRepository {
             new Event(UUID.randomUUID(), "TechnoParty", "Sample data lorem ipsum",
                     "url", "url", 50, "Sopot", false, LocalDate.of(2000,5,5), true, EventType.PARTY, UUID.randomUUID()),
             new Event(UUID.randomUUID(), "Goodwood Festival", "Sample data lorem ipsum",
+                    "url", "url", 100, "UK", false, LocalDate.now(), true, EventType.FESTIVAL, UUID.randomUUID()),
+            new Event(UUID.randomUUID(), "Goodwood Festival", "Sample data lorem ipsum",
                     "url", "url", 100, "UK", false, LocalDate.now(), true, EventType.FESTIVAL, UUID.randomUUID())));
+
 }
