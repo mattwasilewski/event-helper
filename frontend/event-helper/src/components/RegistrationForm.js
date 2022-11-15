@@ -96,24 +96,26 @@ function RegistrationForm() {
                         <div className="form-body" id="register-form">
                             <p id="register-word">Register: </p>
 
-                            <div className="name" id="name-input">
-                                <label className="form__label" htmlFor="name">Name</label>
+                            <div className="name"  >
+                                <label className="form__label" htmlFor="name"></label>
                                 <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
-                                       id="name" placeholder="Name"/>
+                                       id="name" class="name-input" placeholder="Name"/>
                             </div>
-                            <div className="age" id="age-input">
-                                <label className="form__label" htmlFor="age">Age </label>
-                                <input type="number" name="" id="age" value={age} className="form__input"
-                                       onChange={(e) => handleInputChange(e)} />
+                            <div className="age">
+                                <label className="form__label" htmlFor="age"></label>
+                                <input className="form__input" type="number" value={age}
+                                       onChange={(e) => handleInputChange(e)}
+                                       id="age" class="age-input" placeholder="Age"/>
                             </div>
-                            <div className="email" id="email-input">
-                                <label className="form__label" htmlFor="email">Email </label>
-                                <input type="email" id="email" className="form__input" value={email}
-                                       onChange={(e) => handleInputChange(e)} placeholder="Email"/>
+                            <div className="email">
+                                <label className="form__label" htmlFor="email"></label>
+                                <input className="form__input" type="email" value={email}
+                                       onChange={(e) => handleInputChange(e)}
+                                       id="email" class="email-input" placeholder="Email"/>
                             </div>
-                            <div className="password" id="password-input">
-                                <label className="form__label" htmlFor="password">Password </label>
-                                <input className="form__input" type="password" id="password" value={password} min={4}
+                            <div className="password">
+                                <label className="form__label" htmlFor="password"></label>
+                                <input className="form__input" type="password" id="password" class="password-input" value={password} min={4}
                                        onChange={(e) => handleInputChange(e)} placeholder="Password"/>
                             </div>
                         </div>
@@ -122,8 +124,12 @@ function RegistrationForm() {
 
                 </div>
 
-                <div className="footer" id="signup-btn">
-                    <button onClick={() => handleSubmit()} type="submit" className="btn" >Register</button>
+                <div className="footer" >
+                    <button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn" >Register</button>
+                </div>
+                <p id="have-acc-text">You have account?</p>
+                <div>
+                    <button id="login-btn" >Login</button>
                 </div>
             </div>
         </div>
