@@ -1,22 +1,26 @@
-import React,{useEffect,useState} from "react";
+import React, {useEffect, useState} from "react";
 
-export default function Events(props) {
-    const [events,setEvents] = useState([]);
+export const Test = (props) => {
 
-    useEffect(()=>{
+    const [events, setEvents] = useState([]);
 
-        getEvents().then(r=> console.log(r));},[]);
+    useEffect(() => {
+        getEvents().then(r => console.log(r))
+
+        console.log("odświeżyłem się: " + props.sortBy);
+    }, [props.sortBy]);
 
     const getEvents = async () =>{
-        console.log("Log z events: " + props.sortBy)
-        const response = await fetch(`http://localhost:8080/api/events/`); //sort?sortBy=name&ascending=true
+        console.log("Log z test: " + props.sortBy)
+        const response = await fetch(`http://localhost:8080/api/events/sort/${props.sortBy}&false`); //sort?sortBy=name&ascending=true
         const data = await response.json();
         setEvents(data);
+        console.log(events.map((event) => event.name))
     }
 
     return (
         <>  {events.map((event) => {return <div className="event-tile">
-        <div className="event-photo-tile">
+            <div className="event-photo-tile">
                 <div className="event-rating-tile">
                     <div className="star">★</div>
                     <div className="rating">4.4</div>
@@ -30,4 +34,4 @@ export default function Events(props) {
         </div>})}
         </>
     )
-}
+};
