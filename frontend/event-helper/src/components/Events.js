@@ -1,19 +1,25 @@
-import React,{useEffect,useState} from "react";
+import React, {useEffect, useState} from "react";
 
-export default function NewestEvents() {
-    const [events,setEvents] = useState([]);
+export const Events = (props) => {
 
-    useEffect(()=>{getEvents().then(r=> console.log(r));},[]);
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        getEvents().then(r => console.log(r))
+
+    }, [props.sortBy, props.asc]);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:8080/api/events/`);
+        let ascending = true;
+        if (props.asc === "descending")  ascending = false;
+        const response = await fetch(`http://localhost:8080/api/events/sort/${props.sortBy}&${ascending}`); //sort?sortBy=name&ascending=true
         const data = await response.json();
         setEvents(data);
     }
 
     return (
         <>  {events.map((event) => {return <div className="event-tile">
-        <div className="event-photo-tile">
+            <div className="event-photo-tile">
                 <div className="event-rating-tile">
                     <div className="star">★</div>
                     <div className="rating">4.4</div>
@@ -27,4 +33,4 @@ export default function NewestEvents() {
         </div>})}
         </>
     )
-}
+};
