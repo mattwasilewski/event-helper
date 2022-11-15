@@ -55,74 +55,36 @@ function RegistrationForm() {
         };
         fetch('http://localhost:8080/registration', requestOptions)
             .then(response => response.json())
-            // .then(data => this.setState({ postId: data.id }));
-        // fetch(`http://localhost:8080/registration`, {
-        //     method: "POST",
-        //     mode: 'cors',
-        //     headers: {
-        //         'Content-Type': 'application/json; charset=UTF-8',
-        //         'Access-Control-Allow-Origin': 'http://localhost:3000',
-        //         'Access-Control-Allow-Credentials': 'true'
-        //     },
-        //     body: {
-        //         name:name,
-        //         age:age,
-        //         email:email,
-        //         password:password
-        //     }
-        // }).then(res => {
-        //     console.log("Request complete! response:", res);
-        // }).catch((error) => {
-        //     console.log("registration error", error);
-        //     // setErrors("registration error");
-        // });
-        // // setErrors("registered successfully");
-        // // setForm({
-        // //     taskName: "",
-        // //     taskDeadline: ""
-        // // });
     }
 
-    return (
-        <div className="form" >
-            <div class="register-page">
-                    <div id="left-site">
-                        <div id="logo">
-                            <img src={logo} alt="logo"/>
-                        </div>
-                        <div id="switch-mode">
-                            <img src={switchMode} alt=""/>
-                        </div>
-                        <div className="form-body" id="register-form">
-                            <p id="register-word">Register: </p>
-
-                            <div className="name"  >
-                                <label className="form__label" htmlFor="name"></label>
-                                <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
-                                       id="name" class="name-input" placeholder="Name"/>
-                            </div>
-                            <div className="age">
-                                <label className="form__label" htmlFor="age"></label>
-                                <input className="form__input" type="number" value={age}
-                                       onChange={(e) => handleInputChange(e)}
-                                       id="age" class="age-input" placeholder="Age"/>
-                            </div>
-                            <div className="email">
-                                <label className="form__label" htmlFor="email"></label>
-                                <input className="form__input" type="email" value={email}
-                                       onChange={(e) => handleInputChange(e)}
-                                       id="email" class="email-input" placeholder="Email"/>
-                            </div>
-                            <div className="password">
-                                <label className="form__label" htmlFor="password"></label>
-                                <input className="form__input" type="password" id="password" class="password-input" value={password} min={4}
-                                       onChange={(e) => handleInputChange(e)} placeholder="Password"/>
-                            </div>
-                        </div>
-                   </div>
-                <div id="right-site">
-
+    return ( <div>
+                <div id="switch-mode">
+                    <img src={switchMode} alt=""/>
                 </div>
+                    <p id="register-word">Register: </p>
+
+                    <div className="name"  >
+                        <label className="form__label" htmlFor="name"></label>
+                        <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
+                               id="name" class="name-input" placeholder="Name"/>
+                    </div>
+                    <div className="age">
+                        <label className="form__label" htmlFor="age"></label>
+                        <input className="form__input" type="number" value={age}
+                               onChange={(e) => handleInputChange(e)}
+                               id="age" class="age-input" placeholder="Age"/>
+                    </div>
+                    <div className="email">
+                        <label className="form__label" htmlFor="email"></label>
+                        <input className="form__input" type="email" value={email}
+                               onChange={(e) => handleInputChange(e)}
+                               id="email" class="email-input" placeholder="Email"/>
+                    </div>
+                    <div className="password">
+                        <label className="form__label" htmlFor="password"></label>
+                        <input className="form__input" type="password" id="password" class="password-input" value={password} min={4}
+                               onChange={(e) => handleInputChange(e)} placeholder="Password"/>
+                    </div>
 
                 <div className="footer" >
                     <button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn" >Register</button>
@@ -131,7 +93,6 @@ function RegistrationForm() {
                 <div>
                     <button id="login-btn" >Login</button>
                 </div>
-            </div>
         </div>
     )
 }
