@@ -5,6 +5,7 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 export default function LoginPage() {
 
+
     const userData = {
         name: "name",
         password: "password"
@@ -20,9 +21,10 @@ export default function LoginPage() {
                 name: details.name,
             });
         } else {
-            console.log("Details do not match!")
+            console.error("Details do not match!")
             setError("Details do not match!")
         }
+        console.error("test log")
     }
 
     const Logout = () => {
