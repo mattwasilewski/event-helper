@@ -1,6 +1,5 @@
 import {useState} from "react";
-import NewestEvents from "./NewestEvents";
-import EventTile from "./EventTile";
+import {Events} from "./Events";
 
 export default function RecommendedEvents() {
 
@@ -49,7 +48,7 @@ export default function RecommendedEvents() {
                 <button className={musicButtonStyle} onClick={musicButtonClick}>Concert</button>
                 <button className={festivalsButtonStyle} onClick={festivalsButtonClick}>Festival</button>
             </div>
-            <NewestEvents/>
+            <Events/>
         </>
     )
 }
