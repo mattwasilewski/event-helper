@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React,{useEffect,useState} from "react";
+import EventTile from "./EventTile";
 
 export const Events = (props) => {
 
@@ -18,19 +19,11 @@ export const Events = (props) => {
     }
 
     return (
-        <>  {events.map((event) => {return <div className="event-tile">
-            <div className="event-photo-tile">
-                <div className="event-rating-tile">
-                    <div className="star">★</div>
-                    <div className="rating">4.4</div>
-                </div>
-            </div>
-            <div className="event-name-tile">{event.name}</div>
-            <div className="event-location-tile">
-                <span className="material-symbols-outlined location-symbol">location_on</span>
-                <div className="location-text">{event.location}</div>
-            </div>
-        </div>})}
+        <>  {events.map((event) => (
+            <EventTile name={event.name}
+                       location={event.location}
+            />
+        ))}
         </>
     )
-};
+}
