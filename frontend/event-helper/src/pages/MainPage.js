@@ -33,7 +33,7 @@ export default function MainPage() {
             </nav>
             <Events sortBy={sortBy} asc={asc} />
             <h1>Recommended Events</h1>
-            <RecommendedEvents/>
+            {/*<RecommendedEvents/>*/}
             <CalendarTile/>
             <SubscribePanel/>
             <Footer/>
