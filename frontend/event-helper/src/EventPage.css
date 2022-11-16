@@ -55,6 +55,11 @@
     color: #212832;
 }
 
+#nav-home a, #nav-events a, #nav-community a, #nav-about-us a, #nav-login a, #nav-sign-up a{
+    text-decoration: none;
+    color: inherit;
+}
+
 #nav-events {
     /* Nav Item */
 

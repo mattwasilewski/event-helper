@@ -11,11 +11,6 @@ function RegistrationForm() {
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState(null);
     const [password,setPassword] = useState(null);
-    //
-    // const submitHandler = e => {
-    //     e.preventDefault();
-    //     Login(register);
-    // }
 
     const handleInputChange = (e) => {
         const {id , value} = e.target;
@@ -55,32 +50,7 @@ function RegistrationForm() {
         };
         fetch('http://localhost:8080/registration', requestOptions)
             .then(response => response.json())
-            // .then(data => this.setState({ postId: data.id }));
-        // fetch(`http://localhost:8080/registration`, {
-        //     method: "POST",
-        //     mode: 'cors',
-        //     headers: {
-        //         'Content-Type': 'application/json; charset=UTF-8',
-        //         'Access-Control-Allow-Origin': 'http://localhost:3000',
-        //         'Access-Control-Allow-Credentials': 'true'
-        //     },
-        //     body: {
-        //         name:name,
-        //         age:age,
-        //         email:email,
-        //         password:password
-        //     }
-        // }).then(res => {
-        //     console.log("Request complete! response:", res);
-        // }).catch((error) => {
-        //     console.log("registration error", error);
-        //     // setErrors("registration error");
-        // });
-        // // setErrors("registered successfully");
-        // // setForm({
-        // //     taskName: "",
-        // //     taskDeadline: ""
-        // // });
+
     }
 
     return (
