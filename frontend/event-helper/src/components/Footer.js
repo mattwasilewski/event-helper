@@ -30,7 +30,7 @@ export default function Footer() {
                 <ul>
                     <li>Login</li>
                     <li>Register</li>
-                    <li>Add Event</li>
+                    <li><a href="/add-event">Add Event</a></li>
                 </ul></div>
             <div className="footer-contact">Contact
                 <ul>
