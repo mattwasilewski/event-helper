@@ -1,6 +1,6 @@
 
 export default function EventTile(props) {
-    return <div className="event-tile">
+    return (<div className="event-tile">
         <div className="event-photo-tile">
             <div className="event-rating-tile">
                 <div className="star">★</div>
@@ -12,7 +12,7 @@ export default function EventTile(props) {
             <span className="material-symbols-outlined location-symbol">location_on</span>
             <div className="location-text">{props.location}</div>
         </div>
-    </div>
+    </div>)
 
 
 }

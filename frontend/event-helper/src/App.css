@@ -221,7 +221,7 @@ img {
 
 .react-calendar {
   width: 800px;
-  margin-left: 23%;
+  margin: auto;
   max-width: 100%;
   background: white;
   border-radius: 25px;
@@ -353,4 +353,67 @@ img {
 }
 .react-calendar__month-view__days__day{
   border: solid black 1px;
+}
+.subscribe-panel{
+  width: 800px;
+  height: 200px;
+  background: rgba(170, 154, 194, 0.56);
+  margin: auto;
+  border-radius: 80px 80px 20px 20px;
+  text-align: center;
+
+}
+.letter-icon{
+  background: linear-gradient(201.65deg, #747DEF 10.27%, #5E3BE1 100%);
+  width: 50px;
+  height: 50px;
+  float:right;
+  border-radius: 40px;
+
+}
+ .material-symbols-rounded {
+   font-variation-settings: 'FILL' 1,
+   'wght' 400,
+   'GRAD' 0,
+   'opsz' 48
+ }
+
+.send-icon{
+  transform: rotate(-30deg);
+  color: white;
+  margin-left: 5%;
+  margin-top: 20%;
+}
+
+.subscription-text{
+  justify-content: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 54px;
+  /* identical to box height, or 164% */
+  padding-top: 7%;
+  text-align: center;
+
+  /* TEXT CLR */
+
+  color: #5E6282;
+
+}
+#emails{
+  border-radius: 10px;
+  border: none;
+  height: 35px;
+  padding: 10px;
+  margin: 1%;
+}
+.submit-email{
+  background: linear-gradient(180deg, #FF946D 0%, #FF7D68 100%);
+  border-radius: 10px;
+  height:35px;
+  font-weight: bold;
+  border: none;
+  color: white;
+  width: 70px;
+  cursor: pointer;
 }

@@ -2,12 +2,9 @@ import Navbar from "../components/Navbar";
 import NewestEvents from "../components/NewestEvents";
 import RecommendedEvents from "../components/RecommendedEvents";
 import CalendarTile from "../components/CalendarTile";
-import Calendar from "react-calendar";
-import React,{useState} from "react";
+import SubscribePanel from "../components/SubscribePanel";
 
 export default function MainPage() {
-
-    const [date, setDate] = useState(new Date());
 
     return (
         <div>
@@ -17,6 +14,7 @@ export default function MainPage() {
             <h1>Recommended Events</h1>
             <RecommendedEvents/>
             <CalendarTile/>
+            <SubscribePanel/>
         </div>
     )
 
