@@ -4,9 +4,10 @@ import WelcomePage from "./pages/WelcomePage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
+import AddEventPage from "./pages/AddEventPage";
+import RegistrationForm from "./components/RegistrationForm";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
-import { ProSidebarProvider } from 'react-pro-sidebar';
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -21,10 +22,6 @@ Sentry.init({
 });
 
 
-import AddEventPage from "./pages/AddEventPage";
-import {useState} from "react";
-import RegisterPage from "./pages/RegisterPage";
-import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
 
