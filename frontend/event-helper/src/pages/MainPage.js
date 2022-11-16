@@ -1,6 +1,10 @@
 import Navbar from "../components/Navbar";
 import {Events} from "../components/Events";
 import React, {useState} from "react";
+import RecommendedEvents from "../components/RecommendedEvents";
+import CalendarTile from "../components/CalendarTile";
+import SubscribePanel from "../components/SubscribePanel";
+import Footer from "../components/Footer";
 
 export default function MainPage() {
 
@@ -12,7 +16,6 @@ export default function MainPage() {
             <Navbar/>
             <h1>Newest Events</h1>
             <Events sortBy="name" asc="ascending"/>
-            <h1>Recommended Events</h1>
             <h1>All events</h1>
             <nav className="nav">
                 <div>
@@ -29,6 +32,11 @@ export default function MainPage() {
                 </div>
             </nav>
             <Events sortBy={sortBy} asc={asc} />
+            <h1>Recommended Events</h1>
+            <RecommendedEvents/>
+            <CalendarTile/>
+            <SubscribePanel/>
+            <Footer/>
         </div>
     )
 
