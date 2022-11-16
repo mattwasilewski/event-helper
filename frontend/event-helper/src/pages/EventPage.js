@@ -4,8 +4,27 @@ import "../EventPage.css"
 import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
+import {useParams} from "react-router-dom";
 
 export default function EventPage(props) {
+
+    let { id } = useParams()
+    const [event, setEvent] = useState([]);
+
+    useEffect(() => {
+        getEvents().then(r => console.log(r))
+
+    }, []);
+
+    // http://localhost:8080/api/events/8ab04eb6-731a-4ad4-b0f5-1ffffd72ccef
+
+    const getEvents = async () =>{
+        const response = await fetch(`http://localhost:8080/api/events/${id}`, {
+            method: 'GET',
+        });
+        const data = await response.json();
+        setEvent(data);
+    }
 
     return (
         <div id="event-page">
@@ -24,18 +43,19 @@ export default function EventPage(props) {
                         <img src={switchMode} alt=""/>
                     </div>
                 </div>
-                <p id="event-name">{props.name}</p>
+                <p id="event-name">{event.name}</p>
                 <p id="event-description">Miejsce na Twój opis, nie wiem co napisać więc napiszę cokowolwiek bo i tak nie ma czasu na wymyślanie głupotek także wybaczcie ten mój piękny opisik</p>
             </div>
             <div id="destination">
                 <img id="rectangle-14" src={eventDj} alt=""/>
                 <div id="card-2">
                     <div id="rectangle-15">
-                        <p>{props.location}</p>
+                        <p>{event.location}</p>
                     </div>
                 </div>
             </div>
         </div>
     );
+
 
 }
