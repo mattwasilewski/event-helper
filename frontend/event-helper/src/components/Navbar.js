@@ -1,10 +1,12 @@
-import logo from "../assets/event-helper-logo.png";
+import logo from "../assets/logociemne.png";
 
 export default function Navbar() {
     return (
         <nav className="nav">
             <a href="/home" className="site-logo">
-                <img src={logo} alt="Event Helper"/>
+                <div id="navbar-logo">
+                    <img src={logo} alt="Event Helper"/>
+                </div>
             </a>
             <div className="toggle-button">
                 <span className="bar"></span>

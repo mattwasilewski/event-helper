@@ -3,6 +3,7 @@ import NewestEvents from "../components/NewestEvents";
 import RecommendedEvents from "../components/RecommendedEvents";
 import CalendarTile from "../components/CalendarTile";
 import SubscribePanel from "../components/SubscribePanel";
+import Footer from "../components/Footer";
 
 export default function MainPage() {
 
@@ -15,6 +16,7 @@ export default function MainPage() {
             <RecommendedEvents/>
             <CalendarTile/>
             <SubscribePanel/>
+            <Footer/>
         </div>
     )
 
