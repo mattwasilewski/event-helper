@@ -3,16 +3,9 @@ import logo from "../assets/logociemne.png";
 import "../EventPage.css"
 import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
-
-
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import WelcomePage from "./WelcomePage";
-import MainPage from "./MainPage";
-import LoginPage from "./LoginPage";
-import RegistrationForm from "../components/RegistrationForm";
 import img from "../assets/login-img.png";
 
-export default function EventPage() {
+export default function EventPage(props) {
 
     return (
         <div id="event-page">
@@ -31,14 +24,14 @@ export default function EventPage() {
                         <img src={switchMode} alt=""/>
                     </div>
                 </div>
-                <p id="event-name">Event Name</p>
+                <p id="event-name">{props.name}</p>
                 <p id="event-description">Miejsce na Twój opis, nie wiem co napisać więc napiszę cokowolwiek bo i tak nie ma czasu na wymyślanie głupotek także wybaczcie ten mój piękny opisik</p>
             </div>
             <div id="destination">
                 <img id="rectangle-14" src={eventDj} alt=""/>
                 <div id="card-2">
                     <div id="rectangle-15">
-                        <p>Location</p>
+                        <p>{props.location}</p>
                     </div>
                 </div>
             </div>
