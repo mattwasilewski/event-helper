@@ -21,12 +21,12 @@ export default function EventPage() {
             </div>
             <div id="frame19">
                 <div id="top-nav">
-                    <p id="nav-home">Home</p>
-                    <p id="nav-events">Events</p>
-                    <p id="nav-community">Community</p>
+                    <p id="nav-home"><a href="/home">Home</a></p>
+                    <p id="nav-events"><a href="/events">Events</a></p>
+                    <p id="nav-community"><a href="/community">Community</a></p>
                     <p id="nav-about-us">About us</p>
                     <p id="nav-login">Login</p>
-                    <p id="nav-sign-up">Sign up</p>
+                    <p id="nav-sign-up"><a href="/register">Sign up</a></p>
                     <div id="switch-mode">
                         <img src={switchMode} alt=""/>
                     </div>
