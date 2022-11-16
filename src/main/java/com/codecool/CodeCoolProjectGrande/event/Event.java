@@ -28,7 +28,7 @@ public class Event {
     private String location;
     private boolean verification;
     private LocalDate date;
-    private boolean toVerification;
+    private boolean publicEvent;
     @Enumerated
     private EventType eventType;
     private UUID userId;
