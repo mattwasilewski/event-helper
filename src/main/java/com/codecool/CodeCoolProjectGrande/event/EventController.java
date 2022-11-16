@@ -36,7 +36,7 @@ public class EventController {
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         eventDaoImpl.createEvent(event);
-        return new ResponseEntity<>("Event added", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -45,6 +45,7 @@ public class EventController {
         System.out.println("Dziala :) sort by: " + sortBy + " asc: " + ascending);
         return eventDaoImpl.getSortedEvents(sortBy, ascending);
     }
+
 
 }
 
