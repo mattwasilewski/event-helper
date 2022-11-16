@@ -40,13 +40,14 @@ function CreateEventForm() {
             case "price":
                 setPrice(value)
                 break;
-            case "toVerification":
+            case "publicEvent":
                 setPublicEvent(value)
                 break;
         }
     }
 
     const handleSubmit  = () => {
+        console.log(publicEvent)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
@@ -60,8 +61,7 @@ function CreateEventForm() {
                 linkToEventPage: link,
                 description: description,
                 price: price,
-                publicEvent: publicEvent,
-                })                             // TODO add userId after login implementation
+                publicEvent: publicEvent,})   // TODO add userId after login implementation
         };
         fetch('http://localhost:8080/api/events/create-event', requestOptions)
             .then(response => console.log(response.status))
