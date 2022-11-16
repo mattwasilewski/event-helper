@@ -1,0 +1,255 @@
+/* Register */
+.register-page{
+    box-sizing: border-box;
+
+    position: relative;
+    /*width: 1920px;*/
+    /*height: 1080px;*/
+    height: 100%;
+    width: 100%;
+
+
+    background: #FFFCF8;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* logo_transparent 2 */
+#logo{
+    position: absolute;
+    width: 314px;
+    height: 288px;
+    left: -57px;
+    top: -49px;
+    /*background-image: image("/assets/event.png");*/
+}
+
+/* Dark Switch */
+#switch-mode{
+    /* Dark Switch */
+
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 604px;
+    top: 55px;
+
+    /* Neutral/N40
+
+    Border on White
+    */
+    background: #ECECED;
+    border-radius: 20px;
+
+}
+
+#right-site{
+    /* Rectangle 167 */
+
+    position: absolute;
+    width: 1012px;
+    height: 1080px;
+    left: 908px;
+    top: 0px;
+
+    background: #332B2B;
+    mix-blend-mode: normal;
+    opacity: 0.7;
+
+
+}
+
+/* Frame 7 */
+
+
+.name-input{
+    /* Frame 7 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 486.13px;
+    height: 44px;
+    left: 192.23px;
+    top: 317px;
+
+    background: #E9E9E9;
+    border: 1px solid #000000;
+    border-radius: 5px;
+
+}
+
+
+.age-input{
+    /* Frame 4 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 486.13px;
+    height: 44px;
+    left: 192.23px;
+    top: 409px;
+
+    background: #E9E9E9;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+
+
+.password-input {
+    /* Frame 6 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 486.13px;
+    height: 44px;
+    left: 192.23px;
+    top: 593px;
+
+    background: #E9E9E9;
+    border: 1px solid #000000;
+    border-radius: 5px;
+
+}
+
+
+.email-input {
+    /* Frame 5 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 486.13px;
+    height: 44px;
+    left: 192.23px;
+    top: 501px;
+
+    background: #E9E9E9;
+    border: 1px solid #000000;
+    border-radius: 5px;
+
+}
+
+#register-form{
+    position: absolute;
+    width: 565px;
+    height: 840.02px;
+    left: 75x;
+    top: 50px;
+}
+
+
+#register-word{
+    position: absolute;
+    width: 279px;
+    height: 92px;
+    left: 126px;
+    top: 210px;
+    margin: 10px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 80px;
+}
+
+#signup-btn {
+    /* Frame 8 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 139px;
+    height: 44px;
+    left: 250px;
+    top: 777px;
+
+    background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+#login-btn{
+    /* Frame 9 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 26px 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 96px;
+    height: 44px;
+    left: 521px;
+    top: 777px;
+
+    background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+#have-acc-text {
+    /* You have account? */
+
+    position: absolute;
+    width: 202px;
+    height: 52px;
+    left: 481px;
+    top: 725px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    /* or 156% */
+
+    color: #9E9E9E;
+}
+
+
+
+

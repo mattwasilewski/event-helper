@@ -1,6 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.event;
 
-import com.codecool.CodeCoolProjectGrande.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,7 @@ public class EventController {
 
     @GetMapping()
     public List<Event> getEvents(){
+        System.out.println("Get events");
         return eventDaoImpl.getEvents();
     }
 
@@ -36,14 +36,16 @@ public class EventController {
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         eventDaoImpl.createEvent(event);
-        return new ResponseEntity<>("Event added", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping("/sort/{sortBy}&{ascending}")
-    public List<Event> sortEvents(@PathVariable("sortBy") String sortBy, @PathVariable("ascending") boolean ascending) {
+    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending) {
+        System.out.println("Dziala :) sort by: " + sortBy + " asc: " + ascending);
         return eventDaoImpl.getSortedEvents(sortBy, ascending);
     }
+
 
 }
 

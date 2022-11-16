@@ -21,6 +21,10 @@ Sentry.init({
 });
 
 
+import AddEventPage from "./pages/AddEventPage";
+import {useState} from "react";
+import RegisterPage from "./pages/RegisterPage";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
 
@@ -31,6 +35,8 @@ function App() {
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="/home" element={<MainPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegistrationForm/>}/>
+                    <Route path="/add-event" element={<AddEventPage/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                 </Routes>
             </Router>
