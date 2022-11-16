@@ -2,15 +2,24 @@ package com.codecool.CodeCoolProjectGrande.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Entity
+@Table(name = "events")
 public class Event {
-    private UUID eventID;
+
+    @Id
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID eventId = UUID.randomUUID();
     private String name;
     private String description;
     private String logo;
@@ -20,7 +29,14 @@ public class Event {
     private boolean verification;
     private LocalDate date;
     private boolean toVerification;
+    @Enumerated
     private EventType eventType;
-    private UUID userID;
+    private UUID userId;
 
+    public Event(String name, String description, String logo, EventType eventType) {
+        this.name = name;
+        this.description = description;
+        this.logo = logo;
+        this.eventType =eventType;
+    }
 }

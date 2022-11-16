@@ -1,23 +1,25 @@
-import LoginForm from "../components/LoginForm";
+import RegistrationForm from "../components/RegistrationForm"
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
-export default function LoginPage() {
+export default function RegisterPage() {
 
     const userData = {
         name: "name",
+        age: "age",
+        email: "email",
         password: "password"
     }
 
     const [user, setUser] = useState({name: ""});
     const [error, setError] = useState("");
 
-    const Login = details => {
-        if (details.name === userData.name && details.password === userData.password) {
+    const Login = register => {
+        if (register.name === userData.name && register.password === userData.password) {
             console.log("Logged in!")
             setUser({
-                name: details.name,
+                name: register.name,
             });
         } else {
             console.log("Details do not match!")
@@ -40,9 +42,9 @@ export default function LoginPage() {
                     <button onClick={Logout}>Logout</button>
                 </div>
             ) : (
-                <LoginForm Login={Login} error={error} />
+                <RegistrationForm Login={Login} error={error} />
             )}
-        <ForgotPasswordForm/>
+            <ForgotPasswordForm/>
         </div>
     )
 
