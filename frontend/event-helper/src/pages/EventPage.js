@@ -6,7 +6,7 @@ import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
 
-export default function EventPage(props) {
+export default function EventPage() {
 
     let { id } = useParams()
     const [event, setEvent] = useState([]);
@@ -15,8 +15,6 @@ export default function EventPage(props) {
         getEvents().then(r => console.log(r))
 
     }, []);
-
-    // http://localhost:8080/api/events/8ab04eb6-731a-4ad4-b0f5-1ffffd72ccef
 
     const getEvents = async () =>{
         const response = await fetch(`http://localhost:8080/api/events/${id}`, {

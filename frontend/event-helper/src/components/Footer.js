@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <>
             <div className="footer-logo">
-                <img src={logo}/>
+                <img src={logo} alt="logo"/>
                 <div className="app-description">
                     We provide information about upcoming events and also support creating your own private party
                 </div>

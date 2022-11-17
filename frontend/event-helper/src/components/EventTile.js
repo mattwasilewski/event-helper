@@ -2,7 +2,7 @@
 export default function EventTile(props) {
     return (<a href={'/event/' + props.eventId} >
         <div className="event-tile">
-        <div className="event-photo-tile">
+        <div className="event-photo-tile" style={{background: props.logo}}>
             <div className="event-rating-tile">
                 <div className="star">★</div>
                 <div className="rating">4.4</div>
