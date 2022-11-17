@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import img from "../assets/login-img.png";
 import switchMode from "../assets/dark-switch.png"
 import "../App.css"
-import loginForm from "./LoginForm";
 
 function CreateEventForm() {
 
@@ -47,7 +46,6 @@ function CreateEventForm() {
     }
 
     const handleSubmit  = () => {
-        console.log(publicEvent)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
@@ -61,7 +59,8 @@ function CreateEventForm() {
                 linkToEventPage: link,
                 description: description,
                 price: price,
-                publicEvent: publicEvent,})   // TODO add userId after login implementation
+                publicEvent: publicEvent,
+                eventStatus: "TO_VERIFICATION"})   // TODO add userId after login implementation
         };
         fetch('http://localhost:8080/api/events/create-event', requestOptions)
             .then(response => console.log(response.status))

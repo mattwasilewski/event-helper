@@ -5,12 +5,8 @@
 *{
   box-sizing: border-box;
 }
-body{
-  margin:0;
-  /*background-color: #fefaec;*/
-  /*color: #212832;*/
-}
-body.light{
+body {
+  margin: 0;
   background-color: #fefaec;
   color: #212832;
 }

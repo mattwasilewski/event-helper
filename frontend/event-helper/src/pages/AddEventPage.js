@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import React, {useState} from "react";
+import React from "react";
 import CreateEventForm from "../components/CreateEventForm";
 import "../App.css"
 

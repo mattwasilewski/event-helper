@@ -2,8 +2,9 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 
 
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.UserRepository;
-import com.codecool.CodeCoolProjectGrande.user.UserServiceImpl;
+//import com.codecool.CodeCoolProjectGrande.user.UserRepository;
+//import com.codecool.CodeCoolProjectGrande.user.UserServiceImpl;
+import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import de.codecentric.boot.admin.client.registration.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -51,7 +52,7 @@ public class PasswordController {
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
             logger.info("Email send successfully");
         }
-            logger.warn("Email send unsuccessfully");
+        logger.warn("Email send unsuccessfully");
     }
 
     @GetMapping("/reset-password")
@@ -81,5 +82,5 @@ public class PasswordController {
         }
 
 
-        }
     }
+}

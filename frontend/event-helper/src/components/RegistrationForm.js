@@ -28,16 +28,7 @@ export default function RegistrationForm() {
         }
     }
 
-    const handleSubmit  = (e) => {
-        // e.preventDefault();
-        console.log(name, age, email, password);
-        let obj = {
-            name: name,
-            age: age,
-            email: email,
-            password: password
-        }
-        console.log(obj)
+    const handleSubmit  = () => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -71,25 +62,25 @@ export default function RegistrationForm() {
 
                         <div className="name">
                             <label className="form__label" htmlFor="name"></label>
-                            <input className="form__input" type="text" value={name}
+                            <input className="form__input name-input" type="text" value={name}
                                    onChange={(e) => handleInputChange(e)}
-                                   id="name" className="name-input" placeholder="Name"/>
+                                   id="name" placeholder="Name"/>
                         </div>
                         <div className="age">
                             <label className="form__label" htmlFor="age"></label>
-                            <input className="form__input" type="number" value={age}
+                            <input className="form__input age-input" type="number" value={age}
                                    onChange={(e) => handleInputChange(e)}
-                                   id="age" className="age-input" placeholder="Age"/>
+                                   id="age" placeholder="Age"/>
                         </div>
                         <div className="email">
                             <label className="form__label" htmlFor="email"></label>
-                            <input className="form__input" type="email" value={email}
+                            <input className="form__input email-input" type="email" value={email}
                                    onChange={(e) => handleInputChange(e)}
-                                   id="email" className="email-input" placeholder="Email"/>
+                                   id="email" placeholder="Email"/>
                         </div>
                         <div className="password">
                             <label className="form__label" htmlFor="password"></label>
-                            <input className="form__input" type="password" id="password" className="password-input"
+                            <input className="form__input password-input" type="password" id="password"
                                    value={password} min={4}
                                    onChange={(e) => handleInputChange(e)} placeholder="Password"/>
                         </div>
