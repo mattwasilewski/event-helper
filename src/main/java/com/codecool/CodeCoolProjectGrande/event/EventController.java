@@ -30,6 +30,9 @@ public class EventController {
 
     @GetMapping("{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
+        System.out.println("wszedł mi mapping !!!!");
+        System.out.println(eventID);
+        System.out.println(eventDaoImpl.getEventByID(eventID));
         return eventDaoImpl.getEventByID(eventID);
     }
 

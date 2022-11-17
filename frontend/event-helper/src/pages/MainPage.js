@@ -15,7 +15,7 @@ export default function MainPage() {
         <div>
             <Navbar/>
             <h1>Newest Events</h1>
-            <Events sortBy="name" asc="ascending"/>
+            <Events sortBy={sortBy} asc="ascending"/>
             <h1>All events</h1>
             <nav className="nav">
                 <div>
