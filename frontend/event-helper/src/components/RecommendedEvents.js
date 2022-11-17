@@ -12,6 +12,7 @@ export default function RecommendedEvents() {
                 if (prevState === "disabled-button")
                     setFestivalsButtonStyle("disabled-button");
                 setMusicButtonStyle("disabled-button");
+
                 return "active-button";
             }
         )
