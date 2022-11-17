@@ -31,4 +31,7 @@ public class User {
     @JoinColumn(name = "tokenId")
     @OneToOne(cascade=CascadeType.ALL)
     private ResetPasswordToken resetPasswordToken;
+    @JoinColumn(name = "banId")
+    @OneToOne(cascade=CascadeType.ALL)
+    private BanToken banToken;
 }
