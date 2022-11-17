@@ -4,18 +4,13 @@ import img from "../assets/login-img.png";
 import logo from "../assets/logociemne.png";
 import switchMode from "../assets/dark-switch.png"
 
-function RegistrationForm() {
+export default function RegistrationForm() {
 
-    // const [register, setRegister] = useState({name: "",age: "", email: "", password: ""});
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState(null);
     const [password,setPassword] = useState(null);
-    //
-    // const submitHandler = e => {
-    //     e.preventDefault();
-    //     Login(register);
-    // }
+
 
     const handleInputChange = (e) => {
         const {id , value} = e.target;
@@ -35,66 +30,87 @@ function RegistrationForm() {
 
     const handleSubmit  = (e) => {
         // e.preventDefault();
-        console.log(name,age,email,password);
+        console.log(name, age, email, password);
         let obj = {
             name: name,
-            age:age,
-            email:email,
-            password:password
+            age: age,
+            email: email,
+            password: password
         }
         console.log(obj)
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json; charset=UTF-8',
-                        'Access-Control-Allow-Origin': 'http://localhost:3000',
-                        'Access-Control-Allow-Credentials': 'true'},
-            body: JSON.stringify({ name: name,
-                                            age:age,
-                                            email:email,
-                                            password:password})
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'
+            },
+            body: JSON.stringify({
+                name: name,
+                age: age,
+                email: email,
+                password: password
+            })
         };
         fetch('http://localhost:8080/registration', requestOptions)
             .then(response => response.json())
 
-    return ( <div>
-                <div id="switch-mode">
-                    <img src={switchMode} alt=""/>
+    }
+    return (
+        <div className="form">
+            <div className="register-page">
+                <div id="left-site">
+                    <div id="logo">
+                        <img src={logo} alt="logo"/>
+                    </div>
+                    <div id="switch-mode">
+                        <img src={switchMode} alt=""/>
+                    </div>
+                    <div className="form-body" id="register-form">
+                        <p id="register-word">Register: </p>
+
+                        <div className="name">
+                            <label className="form__label" htmlFor="name"></label>
+                            <input className="form__input" type="text" value={name}
+                                   onChange={(e) => handleInputChange(e)}
+                                   id="name" className="name-input" placeholder="Name"/>
+                        </div>
+                        <div className="age">
+                            <label className="form__label" htmlFor="age"></label>
+                            <input className="form__input" type="number" value={age}
+                                   onChange={(e) => handleInputChange(e)}
+                                   id="age" className="age-input" placeholder="Age"/>
+                        </div>
+                        <div className="email">
+                            <label className="form__label" htmlFor="email"></label>
+                            <input className="form__input" type="email" value={email}
+                                   onChange={(e) => handleInputChange(e)}
+                                   id="email" className="email-input" placeholder="Email"/>
+                        </div>
+                        <div className="password">
+                            <label className="form__label" htmlFor="password"></label>
+                            <input className="form__input" type="password" id="password" className="password-input"
+                                   value={password} min={4}
+                                   onChange={(e) => handleInputChange(e)} placeholder="Password"/>
+                        </div>
+                    </div>
                 </div>
-                    <p id="register-word">Register: </p>
+                <div id="right-site">
 
-                    <div className="name"  >
-                        <label className="form__label" htmlFor="name"></label>
-                        <input className="form__input" type="text" value={name} onChange={(e) => handleInputChange(e)}
-                               id="name" class="name-input" placeholder="Name"/>
-                    </div>
-                    <div className="age">
-                        <label className="form__label" htmlFor="age"></label>
-                        <input className="form__input" type="number" value={age}
-                               onChange={(e) => handleInputChange(e)}
-                               id="age" class="age-input" placeholder="Age"/>
-                    </div>
-                    <div className="email">
-                        <label className="form__label" htmlFor="email"></label>
-                        <input className="form__input" type="email" value={email}
-                               onChange={(e) => handleInputChange(e)}
-                               id="email" class="email-input" placeholder="Email"/>
-                    </div>
-                    <div className="password">
-                        <label className="form__label" htmlFor="password"></label>
-                        <input className="form__input" type="password" id="password" class="password-input" value={password} min={4}
-                               onChange={(e) => handleInputChange(e)} placeholder="Password"/>
-                    </div>
+                </div>
 
-                <div className="footer" >
-                    <button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn" >Register</button>
+                <div className="footer">
+                    <button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn">Register
+                    </button>
                 </div>
                 <p id="have-acc-text">You have account?</p>
                 <div>
-                    <button id="login-btn" >Login</button>
+                    <button id="login-btn">Login</button>
                 </div>
             </div>
         </div>
     )
+
 }
 
-export default RegistrationForm
+
