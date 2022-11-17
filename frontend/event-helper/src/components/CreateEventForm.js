@@ -7,7 +7,7 @@ import loginForm from "./LoginForm";
 function CreateEventForm() {
 
     const [name, setName] = useState("");
-    const [eventType, setEventType] = useState("");
+    const [eventType, setEventType] = useState("FESTIVAL");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [link, setLink] = useState("");
@@ -106,8 +106,8 @@ function CreateEventForm() {
                 <div>
                     <select id="publicEvent" className="input" value={publicEvent}
                             onChange={(e) => handleInputChange(e)}>
-                        <option value="true">PUBLIC</option>
-                        <option value="false">PRIVATE</option>
+                        <option value="true">PRIVATE</option>
+                        <option value="false">PUBLIC</option>
                     </select>
                 </div>
                 <div>
