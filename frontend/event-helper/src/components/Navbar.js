@@ -1,4 +1,5 @@
 import logo from "../assets/logociemne.png";
+import DarkMode from "./DarkMode";
 
 export default function Navbar() {
     return (
@@ -37,8 +38,7 @@ export default function Navbar() {
                     </a>
                 </li>
                 <li>
-                    <button className="dark-mode"><span className="material-symbols-outlined">clear_night</span>
-                    </button>
+                    <DarkMode/>
                 </li>
             </ul>
         </nav>

@@ -10,26 +10,26 @@ export default function Footer() {
                 </div>
                 <div className="social-media-logos">
                     <div className="social-logo">
-                        <ion-icon name="logo-facebook"></ion-icon>
+                        <a href="https://www.facebook.com"><ion-icon name="logo-facebook"></ion-icon></a>
                     </div>
                     <div className="social-logo">
-                        <ion-icon name="logo-twitter"></ion-icon>
+                        <a href="https://www.twitter.com"><ion-icon name="logo-twitter"></ion-icon></a>
                     </div>
                     <div className="social-logo">
-                        <ion-icon name="logo-instagram"></ion-icon>
+                        <a href="https://www.instagram.com"><ion-icon name="logo-instagram"></ion-icon></a>
                     </div>
                 </div>
             </div>
             <div className="footer-events">Events
             <ul>
-                <li>Music Events</li>
-                <li>Expo</li>
-                <li>Conferences</li>
+                <a href="/home"><li>Music Events</li></a>
+                <a href="/home"><li>Expo</li></a>
+                <a href="/home"><li>Conferences</li></a>
             </ul></div>
             <div className="footer-user">User
                 <ul>
-                    <li>Login</li>
-                    <li>Register</li>
+                    <a href="/login"><li>Login</li></a>
+                    <a href="/register"><li>Register</li></a>
                     <li>Add Event</li>
                 </ul></div>
             <div className="footer-contact">Contact

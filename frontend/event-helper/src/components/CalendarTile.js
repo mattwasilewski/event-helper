@@ -12,7 +12,7 @@ export default function CalendarTile(){
                 <Calendar onChange={setDate} value={date}/>
             </div>
             <div className="text-center">
-                Selected date: {date.toDateString()}
+                {/*Selected date: {date.toDateString()}*/}
             </div>
         </div>
     );
