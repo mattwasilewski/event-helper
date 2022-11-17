@@ -44,7 +44,7 @@ export default function EventPage(props) {
                     </div>
                 </div>
                 <p id="event-name">{event.name}</p>
-                <p id="event-description">Miejsce na Twój opis, nie wiem co napisać więc napiszę cokowolwiek bo i tak nie ma czasu na wymyślanie głupotek także wybaczcie ten mój piękny opisik</p>
+                <p id="event-description">{event.description}</p>
             </div>
             <div id="destination">
                 <img id="rectangle-14" src={eventDj} alt=""/>
