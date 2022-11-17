@@ -1,6 +1,7 @@
-package com.codecool.CodeCoolProjectGrande.user;
+package com.codecool.CodeCoolProjectGrande.user.service;
 
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -71,4 +72,3 @@ public class UserServiceImpl implements UserService {
 
 
 }
-

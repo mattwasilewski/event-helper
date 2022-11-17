@@ -1,5 +1,6 @@
-package com.codecool.CodeCoolProjectGrande.user;
+package com.codecool.CodeCoolProjectGrande.user.service;
 
+import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 
 import java.util.List;
