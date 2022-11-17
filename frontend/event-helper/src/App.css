@@ -225,6 +225,94 @@ img {
 }
 
 
+.title {
+  position: absolute;
+  width: 279px;
+  height: 92px;
+  left: 126px;
+  top: 210px;
+  margin: 10px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 80px;
+}
+.add-event-page {
+  box-sizing: border-box;
+
+  position: relative;
+  /*width: 1920px;*/
+  /*height: 1080px;*/
+  height: 100%;
+  width: 100%;
+
+
+  background: #FFFCF8;
+  border: 1px solid #000000;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.input {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px 28px;
+  gap: 10px;
+
+  position: relative;
+  width: 486.13px;
+  height: 44px;
+  left: 192.23px;
+  top: 100px;
+
+  background: #E9E9E9;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+.big-input {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px 28px;
+  gap: 10px;
+
+  position: relative;
+  width: 486.13px;
+  height: 140px;
+  left: 192.23px;
+  top: 100px;
+
+  background: #E9E9E9;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+.btn {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px 26px 12px 28px;
+  gap: 10px;
+
+  position: absolute;
+  width: 120px;
+  height: 44px;
+  left: 560px;
+  top: 750px;
+
+  background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+
+
+
 
 
 .react-calendar {
@@ -563,5 +651,13 @@ a{
   text-decoration: none;
   color: #0E1735;
 }
+#menuId {
+  background-color: rgba(33, 138, 25, 0.23);
+  height: 500px;
+  border-radius: 25px;
+}
 
-
+#menuId a{
+  color: inherit;
+  text-decoration: none;
+}

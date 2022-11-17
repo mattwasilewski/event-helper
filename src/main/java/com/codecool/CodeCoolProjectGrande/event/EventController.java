@@ -30,13 +30,16 @@ public class EventController {
 
     @GetMapping("{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
+        System.out.println("wszedł mi mapping !!!!");
+        System.out.println(eventID);
+        System.out.println(eventDaoImpl.getEventByID(eventID));
         return eventDaoImpl.getEventByID(eventID);
     }
 
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         eventDaoImpl.createEvent(event);
-        return new ResponseEntity<>("Event added", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -45,6 +48,7 @@ public class EventController {
         System.out.println("Dziala :) sort by: " + sortBy + " asc: " + ascending);
         return eventDaoImpl.getSortedEvents(sortBy, ascending);
     }
+
 
 }
 

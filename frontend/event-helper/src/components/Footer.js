@@ -28,10 +28,11 @@ export default function Footer() {
             </ul></div>
             <div className="footer-user">User
                 <ul>
-                    <a href="/login"><li>Login</li></a>
-                    <a href="/register"><li>Register</li></a>
-                    <li>Add Event</li>
-                </ul></div>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/add-event">Add Event</a></li>
+
+               </ul></div>
             <div className="footer-contact">Contact
                 <ul>
                     <li>New Jersey 45463</li>

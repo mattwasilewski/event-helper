@@ -16,6 +16,7 @@ export default function MainPage() {
             <Navbar/>
             <h1>Newest Events</h1>
             <Events sortBy="date" asc="descending"/>
+
             <h1>All events</h1>
             <div className="all-events-tools">
                     <div>
@@ -36,7 +37,7 @@ export default function MainPage() {
             </div>
             <Events sortBy={sortBy} asc={asc}/>
             <h1>Recommended Events</h1>
-            <RecommendedEvents/>
+            {/*<RecommendedEvents/>*/}
             <CalendarTile/>
             <SubscribePanel/>
             <Footer/>
