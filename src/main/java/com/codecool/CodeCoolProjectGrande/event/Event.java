@@ -1,5 +1,4 @@
 package com.codecool.CodeCoolProjectGrande.event;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,8 @@ public class Event {
     private String linkToEventPage;
     private int price;
     private String location;
-    private boolean verification;
+    @Enumerated
+    private EventStatus eventStatus;
     private LocalDate date;
     private boolean publicEvent;
     @Enumerated
@@ -38,5 +38,6 @@ public class Event {
         this.description = description;
         this.logo = logo;
         this.eventType =eventType;
+        this.eventStatus = EventStatus.TO_VERIFICATION;
     }
 }

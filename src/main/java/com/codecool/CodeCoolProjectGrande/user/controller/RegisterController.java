@@ -1,5 +1,8 @@
-package com.codecool.CodeCoolProjectGrande.user;
+package com.codecool.CodeCoolProjectGrande.user.controller;
 
+import com.codecool.CodeCoolProjectGrande.user.SecurityConfig;
+import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,6 @@ public class RegisterController {
 
     @PostMapping("/registration")
     public ResponseEntity registerAccount(@RequestBody User user){
-        System.out.println(user);
         user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
