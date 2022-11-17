@@ -4,6 +4,7 @@ package com.codecool.CodeCoolProjectGrande.user.passwordreset;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.UserServiceImpl;
+import de.codecentric.boot.admin.client.registration.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 public class PasswordController {
@@ -20,6 +23,7 @@ public class PasswordController {
 
     private EmailService emailService;
     private UserServiceImpl userServiceImpl;
+    private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
 
 
     @Autowired
@@ -45,9 +49,9 @@ public class PasswordController {
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
                     + "/reset-password/?token=" + token.getTokenId());
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
-
+            logger.info("Email send successfully");
         }
-
+            logger.warn("Email send unsuccessfully");
     }
 
     @GetMapping("/reset-password")
