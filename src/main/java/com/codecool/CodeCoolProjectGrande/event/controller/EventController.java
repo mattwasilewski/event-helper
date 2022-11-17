@@ -18,7 +18,6 @@ import java.util.*;
 @RequestMapping("/api/events/")
 public class EventController {
 
-//    private final EventServiceImpl eventDaoImpl;
     private final EventRepository eventRepository;
 
 
@@ -30,19 +29,16 @@ public class EventController {
     @GetMapping()
     public List<Event> getEvents(){
         return eventRepository.findAll();
-//        return eventDaoImpl.getEvents();
     }
 
     @GetMapping("{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
         return eventRepository.findEventByEventId(eventID);
-//        return eventDaoImpl.getEventByID(eventID);
     }
 
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         eventRepository.save(event);
-//        eventDaoImpl.createEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -53,7 +49,6 @@ public class EventController {
             return eventRepository.findAll(Sort.by(sortBy).ascending());
         }
         return eventRepository.findAll(Sort.by(sortBy).descending());
-//        return eventDaoImpl.getSortedEvents(sortBy, ascending);
     }
 
 

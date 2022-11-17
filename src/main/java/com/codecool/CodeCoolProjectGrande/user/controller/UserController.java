@@ -24,18 +24,15 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers(){
         return userRepository.findAll();
-//        return userServiceImpl.getUsers();
     }
 
     @GetMapping("/user/{userId}")
     public Optional<User> getUserByID(@PathVariable UUID userId) {
         return userRepository.findById(userId);
-//            return userServiceImpl.getUserById(userId);
     }
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         userRepository.save(user);
-//            userServiceImpl.createUser(user);
         return new ResponseEntity<>("User added", HttpStatus.OK);
     }
 

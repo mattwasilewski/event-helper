@@ -28,7 +28,7 @@ export default function RegistrationForm() {
         }
     }
 
-    const handleSubmit  = (e) => {
+    const handleSubmit  = () => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -74,7 +74,7 @@ export default function RegistrationForm() {
                         </div>
                         <div className="email">
                             <label className="form__label" htmlFor="email"></label>
-                            <input className="form__input password-input" type="email" value={email}
+                            <input className="form__input email-input" type="email" value={email}
                                    onChange={(e) => handleInputChange(e)}
                                    id="email" placeholder="Email"/>
                         </div>

@@ -1,6 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.user.repository;
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
