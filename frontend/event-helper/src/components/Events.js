@@ -23,6 +23,7 @@ export const Events = (props) => {
             <EventTile name={event.name}
                        location={event.location}
                        eventId={event.eventId}
+                       logo={event.logo}
             />
         ))}
         </>

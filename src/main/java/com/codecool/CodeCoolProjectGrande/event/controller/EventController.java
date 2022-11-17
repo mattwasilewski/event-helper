@@ -1,6 +1,9 @@
-package com.codecool.CodeCoolProjectGrande.event;
+package com.codecool.CodeCoolProjectGrande.event.controller;
 
+import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,38 +18,37 @@ import java.util.*;
 @RequestMapping("/api/events/")
 public class EventController {
 
-    private final EventServiceImpl eventDaoImpl;
+    private final EventRepository eventRepository;
+
 
     @Autowired
-    public EventController(EventServiceImpl eventDaoImpl) {
-        this.eventDaoImpl = eventDaoImpl;
+    public EventController(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
     }
 
     @GetMapping()
     public List<Event> getEvents(){
-        System.out.println("Get events");
-        return eventDaoImpl.getEvents();
+        return eventRepository.findAll();
     }
 
     @GetMapping("{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
-        System.out.println("wszedł mi mapping !!!!");
-        System.out.println(eventID);
-        System.out.println(eventDaoImpl.getEventByID(eventID));
-        return eventDaoImpl.getEventByID(eventID);
+        return eventRepository.findEventByEventId(eventID);
     }
 
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventDaoImpl.createEvent(event);
+        eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping("/sort/{sortBy}&{ascending}")
     public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending) {
-        System.out.println("Dziala :) sort by: " + sortBy + " asc: " + ascending);
-        return eventDaoImpl.getSortedEvents(sortBy, ascending);
+        if (ascending) {
+            return eventRepository.findAll(Sort.by(sortBy).ascending());
+        }
+        return eventRepository.findAll(Sort.by(sortBy).descending());
     }
 
 

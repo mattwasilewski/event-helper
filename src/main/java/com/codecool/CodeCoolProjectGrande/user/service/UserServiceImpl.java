@@ -1,10 +1,10 @@
-package com.codecool.CodeCoolProjectGrande.user;
+package com.codecool.CodeCoolProjectGrande.user.service;
 
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,38 +19,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
-        userRepository.save(user);
-    }
-
-    @Override
     public Optional<User> getUserById(UUID id) {
         return userRepository.findUserByUserId(id);
-    }
-
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public void deleteUser(UUID id) {
-        if (getUserById(id).isPresent()){
-            userRepository.delete(getUserById(id).get());
-        } else {
-            System.out.println("Place for logger");
-        }
-    }
-
-    @Override
-    public void editUser(UUID id, String name, String password, String email) {
-        if (getUserById(id).isPresent()) {
-            getUserById(id).get().setName(name);
-            getUserById(id).get().setPassword(password);
-            getUserById(id).get().setEmail(email);
-        } else {
-            System.out.println("Place for logger");
-        }
     }
 
     @Override
@@ -71,4 +41,3 @@ public class UserServiceImpl implements UserService {
 
 
 }
-

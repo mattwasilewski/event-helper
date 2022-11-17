@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
-export default function RegisterPage() {
+export default function RegisterPage() {      // TODO IN PROGRESS
 
     const userData = {
         name: "name",
@@ -17,18 +17,15 @@ export default function RegisterPage() {
 
     const Login = register => {
         if (register.name === userData.name && register.password === userData.password) {
-            console.log("Logged in!")
             setUser({
                 name: register.name,
             });
         } else {
-            console.log("Details do not match!")
             setError("Details do not match!")
         }
     }
 
     const Logout = () => {
-        console.log("Logout");
         setUser({name: ""});
     }
 

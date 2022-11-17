@@ -1,4 +1,3 @@
-import logo from "../assets/event-helper-logo.png";
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 export default function Admin() {
     return (
