@@ -18,7 +18,7 @@ function ForgotPasswordForm() {
     }
 
     return(
-        <form
+        <form className="forgot-password-form"
         onSubmit={ sendEmail }
     >
         <input

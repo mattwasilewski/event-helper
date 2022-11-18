@@ -68,9 +68,6 @@ function CreateEventForm() {
 
     return (
         <div className="form" >
-            <div id="switch-mode">
-                <img src={switchMode} alt=""/>
-            </div>
             <div>
                 <h1>Add new event</h1>
                 <div>
@@ -117,9 +114,9 @@ function CreateEventForm() {
                           id="description" className="big-input" placeholder="Description"/>
                 </div>
                 <div>
-                    <button onClick={() => handleSubmit()} type="submit" id="submit-btn" className="btn">
+                    <a href="/home"><button onClick={() => handleSubmit()} type="submit" id="submit-btn" className="btn">
                         Add Event
-                    </button>
+                    </button></a>
                 </div>
             </div>
         </div>
