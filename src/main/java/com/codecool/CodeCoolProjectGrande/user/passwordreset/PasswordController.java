@@ -37,19 +37,19 @@ public class PasswordController {
 
 
     @PostMapping("/forgot-password")
-    public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
+    public void forgotPassword(@RequestParam("email") String userEmail){
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);
         if (user.isPresent()) {
+            String appUrl = "http://localhost:3000";
             ResetPasswordToken token = new ResetPasswordToken();
             user.get().setResetPasswordToken(token);
             userServiceImpl.saveUser(user.get());
-            String appUrl = request.getScheme() + "://" + request.getServerName();
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("support@demo.com");
             passwordResetEmail.setTo(user.get().getEmail());
             passwordResetEmail.setSubject("Password Reset Request");
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
-                    + "/reset-password/?token=" + token.getTokenId());
+                    + "/reset-password/" + token.getTokenId());
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
             logger.info("Email for password reset send successfully");
         }
