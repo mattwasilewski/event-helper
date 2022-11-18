@@ -5,6 +5,7 @@ import CalendarTile from "../components/CalendarTile";
 import SubscribePanel from "../components/SubscribePanel";
 import Footer from "../components/Footer";
 import AllEvents from "../components/AllEvents";
+import RecommendedEvents from "../components/RecommendedEvents";
 
 export default function MainPage() {
 
@@ -17,7 +18,7 @@ export default function MainPage() {
             <h1>All events</h1>
             <AllEvents/>
             <h1>Recommended Events</h1>
-            {/*<RecommendedEvents/>*/}
+            <RecommendedEvents/>
             <CalendarTile/>
             <SubscribePanel/>
             <Footer/>

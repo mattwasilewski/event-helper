@@ -5,10 +5,14 @@
 *{
   box-sizing: border-box;
 }
+html{
+  height: 100%;
+}
 body {
   margin: 0;
   background-color: #fefaec;
   color: #212832;
+  height: 100%;
 }
 body.dark{
   background-color: #2a2826;
@@ -126,6 +130,12 @@ img {
   border-radius: 25px;
   box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.1);
 }
+
+.event-tile:hover,
+.event-tile:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em;
+  transform: translateY(-0.25em);
+}
 .event-photo-tile{
   width: 189px;
   height: 140px;
@@ -185,13 +195,16 @@ img {
   font-size: 20px;
 }
 .container-left {
-  background: yellow;
   float: left;
   width: 50%;
+  max-height: 100vh;
 }
 .container-right {
   float: right;
   width: 50%;
+  max-height: 100vh;
+  background: #332B2B;
+
 }
 .text-left {
   text-align: left;
@@ -520,10 +533,12 @@ img {
 .footer-logo{
   height: 300px;
   width: 300px;
+  margin-left: 13%;
 }
 #navbar-logo{
   width: 200px;
   height: 200px;
+  float: left;
 }
 .app-description{
   width: 250px;
@@ -656,4 +671,68 @@ a{
 #menuId a{
   color: inherit;
   text-decoration: none;
+}
+#login-heading{
+  float: left;
+  height: 200px;
+  width: 30%;
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+  padding-top: 10%;
+}
+#name{
+  width: 350px;
+  height: 44px;
+  left: 25%;
+  top: 28%;
+
+  background: #E9E9E9;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 5px;
+}
+#password{
+  width: 350px;
+  height: 44px;
+  left: 25%;
+  top: 28%;
+  padding: 5px;
+
+  background: #E9E9E9;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+.form-group{
+  padding: 10px;
+}
+#login-submit{
+  justify-content: center;
+  position: absolute;
+  width: 120px;
+  height: 44px;
+  left: 29%;
+
+  background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+.forgot-password-form{
+  padding-top: 20%;
+}
+
+button:hover,
+button:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em;
+  transform: translateY(-0.25em);
+}
+
+
+ul li:hover,
+ul li:focus {
+  transform: translateY(-0.25em);
+}
+.social-logo:hover,
+.social-logo:focus {
+  transform: translateY(-0.25em);
 }

@@ -19,17 +19,17 @@ function ForgotPasswordForm() {
 
     return(
         <form
-        onSubmit={ sendEmail }
-    >
-        <input
-            form="email"
-            onChange={(e) => setEmail(e.target.value) }
-            value={email}
-            type="text"
-            required={true}
-        />
-        <button value="Submit">Reset Password</button>
-    </form>
+            onSubmit={ sendEmail }
+        >
+            <input
+                form="email"
+                onChange={(e) => setEmail(e.target.value) }
+                value={email}
+                type="text"
+                required={true}
+            />
+            <button value="Submit">Send Email</button>
+        </form>
     )
 }
 

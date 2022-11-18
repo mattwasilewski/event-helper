@@ -35,7 +35,6 @@ export default function LoginPage() {
 
     return (
         <div>
-            <Navbar/>
             {(user.name !== "") ? (
                 <div className="welcome">
                     <h2>Welcome, <span>{user.name}</span></h2>
@@ -44,8 +43,6 @@ export default function LoginPage() {
             ) : (
                 <LoginForm Login={Login} error={error} />
             )}
-        <ForgotPasswordForm/>
-        <a href={"/admin"}> Admin </a>
         </div>
     )
 
