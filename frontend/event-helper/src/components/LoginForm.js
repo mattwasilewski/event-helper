@@ -32,10 +32,12 @@ function LoginForm({Login, error}) {
                         </div>
                         <button type="submit" id="login-submit" value="LOGIN">LOGIN</button>
                     </div>
-                    <ForgotPasswordForm/>
+
                     <a href={"/admin"}> Admin </a>
                 </form>
+
             </div>
+            <ForgotPasswordForm/>
             <div className="container-right">
                 <img className="login-photo" src={img} alt={"img"}/>
             </div>

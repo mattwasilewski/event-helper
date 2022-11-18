@@ -18,18 +18,18 @@ function ForgotPasswordForm() {
     }
 
     return(
-        <form className="forgot-password-form"
-        onSubmit={ sendEmail }
-    >
-        <input
-            form="email"
-            onChange={(e) => setEmail(e.target.value) }
-            value={email}
-            type="text"
-            required={true}
-        />
-        <button value="Submit">Send Email</button>
-    </form>
+        <form
+            onSubmit={ sendEmail }
+        >
+            <input
+                form="email"
+                onChange={(e) => setEmail(e.target.value) }
+                value={email}
+                type="text"
+                required={true}
+            />
+            <button value="Submit">Send Email</button>
+        </form>
     )
 }
 

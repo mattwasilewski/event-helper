@@ -1,6 +1,5 @@
 import {useParams} from "react-router-dom";
 
-
 function ResetPasswordForm() {
 let { token } = useParams()
 
@@ -24,7 +23,6 @@ return(
         <button value="Submit">Reset password</button>
 
     </form>
-
 )
 }
 

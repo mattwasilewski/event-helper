@@ -3,7 +3,7 @@ import React from "react";
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import "../App.css"
 
-export default function AddEventPage() {
+export default function ResetPasswordPage() {
 
 
     return (
