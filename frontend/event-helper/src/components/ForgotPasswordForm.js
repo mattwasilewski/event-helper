@@ -28,7 +28,7 @@ function ForgotPasswordForm() {
             type="text"
             required={true}
         />
-        <button value="Submit">Reset Password</button>
+        <button value="Submit">Send Email</button>
     </form>
     )
 }

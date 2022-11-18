@@ -3,14 +3,10 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
-import {useState} from "react";
-import RegisterPage from "./pages/RegisterPage";
-import RegistrationForm from "./components/RegistrationForm";
-import EventPage from "./pages/EventPage";
+import AdminPage from "./pages/AdminPage";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
-import AdminPage from "./pages/AdminPage";
-import AddEventPage from "./pages/AddEventPage";
+import { ProSidebarProvider } from 'react-pro-sidebar';
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -39,6 +35,7 @@ function App() {
                     <Route path="/add-event" element={<AddEventPage/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/event/:id" element={<EventPage/>}/>
+                    <Route path="/reset-password/:token" element={<ResetPasswordPage/>}/>
                 </Routes>
             </Router>
         </div>

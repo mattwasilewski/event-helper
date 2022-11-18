@@ -21,6 +21,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @CrossOrigin
     @GetMapping("/users")
     public List<User> getUsers(){
         return userRepository.findAll();

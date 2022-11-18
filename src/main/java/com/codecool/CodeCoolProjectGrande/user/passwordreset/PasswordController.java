@@ -17,6 +17,8 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+@CrossOrigin
 @RestController
 public class PasswordController {
 
@@ -34,27 +36,24 @@ public class PasswordController {
     }
 
 
-    @CrossOrigin
     @PostMapping("/forgot-password")
-    public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
+    public void forgotPassword(@RequestParam("email") String userEmail){
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);
         if (user.isPresent()) {
+            String appUrl = "http://localhost:3000";
             ResetPasswordToken token = new ResetPasswordToken();
             user.get().setResetPasswordToken(token);
             userServiceImpl.saveUser(user.get());
-            String appUrl = request.getScheme() + "://" + request.getServerName();
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("support@demo.com");
             passwordResetEmail.setTo(user.get().getEmail());
             passwordResetEmail.setSubject("Password Reset Request");
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
-                    + "/reset-password/?token=" + token.getTokenId());
+                    + "/reset-password/" + token.getTokenId());
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
-            logger.info("Email send successfully");
+            logger.info("Email for password reset send successfully");
         }
-        logger.warn("Email send unsuccessfully");
     }
-
     @GetMapping("/reset-password")
     public void resetPasswordPage(@RequestParam("token") UUID token) {
         Optional<User> user = userServiceImpl.getUserByToken(token);
@@ -66,12 +65,12 @@ public class PasswordController {
     }
 
     @PutMapping("/reset-password/{token}")     // TODO change password to request body
-    public void setNewPassword(@PathVariable("token") UUID token, @RequestParam("password") String password){
+    public void setNewPassword(@PathVariable("token") UUID token){
         Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) {
             User resetUser = user.get();
             if (!resetUser.getResetPasswordToken().isExpired(new Date())) {
-                resetUser.setPassword(password);
+                resetUser.setPassword(UUID.randomUUID().toString());
                 resetUser.setResetPasswordToken(null);
                 userServiceImpl.saveUser(resetUser);
             } else {
