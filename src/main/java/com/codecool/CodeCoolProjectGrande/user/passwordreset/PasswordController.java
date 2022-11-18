@@ -17,6 +17,8 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+@CrossOrigin
 @RestController
 public class PasswordController {
 
@@ -34,7 +36,6 @@ public class PasswordController {
     }
 
 
-    @CrossOrigin
     @PostMapping("/forgot-password")
     public void forgotPassword(@RequestParam("email") String userEmail, HttpServletRequest request){
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);
@@ -50,11 +51,9 @@ public class PasswordController {
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
                     + "/reset-password/?token=" + token.getTokenId());
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
-            logger.info("Email send successfully");
+            logger.info("Email for password reset send successfully");
         }
-        logger.warn("Email send unsuccessfully");
     }
-
     @GetMapping("/reset-password")
     public void resetPasswordPage(@RequestParam("token") UUID token) {
         Optional<User> user = userServiceImpl.getUserByToken(token);
@@ -66,12 +65,12 @@ public class PasswordController {
     }
 
     @PutMapping("/reset-password/{token}")     // TODO change password to request body
-    public void setNewPassword(@PathVariable("token") UUID token, @RequestParam("password") String password){
+    public void setNewPassword(@PathVariable("token") UUID token){
         Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) {
             User resetUser = user.get();
             if (!resetUser.getResetPasswordToken().isExpired(new Date())) {
-                resetUser.setPassword(password);
+                resetUser.setPassword(UUID.randomUUID().toString());
                 resetUser.setResetPasswordToken(null);
                 userServiceImpl.saveUser(resetUser);
             } else {
