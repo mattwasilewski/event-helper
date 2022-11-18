@@ -7,6 +7,9 @@ import AdminPage from "./pages/AdminPage";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
 import { ProSidebarProvider } from 'react-pro-sidebar';
+import RegistrationForm from "./components/RegistrationForm";
+import AddEventPage from "./pages/AddEventPage";
+import EventPage from "./pages/EventPage";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -21,6 +24,9 @@ Sentry.init({
 });
 
 
+function ResetPasswordPage() {
+    return null;
+}
 
 function App() {
 
