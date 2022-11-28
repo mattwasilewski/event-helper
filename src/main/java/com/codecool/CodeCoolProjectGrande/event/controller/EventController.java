@@ -39,7 +39,6 @@ public class EventController {
 
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        System.out.println("create event -------------");
         eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -48,12 +47,12 @@ public class EventController {
     public List<Event> getEventsByEventType(@PathVariable String eventType){
         return eventRepository.findEventsByEventType(eventType);
     }
-    @GetMapping("/sort/{sortBy}&{ascending}")
-    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending) {
+    @GetMapping("/sort/{sortBy}&{ascending}&{phrase}")
+    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase) {
         if (ascending) {
-            return eventRepository.findAll(Sort.by(sortBy).ascending());
+            return eventRepository.findAllByNameContains(phrase, Sort.by(sortBy).ascending());
         }
-        return eventRepository.findAll(Sort.by(sortBy).descending());
+        return eventRepository.findAllByNameContains(phrase, Sort.by(sortBy).descending());
     }
 
 

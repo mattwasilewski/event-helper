@@ -13,7 +13,7 @@ export default function MainPage() {
         <div>
             <Navbar/>
             <h1>Newest Events</h1>
-            <Events sortBy="date" asc="descending"/>
+            <Events sortBy="date" asc="descending" phrase="phrase"/>
 
             <h1>All events</h1>
             <AllEvents/>
