@@ -33,7 +33,7 @@ public class RegisterController {
 
     @PostMapping("/registration")
     public ResponseEntity registerAccount(@RequestBody User user){
-        if (EmailValidator.patternMatches(user.getEmail())){
+        if (EmailValidator.patternMatches(user.getEmail()) && user.getPassword().length() >= 8){
             user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
             userRepository.save(user);
         }

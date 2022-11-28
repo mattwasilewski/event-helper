@@ -10,6 +10,8 @@ export default function RegistrationForm() {
     const mail = document.querySelector('#email')
     const passInfo = document.querySelector('#pass-info')
     const mailInfo = document.querySelector('#email-info')
+    const confirmPass = document.querySelector('#confirm-password-input')
+    const confirmPassInfo = document.querySelector('#confirm-pass-info')
 
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
@@ -31,6 +33,19 @@ export default function RegistrationForm() {
                 mailInfo.style.color = 'tomato'
             }else {
                 mailInfo.style.display = "none";
+            }
+        }
+    }
+
+    const confirmPasswordMsg = () => {
+        console.log("masno gang")
+        if (confirmPass !=  null){
+            confirmPassInfo.style.display = "block";
+            confirmPassInfo.style.color = 'tomato'
+            if (pass.value === confirmPass.value){
+                confirmPassInfo.style.display = "none";
+            } else if (confirmPassInfo.value.length === 0 || pass.value.length === 0){
+                confirmPassInfo.style.display = "none";
             }
         }
     }
@@ -73,6 +88,9 @@ export default function RegistrationForm() {
         if (id === "password-signup") {
             passwordValidationMsg()
             setPassword(value);
+        }
+        if (id === "confirm-password-input") {
+            confirmPasswordMsg()
         }
     }
 
@@ -131,9 +149,10 @@ export default function RegistrationForm() {
                                onChange={(e) => handleInputChange(e)} placeholder="Password"/>
                     </div>
                     <div className="password">
+                        <p id="confirm-pass-info">Password not match!</p>
                         <label className="form__label" htmlFor="password"></label>
                         <input className="form__input password-input" type="password" id="confirm-password-input"
-                              placeholder="Confirm Password"/>
+                               onChange={(e) => handleInputChange(e)} placeholder="Confirm Password"/>
                     </div>
                 </div>
             </div>

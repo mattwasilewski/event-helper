@@ -170,6 +170,13 @@
     left: 45%;
 }
 
+#confirm-pass-info {
+    position: absolute;
+    display: none;
+    top: 63%;
+    left: 40%;
+}
+
 
 
 .email-input {
