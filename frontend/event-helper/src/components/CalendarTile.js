@@ -7,6 +7,12 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, {useState} from "react";
 import moment from 'moment';
 
+moment.locale('pl', {
+    week: {
+        dow: 1,
+        doy: 1,
+    },
+});
 
 const localizer = momentLocalizer(moment)
 
