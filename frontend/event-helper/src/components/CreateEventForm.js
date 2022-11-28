@@ -45,7 +45,8 @@ function CreateEventForm() {
         }
     }
 
-    const handleSubmit  = () => {
+    const handleSubmit  = (e) => {
+        e.preventDefault()
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
@@ -114,7 +115,7 @@ function CreateEventForm() {
                           id="description" className="big-input" placeholder="Description"/>
                 </div>
                 <div>
-                    <a href="/home"><button onClick={() => handleSubmit()} type="submit" id="submit-btn" className="btn">
+                    <a href=""><button onClick={(e) => handleSubmit(e)} type="submit" id="submit-btn" className="btn">
                         Add Event
                     </button></a>
                 </div>
