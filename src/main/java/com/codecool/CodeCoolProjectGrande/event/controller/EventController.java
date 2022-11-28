@@ -51,13 +51,13 @@ public class EventController {
     @GetMapping("/sort/{sortBy}&{ascending}&{phrase}")
     public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase) {
         if (ascending) {
-            return eventRepository.findAllByNameContains(phrase, Sort.by(sortBy).ascending());
+            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).ascending());
         }
-        return eventRepository.findAllByNameContains(phrase, Sort.by(sortBy).descending());
+        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).descending());
     }
 
     @PutMapping("/assign-user-to-event")
-    public ResponseEntity<?> assignUserToEvent(@RequestBody UUID id) {
+    public ResponseEntity<?> assignUserToEvent(@RequestBody UUID id) {    // TODO dokończyć
         System.out.println("User uuid: " + id);
         return null;
     }
