@@ -38,7 +38,6 @@ export default function RegistrationForm() {
     }
 
     const confirmPasswordMsg = () => {
-        console.log("masno gang")
         if (confirmPass !=  null){
             confirmPassInfo.style.display = "block";
             confirmPassInfo.style.color = 'tomato'
@@ -158,8 +157,7 @@ export default function RegistrationForm() {
             </div>
 
             <div className="register-button">
-                    <a href="/home"><button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn">Register
-                    </button></a>
+                <a href="/home"><button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn">Register</button></a>
             </div>
             <p id="have-acc-text">Already have an account?</p>
             <div className="login-button">
