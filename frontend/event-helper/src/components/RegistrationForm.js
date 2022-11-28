@@ -6,10 +6,44 @@ import logo from "../assets/logociemne.png";
 
 export default function RegistrationForm() {
 
+    const pass = document.querySelector('#password-signup')
+    const mail = document.querySelector('#email')
+    const passInfo = document.querySelector('#pass-info')
+
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+
+
+    const letters = /[a-z]/i;
+    const numbers = /[0-9]/;
+    const special = /[!@#$%]/;
+    const minValue = 8;
+
+
+    const emailValidationMsg = () => {
+
+    }
+
+    const passwordValidationMsg = () => {
+        if (pass != null){
+            passInfo.style.display = "block";
+            if (pass.value.length >= minValue && pass.value.match(letters) && pass.value.match(numbers)
+                && pass.value.match(special)){
+                passInfo.textContent = 'Perfect Password!'
+                passInfo.style.color = 'lime'
+            } else if (pass.value.length >= minValue && pass.value.match(letters) && pass.value.match(numbers)){
+                passInfo.textContent = 'Good Password'
+                passInfo.style.color = 'gold'
+            } else if (pass.value.length === 0){
+                passInfo.style.display = "none"
+            } else {
+                passInfo.textContent = 'Your password is too short'
+                passInfo.style.color = 'tomato'
+            }
+        }
+    }
 
 
     const handleInputChange = (e) => {
@@ -24,9 +58,11 @@ export default function RegistrationForm() {
             setEmail(value);
         }
         if (id === "password-signup") {
+            passwordValidationMsg()
             setPassword(value);
         }
     }
+
 
     const handleSubmit = () => {
         const requestOptions = {
@@ -74,10 +110,16 @@ export default function RegistrationForm() {
                                id="email" placeholder="Email"/>
                     </div>
                     <div className="password">
+                        <p id="pass-info">Too short password</p>
                         <label className="form__label" htmlFor="password"></label>
                         <input className="form__input password-input" type="password" id="password-signup"
-                               value={password} min={4}
+                               value={password}
                                onChange={(e) => handleInputChange(e)} placeholder="Password"/>
+                    </div>
+                    <div className="password">
+                        <label className="form__label" htmlFor="password"></label>
+                        <input className="form__input password-input" type="password" id="confirm-password-input"
+                              placeholder="Confirm Password"/>
                     </div>
                 </div>
             </div>
