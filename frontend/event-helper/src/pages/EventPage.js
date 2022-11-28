@@ -24,6 +24,21 @@ export default function EventPage() {
         setEvent(data);
     }
 
+    const assignToEvent = async (e) => {
+        e.preventDefault()
+        console.log("Button działa")
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'},
+            body: JSON.stringify({
+                userId: id})
+        }
+        fetch('http://localhost:8080/api/events/assign-user-to-event', requestOptions)
+            .then(response => console.log(response.status))
+    }
+
     return (
         <div id="event-page">
             <div id="logo">
@@ -43,6 +58,9 @@ export default function EventPage() {
                 </div>
                 <p id="event-name">{event.name}</p>
                 <p id="event-description">{event.description}</p>
+
+                <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
+
             </div>
             <div id="destination">
                 <img id="rectangle-14" src={eventDj} alt=""/>
