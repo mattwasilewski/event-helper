@@ -9,6 +9,7 @@ export default function RegistrationForm() {
     const pass = document.querySelector('#password-signup')
     const mail = document.querySelector('#email')
     const passInfo = document.querySelector('#pass-info')
+    const mailInfo = document.querySelector('#email-info')
 
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
@@ -20,10 +21,18 @@ export default function RegistrationForm() {
     const numbers = /[0-9]/;
     const special = /[!@#$%]/;
     const minValue = 8;
-
+    const emailValidation = /^[0-9a-z_.-]+@[0-9a-z>.-]+\.[a-z]{2,3}$/i
 
     const emailValidationMsg = () => {
-
+        if (mail != null){
+            mailInfo.style.display = "block";
+            if (!mail.value.match(emailValidation)){
+                mailInfo.textContent = 'Wrong Email!'
+                mailInfo.style.color = 'tomato'
+            }else {
+                mailInfo.style.display = "none";
+            }
+        }
     }
 
     const passwordValidationMsg = () => {
@@ -38,6 +47,9 @@ export default function RegistrationForm() {
                 passInfo.style.color = 'gold'
             } else if (pass.value.length === 0){
                 passInfo.style.display = "none"
+            } else if (pass.value.length >= minValue) {
+                passInfo.textContent = 'Weak Password!'
+                passInfo.style.color = 'tomato'
             } else {
                 passInfo.textContent = 'Your password is too short'
                 passInfo.style.color = 'tomato'
@@ -55,6 +67,7 @@ export default function RegistrationForm() {
             setAge(value);
         }
         if (id === "email") {
+            emailValidationMsg()
             setEmail(value);
         }
         if (id === "password-signup") {
@@ -104,6 +117,7 @@ export default function RegistrationForm() {
                                id="age" placeholder="Age"/>
                     </div>
                     <div className="email">
+                        <p id="email-info">Wrong Email</p>
                         <label className="form__label" htmlFor="email"></label>
                         <input className="form__input email-input" type="email" value={email}
                                onChange={(e) => handleInputChange(e)}

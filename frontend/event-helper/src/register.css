@@ -163,6 +163,13 @@
     left: 40%;
 }
 
+#email-info {
+    position: absolute;
+    display: none;
+    top: 43%;
+    left: 45%;
+}
+
 
 
 .email-input {

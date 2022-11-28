@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.user;
+package com.codecool.CodeCoolProjectGrande.user.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
