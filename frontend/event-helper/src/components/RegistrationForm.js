@@ -2,6 +2,7 @@ import {useState} from "react";
 import "../register.css"
 import img from "../assets/login-img.png";
 import logo from "../assets/logociemne.png";
+import { useNavigate } from 'react-router-dom' ;
 
 
 export default function RegistrationForm() {
@@ -17,6 +18,9 @@ export default function RegistrationForm() {
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [valid, setValid] = useState(true);
+    let navigate = useNavigate();
+
 
 
     const letters = /[a-z]/i;
@@ -31,8 +35,10 @@ export default function RegistrationForm() {
             if (!mail.value.match(emailValidation)){
                 mailInfo.textContent = 'Wrong Email!'
                 mailInfo.style.color = 'tomato'
+                return false
             }else {
                 mailInfo.style.display = "none";
+                return true
             }
         }
     }
@@ -41,10 +47,12 @@ export default function RegistrationForm() {
         if (confirmPass !=  null){
             confirmPassInfo.style.display = "block";
             confirmPassInfo.style.color = 'tomato'
-            if (pass.value === confirmPass.value){
+            if (pass.value === confirmPass.value && confirmPass.value.length > 7){
                 confirmPassInfo.style.display = "none";
-            } else if (confirmPassInfo.value.length === 0 || pass.value.length === 0){
+                return true
+            } else if (confirmPass.value.length === 0 || pass.value.length === 0){
                 confirmPassInfo.style.display = "none";
+                return false
             }
         }
     }
@@ -56,19 +64,36 @@ export default function RegistrationForm() {
                 && pass.value.match(special)){
                 passInfo.textContent = 'Perfect Password!'
                 passInfo.style.color = 'lime'
+                return true
             } else if (pass.value.length >= minValue && pass.value.match(letters) && pass.value.match(numbers)){
                 passInfo.textContent = 'Good Password'
                 passInfo.style.color = 'gold'
+                return true
             } else if (pass.value.length === 0){
                 passInfo.style.display = "none"
+                return false
             } else if (pass.value.length >= minValue) {
                 passInfo.textContent = 'Weak Password!'
                 passInfo.style.color = 'tomato'
+                return true
             } else {
                 passInfo.textContent = 'Your password is too short'
                 passInfo.style.color = 'tomato'
+                return false
             }
         }
+    }
+
+    const formValidator = () => {
+        if (emailValidationMsg() && confirmPasswordMsg()
+            && passwordValidationMsg()){
+            setValid(false)
+        }else{
+            setValid(true)
+        }
+        console.log('wynik email validator: ' + emailValidationMsg())
+        console.log('wynik confirm pass validator: ' + confirmPasswordMsg())
+        console.log('wynik pass validator: ' + passwordValidationMsg())
     }
 
 
@@ -91,6 +116,9 @@ export default function RegistrationForm() {
         if (id === "confirm-password-input") {
             confirmPasswordMsg()
         }
+        if (email != null && password != null){
+            formValidator()
+        }
     }
 
 
@@ -111,6 +139,8 @@ export default function RegistrationForm() {
         };
         fetch('http://localhost:8080/registration', requestOptions)
             .then(response => response.json())
+
+        navigate("/home")
 
     }
     return (<div className="form">
@@ -157,7 +187,7 @@ export default function RegistrationForm() {
             </div>
 
             <div className="register-button">
-                <a href="/home"><button onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn">Register</button></a>
+                <button disabled={valid} onClick={() => handleSubmit()} type="submit" id="signup-btn" className="btn">Register</button>
             </div>
             <p id="have-acc-text">Already have an account?</p>
             <div className="login-button">
