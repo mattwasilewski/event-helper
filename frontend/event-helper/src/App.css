@@ -736,3 +736,8 @@ ul li:focus {
 .social-logo:focus {
   transform: translateY(-0.25em);
 }
+.calendar-container{
+  margin-left: 25%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
