@@ -45,7 +45,7 @@ export default function CalendarTile() {
                             localizer={localizer}
                           events={events.map((event) => ({title: event.name, start: event.date, end: event.date, eventId: event.eventId}))}
                           startAccessor="start" endAccessor="end"
-                          style={{height: 500, width: "800px"}}></Calendar>
+                          style={{height: 700, width: "1000px"}}></Calendar>
             </div>
         </div>
     );
