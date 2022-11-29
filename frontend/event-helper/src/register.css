@@ -133,8 +133,50 @@
     background: #E9E9E9;
     border: 1px solid #000000;
     border-radius: 5px;
-
 }
+
+#confirm-password-input {
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 28px;
+    gap: 10px;
+
+    position: absolute;
+    width: 350px;
+    height: 44px;
+    left: 25%;
+    top: 68%;
+
+    background: #E9E9E9;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+#pass-info {
+    position: absolute;
+    display: none;
+    top: 53%;
+    left: 40%;
+}
+
+#email-info {
+    position: absolute;
+    display: none;
+    top: 43%;
+    left: 45%;
+}
+
+#confirm-pass-info {
+    position: absolute;
+    display: none;
+    top: 63%;
+    left: 40%;
+}
+
 
 
 .email-input {
@@ -200,7 +242,7 @@
     width: 120px;
     height: 44px;
     left: 14%;
-    top:70%;
+    top:80%;
 
     background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
     border: 1px solid #000000;
@@ -224,7 +266,7 @@
     width: 120px;
     height: 44px;
     left: 30%;
-    top: 70%;
+    top: 80%;
 
     background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
     border: 1px solid #000000;
@@ -238,7 +280,7 @@
     width: 202px;
     height: 52px;
     left: 27%;
-    top: 63%;
+    top: 73%;
 
     font-family: 'Poppins';
     font-style: normal;

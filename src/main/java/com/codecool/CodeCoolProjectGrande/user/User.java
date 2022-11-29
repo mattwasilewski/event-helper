@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -21,9 +22,12 @@ public class User {
     @Id
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID userId = UUID.randomUUID();
+    @NotNull
     private String name;
     private int age;
+    @NotNull
     private String password;
+    @NotNull
     private String email;
     private UserType userType;
     private String imgUrl;
