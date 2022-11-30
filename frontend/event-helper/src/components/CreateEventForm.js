@@ -2,9 +2,10 @@ import React, {useState} from "react";
 import img from "../assets/login-img.png";
 import switchMode from "../assets/dark-switch.png"
 import "../App.css"
+import {useNavigate} from "react-router-dom";
 
 function CreateEventForm() {
-
+    let navigate = useNavigate();
     const [name, setName] = useState("");
     const [eventType, setEventType] = useState("FESTIVAL");
     const [startDate, setStartDate] = useState("");
@@ -70,6 +71,7 @@ function CreateEventForm() {
         };
         fetch('http://localhost:8080/api/events/create-event', requestOptions)
             .then(response => console.log(response.status))
+        navigate('/home');
     }
 
     return (
