@@ -47,12 +47,19 @@ public class EventController {
     public List<Event> getEventsByEventType(@PathVariable String eventType){
         return eventRepository.findEventsByEventType(eventType);
     }
-    @GetMapping("/sort/{sortBy}&{ascending}")
-    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending) {
+
+    @GetMapping("/sort/{sortBy}&{ascending}&{phrase}")
+    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase) {
         if (ascending) {
-            return eventRepository.findAll(Sort.by(sortBy).ascending());
+            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).ascending());
         }
-        return eventRepository.findAll(Sort.by(sortBy).descending());
+        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).descending());
+    }
+
+    @PutMapping("/assign-user-to-event")
+    public ResponseEntity<?> assignUserToEvent(@RequestBody UUID id) {    // TODO dokończyć
+        System.out.println("User uuid: " + id);
+        return null;
     }
 
 

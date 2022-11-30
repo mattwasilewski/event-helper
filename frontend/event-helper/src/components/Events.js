@@ -8,12 +8,12 @@ export const Events = (props) => {
     useEffect(() => {
         getEvents().then(r => console.log(r))
 
-    }, [props.sortBy, props.asc]);
+    }, [props.sortBy, props.asc, props.phrase]);
 
     const getEvents = async () =>{
         let ascending = true;
         if (props.asc === "descending")  ascending = false;
-        const response = await fetch(`http://localhost:8080/api/events/sort/${props.sortBy}&${ascending}`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/sort/${props.sortBy}&${ascending}&${props.phrase}`); //sort?sortBy=name&ascending=true
         const data = await response.json();
         setEvents(data);
     }
