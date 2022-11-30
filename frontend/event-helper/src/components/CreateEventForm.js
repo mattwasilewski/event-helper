@@ -7,7 +7,8 @@ function CreateEventForm() {
 
     const [name, setName] = useState("");
     const [eventType, setEventType] = useState("FESTIVAL");
-    const [date, setDate] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [location, setLocation] = useState("");
     const [link, setLink] = useState("");
     const [description, setDescription] = useState("");
@@ -24,8 +25,11 @@ function CreateEventForm() {
             case "eventType":
                 setEventType(value)
                 break;
-            case "date":
-                setDate(value)
+            case "startDate":
+                setStartDate(value)
+                break;
+            case "endDate":
+                setEndDate(value)
                 break;
             case "location":
                 setLocation(value)
@@ -54,7 +58,8 @@ function CreateEventForm() {
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 name: name,
-                date: date,
+                startDate: startDate,
+                endDate: endDate,
                 eventType: eventType,
                 location: location,
                 linkToEventPage: link,
@@ -85,8 +90,12 @@ function CreateEventForm() {
                     </select>
                 </div>
                 <div>
-                    <input type="datetime-local" value={date} onChange={(e) => handleInputChange(e)}
-                        id="date" className="input"/>
+                    <input type="datetime-local" value={startDate} onChange={(e) => handleInputChange(e)}
+                        id="startDate" className="input"/>
+                </div>
+                <div>
+                    <input type="datetime-local" value={endDate} onChange={(e) => handleInputChange(e)}
+                           id="endDate" className="input"/>
                 </div>
                 <div>
                     <input type="text" value={location} onChange={(e) => handleInputChange(e)}
