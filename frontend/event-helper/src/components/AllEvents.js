@@ -34,7 +34,7 @@ export default function AllEvents() {
             <div>
                 <div className="search-bar">
                     <input type="text" id="search" placeholder="🔎︎  Search" name="search" multiple
-                        onChange={(e) => setPhrase(e.currentTarget.value)}></input>
+                           onChange={(e) => setPhrase(e.currentTarget.value)}></input>
 
                     <select name="sort-by" id="sort-by" onChange={(event) => setSortBy(event.currentTarget.value)}>
                         <option value="name">name</option>
@@ -49,6 +49,31 @@ export default function AllEvents() {
                 </div>
             </div>
         </div>
-    <Events sortBy={sortBy} asc={asc} phrase={phrase}/>
-    </>)
+        <div className="all-events">
+            <Swiper
+                slidesPerView={5}
+                spaceBetween={-40}
+                slidesPerGroup={5}
+                loop={true}
+                loopFillGroupWithBlank={true}
+                autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                }}
+                pagination={{
+                    clickable: true,
+                }}
+                navigation={true}
+                modules={[Autoplay,Pagination, Navigation]}
+                className="mySwiper"
+            >
+                <>  {events.map((event) => (
+                    <SwiperSlide><EventTile name={event.name}
+                                            location={event.location}
+                                            eventId={event.eventId}
+                                            logo={event.logo}
+                    /></SwiperSlide>
+                ))}</>
+            </Swiper>
+        </div></>)
 }
