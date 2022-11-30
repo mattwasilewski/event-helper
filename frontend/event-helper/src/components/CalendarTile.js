@@ -18,7 +18,7 @@ export default function CalendarTile() {
     const [events, setEvents] = useState([]);
     let navigate = useNavigate();
     const getEvents = async () => {
-        const response = await fetch(`http://localhost:8080/api/events/sort/date&false&`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/`); //sort?sortBy=name&ascending=true
         const data = await response.json();
         setEvents(data)
     }
@@ -40,12 +40,12 @@ export default function CalendarTile() {
             <h1 className="header">Events Calendar</h1>
             <div className="calendar-container">
                 <Calendar
-                    selected={selected}
-                    onSelectEvent={handleSelected}
+                            selected={selected}
+                            onSelectEvent={handleSelected}
                             localizer={localizer}
-                          events={events.map((event) => ({title: event.name, start: event.date, end: event.date, eventId: event.eventId}))}
-                          startAccessor="start" endAccessor="end"
-                          style={{height: 700, width: "1000px"}}></Calendar>
+                            events={events.map((event) => ({title: event.name, start: event.startDate, end: event.endDate, eventId: event.eventId}))}
+                            startAccessor="start" endAccessor="end"
+                            style={{height: 700, width: "1000px"}}></Calendar>
             </div>
         </div>
     );
