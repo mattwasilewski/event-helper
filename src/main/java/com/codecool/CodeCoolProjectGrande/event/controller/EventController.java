@@ -66,6 +66,7 @@ public class EventController {
         Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
+            eventRepository.save(event.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
