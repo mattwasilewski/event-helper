@@ -1,5 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
+import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +10,11 @@ import org.hibernate.annotations.Type;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,4 +43,14 @@ public class User {
     @JoinColumn(name = "banId")
     @OneToOne(cascade=CascadeType.ALL)
     private BanToken banToken;
+
+    @ManyToMany(mappedBy = "assignedUsers")
+    private List<Event> events = new ArrayList<>();
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+
+
 }

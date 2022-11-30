@@ -26,14 +26,14 @@ export default function EventPage() {
 
     const assignToEvent = async (e) => {
         e.preventDefault()
-        console.log("Button działa")
+        console.log("Button działa, uuid: " + id)
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000',
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
-                userId: id})
+                event})
         }
         fetch('http://localhost:8080/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))

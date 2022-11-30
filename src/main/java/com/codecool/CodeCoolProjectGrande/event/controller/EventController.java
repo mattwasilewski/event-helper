@@ -57,8 +57,8 @@ public class EventController {
     }
 
     @PutMapping("/assign-user-to-event")
-    public ResponseEntity<?> assignUserToEvent(@RequestBody UUID id) {    // TODO dokończyć
-        System.out.println("User uuid: " + id);
+    public ResponseEntity<?> assignUserToEvent(@RequestBody Event event) {    // TODO dokończyć
+        System.out.println("User uuid: " + event);
         return null;
     }
 
