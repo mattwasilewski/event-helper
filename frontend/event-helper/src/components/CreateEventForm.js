@@ -90,11 +90,11 @@ function CreateEventForm() {
                     </select>
                 </div>
                 <div>
-                    <input type="datetime-local" value={startDate} onChange={(e) => handleInputChange(e)}
+                    <input type="date" value={startDate} onChange={(e) => handleInputChange(e)}
                         id="startDate" className="input"/>
                 </div>
                 <div>
-                    <input type="datetime-local" value={endDate} onChange={(e) => handleInputChange(e)}
+                    <input type="date" value={endDate} onChange={(e) => handleInputChange(e)}
                            id="endDate" className="input"/>
                 </div>
                 <div>
