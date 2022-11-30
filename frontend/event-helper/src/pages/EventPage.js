@@ -12,7 +12,7 @@ export default function EventPage() {
     const [event, setEvent] = useState([]);
 
     useEffect(() => {
-        getEvents().then(r => console.log(r))
+        getEvents().then(r => console.log("r: " + r))
 
     }, []);
 
@@ -22,18 +22,20 @@ export default function EventPage() {
         });
         const data = await response.json();
         setEvent(data);
+
     }
 
     const assignToEvent = async (e) => {
         e.preventDefault()
-        console.log("Button działa, uuid: " + id)
+        console.log("Button działa, event uuid: " + id)
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000',
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
-                event})
+                eventId: id,
+                userId: "0ec0ef44-dbbd-4dac-97e7-377a58ae5369" })
         }
         fetch('http://localhost:8080/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
