@@ -29,7 +29,8 @@ public class Event {
     private String location;
     @Enumerated
     private EventStatus eventStatus;
-    private LocalDate date;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private boolean publicEvent;
     @Enumerated
     private EventType eventType;
