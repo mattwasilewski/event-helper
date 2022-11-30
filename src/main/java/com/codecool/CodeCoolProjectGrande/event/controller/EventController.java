@@ -1,8 +1,9 @@
 package com.codecool.CodeCoolProjectGrande.event.controller;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
-import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
+import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,13 @@ import java.util.*;
 public class EventController {
 
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
 
     @Autowired
-    public EventController(EventRepository eventRepository) {
+    public EventController(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping()
@@ -57,9 +60,16 @@ public class EventController {
     }
 
     @PutMapping("/assign-user-to-event")
-    public ResponseEntity<?> assignUserToEvent(@RequestBody UUID id) {    // TODO dokończyć
-        System.out.println("User uuid: " + id);
-        return null;
+    public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
+        System.out.println("User id: " + data.get("userId") + " event id: " + data.get("eventId"));
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
+        if (event.isPresent() && user.isPresent()) {
+            event.get().assignUser(user.get());
+            eventRepository.save(event.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
