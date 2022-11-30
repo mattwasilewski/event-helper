@@ -2,6 +2,7 @@ package com.codecool.CodeCoolProjectGrande.event.repository;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findEventsByEventType(String eventType);
 
-    List<Event> findAllByNameContainingOrDescriptionContaining(String phrase, String phrase2, Sort sort);
+    List<Event> findAllByNameContainingOrDescriptionContaining(String phrase, String phrase2,
+                                                               PageRequest pageRequest, Sort sort);
 
 }

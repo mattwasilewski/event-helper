@@ -10,10 +10,7 @@ import org.hibernate.annotations.Type;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.Set;
+import java.util.*;
 
 
 @AllArgsConstructor
@@ -45,7 +42,7 @@ public class User {
     private BanToken banToken;
 
     @ManyToMany(mappedBy = "assignedUsers")
-    private List<Event> events = new ArrayList<>();
+    private Set<Event> events = new HashSet<>();
 
     public void addEvent(Event event) {
         events.add(event);

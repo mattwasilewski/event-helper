@@ -40,7 +40,7 @@ public class Event {
             name = "assigned_users",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> assignedUsers = new ArrayList<>();
+    private Set<User> assignedUsers = new HashSet<>();
 
     public Event(String name, String description, String logo, EventType eventType) {
         this.name = name;
