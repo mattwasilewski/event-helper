@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.data.model;
+package com.codecool.CodeCoolProjectGrande.event_provider.model;
 
 import java.io.Serializable;
 import java.util.List;

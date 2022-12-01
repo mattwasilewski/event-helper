@@ -1,11 +1,15 @@
-package com.codecool.CodeCoolProjectGrande.data.model;
+package com.codecool.CodeCoolProjectGrande.event_provider.model;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Generated;
+import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -27,11 +31,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "address",
         "lastPublished"
 })
+@Data
+@NoArgsConstructor
+@Entity
 @Generated("jsonschema2pojo")
 public class Place implements Serializable {
-
+    @Id
     @JsonProperty("id")
-    public Integer id;
+    public Integer placeId;
     @JsonProperty("modified")
     public String modified;
     @JsonProperty("url")
@@ -44,13 +51,15 @@ public class Place implements Serializable {
     public String longDescription;
     @JsonProperty("pageLink")
     public String pageLink;
-    @JsonProperty("type")
-    public Type__1 type;
-    @JsonProperty("categories")
-    public List<Object> categories = null;
-    @JsonProperty("images")
-    public List<Object> images = null;
+//    @JsonProperty("type")
+//    public Type__1 type;
+//    @JsonProperty("categories")
+//    public List<Object> categories = null;
+//    @JsonProperty("images")
+//    public List<Object> images = null;
     @JsonProperty("venue")
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "venueId")
     public Venue venue;
     @JsonProperty("priority")
     public Integer priority;
@@ -58,10 +67,10 @@ public class Place implements Serializable {
     public String source;
     @JsonProperty("language")
     public String language;
-    @JsonProperty("location")
-    public Location__1 location;
-    @JsonProperty("address")
-    public Address__1 address;
+//    @JsonProperty("location")
+//    public Location__1 location;
+//    @JsonProperty("address")
+//    public Address__1 address;
     @JsonProperty("lastPublished")
     public String lastPublished;
     private final static long serialVersionUID = 4255659379628115253L;

@@ -1,17 +1,12 @@
-package com.codecool.CodeCoolProjectGrande.data.model;
+package com.codecool.CodeCoolProjectGrande.event_provider.model;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonPropertyOrder({
@@ -49,14 +44,20 @@ import org.springframework.beans.factory.annotation.Autowired;
         @JsonProperty("endDate")
         public String endDate;
         @JsonProperty("location")
+        @OneToOne(cascade= CascadeType.ALL)
+        @JoinColumn(name = "locationId")
         public Location location;
         @JsonProperty("address")
+        @OneToOne(cascade= CascadeType.ALL)
+        @JoinColumn(name = "addressId")
         public Address address;
         @JsonProperty("offer")
         public Offer offer;
         @JsonProperty("placeName")
         public String placeName;
         @JsonProperty("place")
+        @OneToOne(cascade= CascadeType.ALL)
+        @JoinColumn(name = "placeId")
         public Place place;
         @JsonProperty("premiere")
         public Boolean premiere;
