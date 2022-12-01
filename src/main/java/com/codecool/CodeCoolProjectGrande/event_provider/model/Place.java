@@ -1,10 +1,12 @@
 package com.codecool.CodeCoolProjectGrande.event_provider.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 import javax.persistence.*;
 
+import com.codecool.CodeCoolProjectGrande.event_provider.model.category.Category;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -53,10 +55,12 @@ public class Place implements Serializable {
     public String pageLink;
 //    @JsonProperty("type")
 //    public Type__1 type;
-//    @JsonProperty("categories")
-//    public List<Object> categories = null;
+    @JsonProperty("categories")
+    @OneToMany(mappedBy = "place", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
+    public List<Category> categories = new ArrayList<>();
 //    @JsonProperty("images")
-//    public List<Object> images = null;
+//    @OneToMany(mappedBy = "place", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
+//    public List<String> images = new ArrayList<>();
     @JsonProperty("venue")
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "venueId")

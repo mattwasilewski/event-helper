@@ -1,6 +1,6 @@
-package com.codecool.CodeCoolProjectGrande.data;
+package com.codecool.CodeCoolProjectGrande.event_provider;
 
-import com.codecool.CodeCoolProjectGrande.data.model.MainData;
+import com.codecool.CodeCoolProjectGrande.event_provider.model.MainData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

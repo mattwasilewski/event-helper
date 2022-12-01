@@ -52,6 +52,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         @JoinColumn(name = "addressId")
         public Address address;
         @JsonProperty("offer")
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "offerId")
         public Offer offer;
         @JsonProperty("placeName")
         public String placeName;

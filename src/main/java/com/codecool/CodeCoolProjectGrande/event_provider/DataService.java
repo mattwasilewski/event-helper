@@ -1,7 +1,6 @@
-package com.codecool.CodeCoolProjectGrande.data;
+package com.codecool.CodeCoolProjectGrande.event_provider;
 
 
-import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
