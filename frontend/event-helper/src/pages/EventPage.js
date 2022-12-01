@@ -5,6 +5,7 @@ import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function EventPage() {
 
@@ -82,7 +83,7 @@ export default function EventPage() {
                     </div>
                 </div>
                 <p id="event-name">{event.name}</p>
-                <p id="event-description">{event.description}</p>
+                {/*<p id="event-description">{event.description}</p>*/}
 
                 <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
 
