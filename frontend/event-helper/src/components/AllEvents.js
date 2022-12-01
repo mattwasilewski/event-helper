@@ -17,7 +17,7 @@ export default function AllEvents() {
     const getEvents = async () =>{
         let ascending = true;
         if (asc === "descending")  ascending = false;
-        const response = await fetch(`http://localhost:8080/api/events/sort/${sortBy}&${ascending}&${phrase}`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/sort/${sortBy}&${ascending}&${phrase}&0&100`); //sort?sortBy=name&ascending=true
         const data = await response.json();
         setEvents(data);
     }
