@@ -1,5 +1,4 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import SearchUserForm from "./SearchUserForm";
 export default function AdminNavbar() {
 
 
