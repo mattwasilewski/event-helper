@@ -1,4 +1,4 @@
-import logo from "../assets/logociemne.png";
+import logo from "../../assets/logociemne.png";
 import DarkMode from "./DarkMode";
 
 export default function Navbar() {

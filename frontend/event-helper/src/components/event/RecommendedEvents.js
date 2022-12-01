@@ -15,7 +15,7 @@ export default function RecommendedEvents() {
     }, []);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:8080/api/events/getEventByType/FESTIVAL`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/getEventByType/FESTIVAL`);
         const data = await response.json();
         setEvents(data);
     }
@@ -29,7 +29,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:8080/api/events/getEventByType/FESTIVAL`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/getEventByType/FESTIVAL`);
         const data = await response.json();
         console.log(data)
         setEvents(data);
@@ -44,7 +44,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:8080/api/events/getEventByType/CONCERT`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/getEventByType/CONCERT`);
         const data = await response.json();
         setEvents(data);
 
@@ -58,7 +58,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:8080/api/events/getEventByType/PARTY`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/getEventByType/PARTY`);
         const data = await response.json();
         setEvents(data);
     }

@@ -33,8 +33,7 @@ export default function RegistrationForm() {
         if (mail != null){
             mailInfo.style.display = "block";
             if (!mail.value.match(emailValidation)){
-                mailInfo.textContent = 'Wrong Email!'
-                mailInfo.style.color = 'tomato'
+                setDisplayInfo('Wrong Email', 'tomato',mailInfo);
                 return false
             }else {
                 mailInfo.style.display = "none";
@@ -57,28 +56,29 @@ export default function RegistrationForm() {
         }
     }
 
+    function setDisplayInfo(textContent,color,variable){
+        variable.textContent = textContent
+        variable.style.color = color
+    }
+
     const passwordValidationMsg = () => {
         if (pass != null){
             passInfo.style.display = "block";
             if (pass.value.length >= minValue && pass.value.match(letters) && pass.value.match(numbers)
                 && pass.value.match(special)){
-                passInfo.textContent = 'Perfect Password!'
-                passInfo.style.color = 'lime'
+                setDisplayInfo('Perfect Password!','lime',passInfo)
                 return true
             } else if (pass.value.length >= minValue && pass.value.match(letters) && pass.value.match(numbers)){
-                passInfo.textContent = 'Good Password'
-                passInfo.style.color = 'gold'
+                setDisplayInfo('Good Password','gold',passInfo)
                 return true
             } else if (pass.value.length === 0){
                 passInfo.style.display = "none"
                 return false
             } else if (pass.value.length >= minValue) {
-                passInfo.textContent = 'Weak Password!'
-                passInfo.style.color = 'tomato'
+                setDisplayInfo('Weak Password!','tomato',passInfo)
                 return true
             } else {
-                passInfo.textContent = 'Your password is too short'
-                passInfo.style.color = 'tomato'
+                setDisplayInfo('Your password is too short','tomato',passInfo)
                 return false
             }
         }
@@ -91,9 +91,6 @@ export default function RegistrationForm() {
         }else{
             setValid(true)
         }
-        console.log('wynik email validator: ' + emailValidationMsg())
-        console.log('wynik confirm pass validator: ' + confirmPasswordMsg())
-        console.log('wynik pass validator: ' + passwordValidationMsg())
     }
 
 
