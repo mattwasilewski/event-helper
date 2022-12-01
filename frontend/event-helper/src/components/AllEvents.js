@@ -1,4 +1,3 @@
-import {Events} from "./Events";
 import React, {useState,useEffect} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";

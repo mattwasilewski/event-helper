@@ -1,7 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.user.controller;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,26 +13,26 @@ import java.util.UUID;
 
 @RestController
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @CrossOrigin
     @GetMapping("/users")
     public List<User> getUsers(){
-        return userRepository.findAll();
+        return userService.getUsers();
     }
 
     @GetMapping("/user/{userId}")
     public Optional<User> getUserByID(@PathVariable UUID userId) {
-        return userRepository.findById(userId);
+        return userService.getUserById(userId);
     }
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userRepository.save(user);
+        userService.saveUser(user);
         return new ResponseEntity<>("User added", HttpStatus.OK);
     }
 
