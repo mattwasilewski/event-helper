@@ -1,10 +1,12 @@
 package com.codecool.CodeCoolProjectGrande.event.controller;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,12 +53,15 @@ public class EventController {
         return eventRepository.findEventsByEventType(eventType);
     }
 
-    @GetMapping("/sort/{sortBy}&{ascending}&{phrase}")
-    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase) {
+    @GetMapping("/sort/{sortBy}&{ascending}&{phrase}&{page}&{size}")
+    public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase,
+                                  @PathVariable int page, @PathVariable int size) {
         if (ascending) {
-            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).ascending());
+            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
+                    PageRequest.of(page, size), Sort.by(sortBy).ascending());
         }
-        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase, Sort.by(sortBy).descending());
+        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
+                PageRequest.of(page, size), Sort.by(sortBy).descending());
     }
 
     @PutMapping("/assign-user-to-event")
