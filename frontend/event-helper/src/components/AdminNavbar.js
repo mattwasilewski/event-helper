@@ -1,11 +1,14 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-export default function Admin() {
+import SearchUserForm from "./SearchUserForm";
+export default function AdminNavbar() {
+
+
+
     return (
     <Sidebar>
-        <Menu pageWrapId={"menuId"}>
+        <Menu pagewrapid={"menuId"}>
             <main id="menuId">
             <SubMenu label="User">
-                <MenuItem> <a href="/home">User manager</a> </MenuItem>
                 <MenuItem> User stats </MenuItem>
             </SubMenu>
             <MenuItem> <a href="http://localhost:8080/">Spring boot logs</a> </MenuItem>
@@ -14,5 +17,9 @@ export default function Admin() {
             </main>
         </Menu>
     </Sidebar>
+
+
+
+
     )
 }

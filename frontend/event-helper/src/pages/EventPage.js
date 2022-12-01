@@ -5,6 +5,10 @@ import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
+import Navbar from "../components/Navbar";
+import {Col, Container, Row, Card} from "react-bootstrap";
+import RecommendedEvents from "../components/RecommendedEvents";
+import Footer from "../components/Footer";
 
 export default function EventPage() {
 
@@ -40,38 +44,31 @@ export default function EventPage() {
     }
 
     return (
-        <div id="event-page">
-            <div id="logo">
-                <img src={logo} alt="logo"/>
-            </div>
-            <div id="frame19">
-                <div id="top-nav">
-                    <p id="nav-home"><a href="/home">Home</a></p>
-                    <p id="nav-events"><a href="/events">Events</a></p>
-                    <p id="nav-community"><a href="/community">Community</a></p>
-                    <p id="nav-about-us">About us</p>
-                    <p id="nav-login">Login</p>
-                    <p id="nav-sign-up"><a href="/register">Sign up</a></p>
-                    <div id="switch-mode">
-                        <img src={switchMode} alt=""/>
-                    </div>
-                </div>
-                <p id="event-name">{event.name}</p>
-                <p id="event-description">{event.description}</p>
-
-                <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
-
-            </div>
-            <div id="destination">
-                <img id="rectangle-14" src={eventDj} alt=""/>
-                <div id="card-2">
-                    <div id="rectangle-15">
-                        <p>{event.location}</p>
-                    </div>
-                </div>
-            </div>
+            <div>
+                <Navbar/>
+                <Card  id="eventData">
+                    <Card.Body>
+                <Container>
+                    <Row>
+                        <Col><p id="eventHeader">{event.name}</p></Col>
+                    </Row>
+                    <Row>
+                        <Col><img id="eventImg" src={eventDj} alt=""/></Col>
+                        <Col>
+                            <p id="eventText">{event.description}</p>
+                        </Col>
+                        <Col>
+                            <p id="eventText">KOLEJNE DANE TYPU CZAS CENA ITP</p>
+                        </Col>
+                    </Row>
+                </Container>
+                    </Card.Body>
+                </Card>
+                <RecommendedEvents/>
+                <Footer/>
         </div>
     );
+
 
 
 }
