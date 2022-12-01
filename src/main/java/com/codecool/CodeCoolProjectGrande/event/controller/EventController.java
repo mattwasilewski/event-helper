@@ -23,15 +23,11 @@ import java.util.*;
 @RequestMapping("/api/events/")
 public class EventController {
 
-    private final EventRepository eventRepository;
-    private final UserRepository userRepository;
     private final EventServiceImpl eventService;
 
 
     @Autowired
-    public EventController(EventRepository eventRepository, UserRepository userRepository, EventServiceImpl eventService) {
-        this.eventRepository = eventRepository;
-        this.userRepository = userRepository;
+    public EventController(EventServiceImpl eventService) {
         this.eventService = eventService;
     }
 
