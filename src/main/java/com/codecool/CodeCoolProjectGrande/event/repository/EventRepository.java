@@ -11,7 +11,7 @@ import java.util.*;
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findEventByEventId(UUID uuid);
 
-    List<Event> findEventsByEventType(String eventType);
+    List<Event> findEventsByEventType(EventType eventType);
 
     List<Event> findAllByNameContainingOrDescriptionContaining(String phrase, String phrase2,
                                                                PageRequest pageRequest, Sort sort);

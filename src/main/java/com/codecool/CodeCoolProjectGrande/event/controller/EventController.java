@@ -48,7 +48,7 @@ public class EventController {
     }
 
     @GetMapping("/getEventByType/{eventType}")
-    public List<Event> getEventsByEventType(@PathVariable String eventType){
+    public List<Event> getEventsByEventType(@PathVariable EventType eventType){
         return eventRepository.findEventsByEventType(eventType);
     }
 
