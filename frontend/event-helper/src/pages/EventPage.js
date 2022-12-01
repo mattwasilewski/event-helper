@@ -5,7 +5,6 @@ import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 export default function EventPage() {
 
