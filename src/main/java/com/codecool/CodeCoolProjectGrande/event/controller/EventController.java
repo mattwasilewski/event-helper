@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
+import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,69 +25,51 @@ public class EventController {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final EventServiceImpl eventService;
 
 
     @Autowired
-    public EventController(EventRepository eventRepository, UserRepository userRepository) {
+    public EventController(EventRepository eventRepository, UserRepository userRepository, EventServiceImpl eventService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.eventService = eventService;
     }
 
     @GetMapping()
     public List<Event> getEvents(){
-        return eventRepository.findAll();
+        return eventService.getEvents();
     }
 
     @GetMapping("{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
-        return eventRepository.findEventByEventId(eventID);
+        return eventService.getEventByID(eventID);
     }
 
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventRepository.save(event);
+        eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/getEventByType/{eventType}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType){
-        return eventRepository.findEventsByEventType(eventType);
+        return eventService.findEventsByEventType(eventType);
     }
 
     @GetMapping("/sort/{sortBy}&{ascending}&{phrase}&{page}&{size}")
     public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase,
                                   @PathVariable int page, @PathVariable int size) {
-        if (ascending) {
-            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
-                    PageRequest.of(page, size), Sort.by(sortBy).ascending());
-        }
-        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
-                PageRequest.of(page, size), Sort.by(sortBy).descending());
+        return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
     @PutMapping("/assign-user-to-event")
     public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
-        System.out.println("User id: " + data.get("userId") + " event id: " + data.get("eventId"));
-        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
-        Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
-        if (event.isPresent() && user.isPresent()) {
-            event.get().assignUser(user.get());
-            eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return eventService.assignUserToEvent(data);
     }
 
     @PutMapping("/edit-event-description")
     public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
-        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
-        System.out.println(data.get("description"));
-        if(event.isPresent()){
-            event.get().setDescription(String.valueOf(data.get("description")));
-            eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return eventService.editEventDescriptionByEventId(data);
     }
 
 
