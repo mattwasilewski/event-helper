@@ -1,4 +1,4 @@
-import logo from "../assets/logociemne.png"
+import logo from "../../assets/logociemne.png"
 
 export default function Footer() {
     return (

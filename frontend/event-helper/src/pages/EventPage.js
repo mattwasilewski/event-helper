@@ -12,7 +12,7 @@ export default function EventPage() {
     const [event, setEvent] = useState([]);
 
     useEffect(() => {
-        getEvents().then(r => console.log("r: " + r))
+        getEvents().then(r => console.log(r))
 
     }, []);
 
@@ -27,7 +27,6 @@ export default function EventPage() {
 
     const assignToEvent = async (e) => {
         e.preventDefault()
-        console.log("Button działa, event uuid: " + id)
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
@@ -43,7 +42,6 @@ export default function EventPage() {
 
     const [editable, setEditable] = useState(["false"]);
     const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
-    const [description, setDescription] = useState("");
     const enableEditing = () =>{
         setEditable("true");
         setButton(saveButton)

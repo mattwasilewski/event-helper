@@ -24,7 +24,6 @@ body.dark{
   align-items: stretch;
   gap: 2rem;
   padding: 0 1rem;
-  /*margin-top: 10px;*/
   font-weight: bold;
   font-size: 100%;
 }
@@ -125,7 +124,6 @@ img {
   height: 400px;
   background-color: white;
   display: inline-block;
-  /*padding: 5px;*/
   margin: 20px;
   border-radius: 25px;
   box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.1);
@@ -236,8 +234,6 @@ h3{
   font-size: 12px;
 }
 .event-name-tile{
-  /*float: left;*/
-  /*padding: 5px;*/
   font-weight: bold;
   font-size: 20px;
   text-align: center;
@@ -304,8 +300,6 @@ h4{
   box-sizing: border-box;
 
   position: relative;
-  /*width: 1920px;*/
-  /*height: 1080px;*/
   height: 100%;
   width: 100%;
 
@@ -548,12 +542,8 @@ h4{
   font-weight: 600;
   font-size: 26px;
   line-height: 54px;
-  /* identical to box height, or 164% */
   padding-top: 9%;
   text-align: center;
-
-  /* TEXT CLR */
-
   color: #5E6282;
 
 }
@@ -750,7 +740,6 @@ a{
   left: 25%;
   top: 28%;
   padding: 5px;
-
   background: #E9E9E9;
   border: 1px solid #000000;
   border-radius: 5px;
@@ -764,7 +753,6 @@ a{
   width: 120px;
   height: 44px;
   left: 29%;
-
   background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
   border: 1px solid #000000;
   border-radius: 5px;

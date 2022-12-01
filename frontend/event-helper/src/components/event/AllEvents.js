@@ -1,4 +1,3 @@
-import {Events} from "./Events";
 import React, {useState,useEffect} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -17,7 +16,7 @@ export default function AllEvents() {
     const getEvents = async () =>{
         let ascending = true;
         if (asc === "descending")  ascending = false;
-        const response = await fetch(`http://localhost:8080/api/events/sort/${sortBy}&${ascending}&${phrase}&0&100`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:8080/api/events/sort/${sortBy}&${ascending}&${phrase}&0&100`);
         const data = await response.json();
         setEvents(data);
     }

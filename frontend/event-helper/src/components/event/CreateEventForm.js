@@ -1,7 +1,5 @@
 import React, {useState} from "react";
-import img from "../assets/login-img.png";
-import switchMode from "../assets/dark-switch.png"
-import "../App.css"
+import "../../App.css"
 import {useNavigate} from "react-router-dom";
 
 function CreateEventForm() {

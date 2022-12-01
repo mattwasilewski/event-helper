@@ -1,11 +1,11 @@
-import Navbar from "../components/Navbar";
-import {Events} from "../components/Events";
+import Navbar from "../components/utils/Navbar";
+import {Events} from "../components/event/Events";
 import React from "react";
-import CalendarTile from "../components/CalendarTile";
-import SubscribePanel from "../components/SubscribePanel";
-import Footer from "../components/Footer";
-import AllEvents from "../components/AllEvents";
-import RecommendedEvents from "../components/RecommendedEvents";
+import CalendarTile from "../components/utils/CalendarTile";
+import SubscribePanel from "../components/utils/SubscribePanel";
+import Footer from "../components/utils/Footer";
+import AllEvents from "../components/event/AllEvents";
+import RecommendedEvents from "../components/event/RecommendedEvents";
 
 export default function MainPage() {
 
