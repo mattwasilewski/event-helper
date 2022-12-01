@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,18 @@ public class EventController {
         Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
+            eventRepository.save(event.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/edit-event-description")
+    public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        System.out.println(data.get("description"));
+        if(event.isPresent()){
+            event.get().setDescription(String.valueOf(data.get("description")));
             eventRepository.save(event.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }

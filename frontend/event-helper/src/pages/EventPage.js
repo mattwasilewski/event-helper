@@ -41,6 +41,31 @@ export default function EventPage() {
             .then(response => console.log(response.status))
     }
 
+    const [editable, setEditable] = useState(["false"]);
+    const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
+    const [description, setDescription] = useState("");
+    const enableEditing = () =>{
+        setEditable("true");
+        setButton(saveButton)
+    }
+    const editButton = <button onClick={enableEditing}>Edit</button>;
+    const [button, setButton] = useState([editButton]);
+    const editEventDescription = async () => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'},
+            body: JSON.stringify({
+                eventId: id,
+                description: document.getElementById("hah").innerText })
+        }
+        fetch('http://localhost:8080/api/events/edit-event-description', requestOptions)
+            .then(response => console.log(response.status))
+        setEditable("false");
+        setButton(editButton);
+    }
+
     return (
         <div id="event-page">
             <div id="logo">
@@ -69,6 +94,8 @@ export default function EventPage() {
                 <div id="card-2">
                     <div id="rectangle-15">
                         <p>{event.location}</p>
+                        <label id="hah" contentEditable={editable}>{event.description}</label>
+                        {button}
                     </div>
                 </div>
             </div>
