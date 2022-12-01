@@ -121,14 +121,59 @@ img {
   }
 }
 .event-tile{
-  width: 200px;
-  height: 230px;
+  width: 250px;
+  height: 400px;
   background-color: white;
   display: inline-block;
-  padding: 5px;
-  margin: 10px;
+  /*padding: 5px;*/
+  margin: 20px;
   border-radius: 25px;
   box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.1);
+}
+.information-bar{
+  background-color: cornflowerblue;
+  width: 250px;
+  height: 65px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+h6{
+  margin: 0;
+  color: white;
+}
+h3{
+  margin-top: 10px;
+  color: white;
+}
+
+
+.location-info{
+  border-right: solid rgba(255, 255, 255, 0.95) 1px;
+  width: 80px;
+  height: 65px;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
+}
+.price-info{
+  display: flex;
+  width: 80px;
+  height: 65px;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
+}
+.rating-info{
+  display: flex;
+  border-left: solid rgb(255, 255, 255) 1px;
+  width: 80px;
+  height: 65px;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
 }
 
 .event-tile:hover,
@@ -137,10 +182,11 @@ img {
   transform: translateY(-0.25em);
 }
 .event-photo-tile{
-  width: 189px;
-  height: 140px;
+  width: 250px;
+  height: 170px;
   background: url("assets/event.png") ;
-  border-radius: 25px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
 }
 .event-rating-tile{
   width: 40px;
@@ -181,7 +227,8 @@ img {
   float: left;
   text-align: center;
   font-size: 15px;
-  margin: 10px;
+  /*margin: 10px;*/
+  margin: auto;
 }
 .rating{
   display: inline-block;
@@ -189,10 +236,15 @@ img {
   font-size: 12px;
 }
 .event-name-tile{
-  float: left;
-  padding: 5px;
+  /*float: left;*/
+  /*padding: 5px;*/
   font-weight: bold;
   font-size: 20px;
+  text-align: center;
+}
+h4{
+  font-weight: normal;
+  padding: 5px;
 }
 .container-left {
   float: left;
@@ -747,13 +799,12 @@ ul li:focus {
 }
 
 .swiper {
-  width: 70%;
+  width: 71%;
   height: 100%;
   justify-content: center;
 }
 
 .swiper-slide {
-  font-size: 18px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -770,6 +821,6 @@ ul li:focus {
 
 .swiper-slide img {
   display: block;
-  width: 70%;
+  width: 71%;
   height: 100%;
 }
