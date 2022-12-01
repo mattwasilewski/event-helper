@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.event.controller;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
