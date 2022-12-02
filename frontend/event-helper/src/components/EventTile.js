@@ -5,7 +5,7 @@ export default function EventTile(props) {
         <div className="event-tile">
         <div className="event-photo-tile" style={{background: props.logo}}>
         </div>
-            <div>{moment.utc("2022-12-3 23:00:00").local().startOf('seconds').fromNow()}</div>
+            <div>{moment.utc(props.startDate).local().startOf('seconds').fromNow()}</div>
         <div className="event-name-tile">{props.name}</div>
             <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget neque eu ligula interdum pretium.</h4>
             <div className="information-bar">

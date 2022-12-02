@@ -799,7 +799,7 @@ ul li:focus {
 }
 
 .swiper {
-  width: 71%;
+  width: 80%;
   height: 100%;
   justify-content: center;
 }
@@ -821,6 +821,6 @@ ul li:focus {
 
 .swiper-slide img {
   display: block;
-  width: 71%;
+  width: 80%;
   height: 100%;
 }
