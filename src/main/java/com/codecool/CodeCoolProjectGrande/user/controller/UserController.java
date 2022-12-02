@@ -1,6 +1,9 @@
 package com.codecool.CodeCoolProjectGrande.user.controller;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import com.codecool.CodeCoolProjectGrande.user.service.UserService;
+
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +31,13 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public Optional<User> getUserByID(@PathVariable UUID userId) {
-        return userService.getUserById(userId);
+        return userService.getUserByID(userId);
     }
+
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.saveUser(user);
+        userService.createUser(user);
+
         return new ResponseEntity<>("User added", HttpStatus.OK);
     }
 
