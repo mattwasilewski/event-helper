@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.user.auth;
 
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,21 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserDetailsManager userDetailsManager;
+    private final UserDetails userDetails;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
-    public AuthController(UserDetailsManager userDetailsManager, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    @Autowired
+    public AuthController(UserDetailsManager userDetailsManager, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils,
+                          UserDetails userDetails) {
         this.userDetailsManager = userDetailsManager;
         this.encoder = encoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.userDetails = userDetails;
     }
-    
+
 
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest loginRequest) {
