@@ -31,7 +31,8 @@ public class EventServiceImpl implements EventService {
         this.userRepository = userRepository;
     }
 
-    public List<Event> getEvents(){
+    public List<Event> getEvents() {
+
         return eventRepository.findAll();
     }
 
@@ -39,13 +40,43 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findEventByEventId(eventID);
     }
 
-
     public void createEvent(Event event) {
         eventRepository.save(event);
     }
 
-    public List<Event> getEventsByEventType(EventType eventType){
+    public List<Event> findEventsByEventType(EventType eventType){
         return eventRepository.findEventsByEventType(eventType);
+    }
+
+    public List<Event> sortEvents(String sortBy, boolean ascending, String phrase, int page, int size) {
+        if (ascending) {
+            return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
+                    PageRequest.of(page, size), Sort.by(sortBy).ascending());
+        }
+        return eventRepository.findAllByNameContainingOrDescriptionContaining(phrase, phrase,
+                PageRequest.of(page, size), Sort.by(sortBy).descending());
+    }
+
+    public ResponseEntity<?> assignUserToEvent(Map data) {
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
+        if (event.isPresent() && user.isPresent()) {
+            event.get().assignUser(user.get());
+            eventRepository.save(event.get());
+            return new ResponseEntity<>(HttpStatus.OK); // TODO czy zwracać statusy http albo true/false albo void
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> editEventDescriptionByEventId(Map data) {
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        if(event.isPresent()){
+            event.get().setDescription(String.valueOf(data.get("description")));
+            eventRepository.save(event.get());
+            return new ResponseEntity<>(HttpStatus.OK);     // TODO to samo co wyżej
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 
