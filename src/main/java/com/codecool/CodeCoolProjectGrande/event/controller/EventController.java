@@ -23,7 +23,7 @@ import java.util.*;
 @RequestMapping("/api/events/")
 public class EventController {
 
-    private final EventServiceImpl eventService;
+    private final EventServiceImpl eventService; // TODO USUNĄĆ
 
 
     @Autowired
