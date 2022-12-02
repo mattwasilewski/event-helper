@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
 //        return userRepository.findUserByUserId(id);
 //    }
 
+
     @Override
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
@@ -39,7 +40,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Modifying
     public void saveUser(User user) {
         userRepository.save(user);
     }

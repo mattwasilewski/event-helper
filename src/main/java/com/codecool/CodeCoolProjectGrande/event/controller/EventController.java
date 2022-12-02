@@ -6,6 +6,8 @@ import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import com.codecool.CodeCoolProjectGrande.user.service.UserService;
+import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -50,6 +52,7 @@ public class EventController {
     @GetMapping("/getEventByType/{eventType}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType){
         return eventService.findEventsByEventType(eventType);
+
     }
 
     @GetMapping("/sort/{sortBy}&{ascending}&{phrase}&{page}&{size}")
