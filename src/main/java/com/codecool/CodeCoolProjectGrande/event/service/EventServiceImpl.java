@@ -11,12 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -43,6 +39,7 @@ public class EventServiceImpl implements EventService {
     public void createEvent(Event event) {
         eventRepository.save(event);
     }
+
 
     public List<Event> getEventsByEventType(EventType eventType){
         return eventRepository.findEventsByEventType(eventType);

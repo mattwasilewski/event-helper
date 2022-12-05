@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.*;
 
 
@@ -29,8 +29,8 @@ public class Event {
     private String location;
     @Enumerated
     private EventStatus eventStatus;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private boolean publicEvent;
     @Enumerated
     private EventType eventType;
@@ -42,12 +42,15 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignedUsers = new HashSet<>();
 
-    public Event(String name, String description, String logo, EventType eventType) {
+    public Event(String name, String description, String logo, EventType eventType, String startDate, String endDate) {
         this.name = name;
         this.description = description;
         this.logo = logo;
         this.eventType =eventType;
         this.eventStatus = EventStatus.TO_VERIFICATION;
+        this.startDate = parseStringToLocalDate(startDate);
+        this.endDate = parseStringToLocalDate(endDate);
+
     }
 
     public void assignUser(User user) {
@@ -55,5 +58,8 @@ public class Event {
     }
 
 
+        public LocalDateTime parseStringToLocalDate(String date) {
+            return LocalDateTime.parse(date);
+    }
 
 }

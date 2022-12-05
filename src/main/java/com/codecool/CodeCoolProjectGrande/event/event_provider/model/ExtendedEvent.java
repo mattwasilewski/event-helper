@@ -1,6 +1,7 @@
-package com.codecool.CodeCoolProjectGrande.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 import javax.annotation.Generated;
 import javax.persistence.*;
 
@@ -27,12 +28,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     })
     @Entity
     @Generated("jsonschema2pojo")
-    public class MainData implements Serializable
+    public class ExtendedEvent implements Serializable
     {
 
         @Id
-        @JsonProperty("id")
-        public Long id;
+        public UUID uuid = UUID.randomUUID();
         @JsonProperty("modified")
         public String modified;
         @JsonProperty("url")
@@ -55,18 +55,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "offerId")
         public Offer offer;
-        @JsonProperty("placeName")
-        public String placeName;
-        @JsonProperty("place")
-        @OneToOne(cascade= CascadeType.ALL)
-        @JoinColumn(name = "placeId")
-        public Place place;
-        @JsonProperty("premiere")
-        public Boolean premiere;
-        @JsonProperty("ticketing")
-        public String ticketing;
-        @JsonProperty("urbancardPremium")
-        public Boolean urbancardPremium;
         private final static long serialVersionUID = 1785813041886123000L;
 
+//        public ExtendedEvent(UUID uuid, String startDate, String endDate) {
+//            this.name = offer.title;
+//            this.description = offer.longDescription;
+//            this.logo = offer.images.get(1).standard;
+//            this.startDate = startDate;
+//            this.endDate = endDate;
+//        }
     }

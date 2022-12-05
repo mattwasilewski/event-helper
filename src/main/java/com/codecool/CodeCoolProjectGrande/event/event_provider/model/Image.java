@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
