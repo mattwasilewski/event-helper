@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.annotation.Generated;

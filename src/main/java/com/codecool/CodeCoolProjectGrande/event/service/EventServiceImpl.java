@@ -2,13 +2,19 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.ExternalEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +43,9 @@ public class EventServiceImpl implements EventService {
 
 
     public void createEvent(Event event) {
-        eventRepository.save(event);
+        if (!eventRepository.findEventByName(event.getName()).isPresent()) {
+            eventRepository.save(event);
+        }
     }
 
 
@@ -78,6 +86,32 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+
+    public void saveWroclawData() {
+        int firstPage = 10;
+        int lastPage = 20;
+        for (int startPage = firstPage; startPage < lastPage; startPage++) {
+            String uri = String.format("test%d", startPage);
+            EventStorage storage = new RestTemplateBuilder()
+                    .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+                    .build().getForObject(uri, EventStorage.class);
+            assert storage != null;
+            storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+        }
+    }
+
+    @NotNull
+    private Event serializeWroclawData(ExternalEvent event) {
+        return new Event(
+                event.offer.title,
+                "Test test test test test test",
+                event.offer.images.toString(),
+                EventType.CONCERT,
+                event.startDate,
+                event.endDate);
     }
 
 

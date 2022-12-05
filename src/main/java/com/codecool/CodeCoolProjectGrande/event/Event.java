@@ -3,7 +3,9 @@ import com.codecool.CodeCoolProjectGrande.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.*;
@@ -20,13 +22,14 @@ public class Event {
     @Id
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID eventId = UUID.randomUUID();
-
     private String name;
     private String description;
     private String logo;
     private String linkToEventPage;
     private int price;
     private String location;
+    @NaturalId
+    private String businessKey = name;
     @Enumerated
     private EventStatus eventStatus;
     private LocalDateTime startDate;
@@ -56,10 +59,7 @@ public class Event {
     public void assignUser(User user) {
         assignedUsers.add(user);
     }
-
-
-        public LocalDateTime parseStringToLocalDate(String date) {
+    public LocalDateTime parseStringToLocalDate(String date) {
             return LocalDateTime.parse(date);
     }
-
 }
