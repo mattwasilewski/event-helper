@@ -5,7 +5,7 @@ let { token } = useParams()
 
 
 const sendEmail = async () =>{
-    await fetch(`http://localhost:8080/reset-password/${token}`,{
+    await fetch(`http://localhost:3000/reset-password/${token}`,{
         method:"PUT",
         headers:{"Content-Type":"application/json",
             'Accept': 'application/json',
