@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -60,20 +60,12 @@ public class Place implements Serializable {
 //    @JsonProperty("images")
 //    @OneToMany(mappedBy = "place", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
 //    public List<String> images = new ArrayList<>();
-    @JsonProperty("venue")
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "venueId")
-    public Venue venue;
     @JsonProperty("priority")
     public Integer priority;
     @JsonProperty("source")
     public String source;
     @JsonProperty("language")
     public String language;
-//    @JsonProperty("location")
-//    public Location__1 location;
-//    @JsonProperty("address")
-//    public Address__1 address;
     @JsonProperty("lastPublished")
     public String lastPublished;
     private final static long serialVersionUID = 4255659379628115253L;

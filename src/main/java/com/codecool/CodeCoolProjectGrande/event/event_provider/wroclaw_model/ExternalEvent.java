@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -20,17 +20,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
             "location",
             "address",
             "offer",
-            "placeName",
-            "place",
-            "premiere",
-            "ticketing",
-            "urbancardPremium"
+            "place"
     })
     @Entity
     @Generated("jsonschema2pojo")
-    public class ExtendedEvent implements Serializable
+    public class ExternalEvent implements Serializable
     {
-
         @Id
         public UUID uuid = UUID.randomUUID();
         @JsonProperty("modified")
@@ -55,13 +50,5 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "offerId")
         public Offer offer;
-        private final static long serialVersionUID = 1785813041886123000L;
 
-//        public ExtendedEvent(UUID uuid, String startDate, String endDate) {
-//            this.name = offer.title;
-//            this.description = offer.longDescription;
-//            this.logo = offer.images.get(1).standard;
-//            this.startDate = startDate;
-//            this.endDate = endDate;
-//        }
     }

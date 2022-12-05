@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,10 +52,6 @@ public class Offer implements Serializable {
     public String externalLink;
     @JsonProperty("pageLink")
     public String pageLink;
-    @JsonProperty("type")
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "typeId")
-    public Type type;
 
     @JsonProperty("categories")
     @OneToMany(mappedBy = "offer", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
@@ -65,12 +61,6 @@ public class Offer implements Serializable {
     @JsonProperty("images")
     @OneToMany(mappedBy = "offer", fetch= FetchType.LAZY, cascade=CascadeType.ALL)
     public List<Image> images = new ArrayList<>();
-
-    @JsonProperty("show")
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "showId")
-    public Show show;
-
 
     @JsonProperty("priority")
     public Integer priority;
