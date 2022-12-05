@@ -1,20 +1,12 @@
-package com.codecool.CodeCoolProjectGrande.event_provider.model.category;
+package com.codecool.CodeCoolProjectGrande.event.event_provider.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.codecool.CodeCoolProjectGrande.event_provider.model.Offer;
-import com.codecool.CodeCoolProjectGrande.event_provider.model.Place;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

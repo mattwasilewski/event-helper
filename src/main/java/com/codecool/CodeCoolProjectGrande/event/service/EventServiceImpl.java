@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -31,8 +28,7 @@ public class EventServiceImpl implements EventService {
         this.userRepository = userRepository;
     }
 
-    public List<Event> getEvents() {
-
+    public List<Event> getEvents(){
         return eventRepository.findAll();
     }
 
@@ -60,6 +56,7 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<?> assignUserToEvent(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
+        //TODO czy zwracac responseentity/ true/false
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
@@ -76,10 +73,7 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>(HttpStatus.OK);     // TODO to samo co wyżej
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
-
-
 
 
 }
