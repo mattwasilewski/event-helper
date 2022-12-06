@@ -9,31 +9,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonPropertyOrder({
-            "id",
-            "modified",
-            "url",
-            "eventDuration",
-            "startDate",
-            "endDate",
-            "location",
-            "address",
-            "offer",
-            "place"
-    })
-    @Entity
-    @Generated("jsonschema2pojo")
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public class ExternalEvent implements Serializable
     {
         @Id
         public UUID uuid = UUID.randomUUID();
-        @JsonProperty("modified")
-        public String modified;
         @JsonProperty("url")
         public String url;
-        @JsonProperty("eventDuration")
-        public String eventDuration;
         @JsonProperty("startDate")
         public String startDate;
         @JsonProperty("endDate")

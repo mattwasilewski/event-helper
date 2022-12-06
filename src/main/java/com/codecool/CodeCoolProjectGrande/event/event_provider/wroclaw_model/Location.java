@@ -12,16 +12,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonPropertyOrder({
-            "lattiude",
-            "longitude",
-            "defined"
-    })
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Data
     @NoArgsConstructor
-    @Entity
-    @Generated("jsonschema2pojo")
     public class Location implements Serializable
     {
         @Id
@@ -32,6 +25,5 @@ import lombok.NoArgsConstructor;
         public Double longitude;
         @JsonProperty("defined")
         public Boolean defined;
-        private final static long serialVersionUID = 7552324809068724044L;
 
     }

@@ -13,6 +13,7 @@ import java.util.*;
 
 
 @AllArgsConstructor
+
 @NoArgsConstructor
 @Data
 @Entity
@@ -23,13 +24,12 @@ public class Event {
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID eventId = UUID.randomUUID();
     private String name;
+    @Column(columnDefinition="TEXT")
     private String description;
     private String logo;
     private String linkToEventPage;
     private int price;
     private String location;
-    @NaturalId
-    private String businessKey = name;
     @Enumerated
     private EventStatus eventStatus;
     private LocalDateTime startDate;
@@ -45,9 +45,11 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignedUsers = new HashSet<>();
 
-    public Event(String name, String description, String logo, EventType eventType, String startDate, String endDate) {
+    public Event(String name, String description, String url, String location, String logo, EventType eventType, String startDate, String endDate) {
         this.name = name;
         this.description = description;
+        this.linkToEventPage = url;
+        this.location = location;
         this.logo = logo;
         this.eventType =eventType;
         this.eventStatus = EventStatus.TO_VERIFICATION;
@@ -62,4 +64,5 @@ public class Event {
     public LocalDateTime parseStringToLocalDate(String date) {
             return LocalDateTime.parse(date);
     }
+
 }

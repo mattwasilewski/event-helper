@@ -13,29 +13,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "id",
-        "modified",
-        "url",
-        "title",
-        "alias",
-        "longDescription",
-        "pageLink",
-        "type",
-        "categories",
-        "images",
-        "venue",
-        "priority",
-        "source",
-        "language",
-        "location",
-        "address",
-        "lastPublished"
-})
 @Data
 @NoArgsConstructor
-@Entity
-@Generated("jsonschema2pojo")
 public class Place implements Serializable {
     @Id
     @JsonProperty("id")
@@ -52,14 +31,9 @@ public class Place implements Serializable {
     public String longDescription;
     @JsonProperty("pageLink")
     public String pageLink;
-//    @JsonProperty("type")
-//    public Type__1 type;
     @JsonProperty("categories")
     @OneToMany(mappedBy = "place", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
     public List<Category> categories = new ArrayList<>();
-//    @JsonProperty("images")
-//    @OneToMany(mappedBy = "place", fetch= FetchType.EAGER, cascade=CascadeType.ALL)
-//    public List<String> images = new ArrayList<>();
     @JsonProperty("priority")
     public Integer priority;
     @JsonProperty("source")
@@ -68,6 +42,5 @@ public class Place implements Serializable {
     public String language;
     @JsonProperty("lastPublished")
     public String lastPublished;
-    private final static long serialVersionUID = 4255659379628115253L;
 
 }

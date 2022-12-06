@@ -9,6 +9,7 @@ import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,8 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    @Value("${apiKey}")
+    private String apiKey;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
@@ -88,7 +91,7 @@ public class EventServiceImpl implements EventService {
         int firstPage = 10;
         int lastPage = 20;
         for (int startPage = firstPage; startPage < lastPage; startPage++) {
-            String uri = String.format("test%d", startPage);
+            String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
             EventStorage storage = new RestTemplateBuilder()
                     .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                     .build().getForObject(uri, EventStorage.class);
@@ -101,12 +104,15 @@ public class EventServiceImpl implements EventService {
     private Event serializeWroclawData(ExternalEvent event) {
         return new Event(
                 event.offer.title,
-                "Test test test test test test",
-                event.offer.images.toString(),
+                event.offer.longDescription,
+                event.offer.url,
+                String.format("%s, %s", event.address.street, event.address.street),
+                event.offer.mainImage.standard,
                 EventType.CONCERT,
                 event.startDate,
                 event.endDate);
     }
+
 
 
 }

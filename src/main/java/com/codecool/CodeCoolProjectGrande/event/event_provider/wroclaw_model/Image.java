@@ -1,38 +1,22 @@
 package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "standard",
-        "large",
-        "thumbnail",
-        "tile",
-        "banner",
-        "description",
-        "role"
-})
-@Generated("jsonschema2pojo")
 @Data
 @NoArgsConstructor
-@Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Image {
     @Id
     public UUID imageId = UUID.randomUUID();
     @JsonProperty("standard")
-    public String standard;
+    public String standard = "defaultUrl";
     @JsonProperty("large")
     public String large;
     @JsonProperty("thumbnail")
@@ -45,7 +29,7 @@ public class Image {
     public String description;
     @JsonProperty("role")
     public String role;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "offer_id")
     public Offer offer;
 
