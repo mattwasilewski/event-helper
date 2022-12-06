@@ -71,6 +71,16 @@ public class EventController {
         return eventService.editEventDescriptionByEventId(data);
     }
 
+    @GetMapping("assigned-events/{userId}")
+    public List<Event> getAssignedEvents(@PathVariable UUID userId) {
+        System.out.println("----------------------------------------------------- User id: " + userId);
+        List <Event> evenst = eventService.getAssignedEvents(userId);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(evenst);
+        System.out.println(evenst.size());
+        return evenst;
+    }
+
 
 }
 

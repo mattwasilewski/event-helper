@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class EventServiceImpl implements EventService {
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK); // TODO czy zwracać statusy http albo true/false albo void
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -73,13 +74,16 @@ public class EventServiceImpl implements EventService {
         if(event.isPresent()){
             event.get().setDescription(String.valueOf(data.get("description")));
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);     // TODO to samo co wyżej
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
-
+    public List<Event> getAssignedEvents(UUID userId) {
+//        Optional<User> user = userRepository.findUserByUserId(userId);
+        return eventRepository.getAssignedEventsToUser();
+    }
 
 
 }

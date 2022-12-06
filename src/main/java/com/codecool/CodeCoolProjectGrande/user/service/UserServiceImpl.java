@@ -53,7 +53,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<User> getUserByID(UUID userId) {
-        return userRepository.findById(userId);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+        Optional<User> user = userRepository.findUserByUserId(UUID.fromString("b0c79ff6-6a47-4541-acbc-a2cc0e9138cd"));
+        System.out.println("---------------------" + user);
+        return user;
     }
 
 }
