@@ -2,7 +2,7 @@ html{
   scroll-behavior: smooth;
 }
 body{
-  background-image: url("src/assets/background.jpg");
+  background-image: url("../assets/background.jpg");
   background-attachment: fixed;
   background-size: cover;
 }

@@ -15,7 +15,7 @@
 
 .section-1{
     height: 100vh;
-    background-image: url("src/assets/mainPageStarterImage.jpg");
+    background-image: url("../assets/mainPageStarterImage.jpg");
     background-attachment: fixed;
     background-size: cover;
 }
@@ -29,7 +29,7 @@
 }
 
 .section-3{
-    background-image: url("src/assets/background.jpg");
+    background-image: url("../assets/background.jpg");
     background-attachment: fixed;
     background-size: cover;
 }
@@ -47,7 +47,7 @@
 /*    margin-top: 100px;*/
 /*}*/
 .section-5{
-    background-image: url("src/assets/background.jpg");
+    background-image: url("../assets/background.jpg");
     background-attachment: fixed;
     background-size: cover;
 }
