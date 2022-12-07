@@ -33,7 +33,7 @@ function LoginForm({Login, error}) {
                         <button type="submit" id="login-submit" value="LOGIN">LOGIN</button>
                     </div>
 
-                    <a href={"/admin"}> Admin </a>
+                    <a href={"/admin"} style={{color:"white"}}> Admin </a>
                 </form>
 
             </div>
