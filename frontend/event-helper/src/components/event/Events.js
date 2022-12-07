@@ -25,6 +25,8 @@ export const Events = (props) => {
                        eventId={event.eventId}
                        logo={event.logo}
                        startDate={event.startDate}
+                       eventType={event.eventType}
+                       description={event.description}
             />
         ))}
         </>
