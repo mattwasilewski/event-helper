@@ -4,13 +4,7 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
-import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
-import com.codecool.CodeCoolProjectGrande.user.service.UserService;
-import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -70,6 +64,12 @@ public class EventController {
     public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
         return eventService.editEventDescriptionByEventId(data);
     }
+
+    @GetMapping("data")
+    public void saveWroclawData() {
+        eventService.saveWroclawData();
+    }
+
 
 
 }

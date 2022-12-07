@@ -2,21 +2,24 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.ExternalEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -24,6 +27,8 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    @Value("${apiKey}")
+    private String apiKey;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
@@ -31,8 +36,7 @@ public class EventServiceImpl implements EventService {
         this.userRepository = userRepository;
     }
 
-    public List<Event> getEvents() {
-
+    public List<Event> getEvents(){
         return eventRepository.findAll();
     }
 
@@ -41,7 +45,9 @@ public class EventServiceImpl implements EventService {
     }
 
     public void createEvent(Event event) {
-        eventRepository.save(event);
+        if (!eventRepository.findEventByName(event.getName()).isPresent()) {
+            eventRepository.save(event);
+        }
     }
 
     public List<Event> findEventsByEventType(EventType eventType){
@@ -60,6 +66,7 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<?> assignUserToEvent(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
+        //TODO czy zwracac responseentity/ true/false
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
@@ -76,9 +83,35 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>(HttpStatus.OK);     // TODO to samo co wyżej
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
+
+
+    public void saveWroclawData() {
+        int firstPage = 10;
+        int lastPage = 20;
+        for (int startPage = firstPage; startPage < lastPage; startPage++) {
+            String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
+            EventStorage storage = new RestTemplateBuilder()
+                    .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+                    .build().getForObject(uri, EventStorage.class);
+            assert storage != null;
+            storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+        }
+    }
+
+    @NotNull
+    private Event serializeWroclawData(ExternalEvent event) {
+        return new Event(
+                event.offer.title,
+                event.offer.longDescription,
+                event.offer.url,
+                String.format("%s, %s", event.address.street, event.address.street),
+                event.offer.mainImage.standard,
+                EventType.CONCERT,
+                event.startDate,
+                event.endDate);
+    }
 
 
 
