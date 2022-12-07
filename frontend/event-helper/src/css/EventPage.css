@@ -194,8 +194,6 @@
     line-height: 80px;
     /* or 167% */
     text-align: center;
-
-    color: #000000;
 }
 #event-description{
     position: absolute;
