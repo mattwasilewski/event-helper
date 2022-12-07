@@ -1,46 +1,46 @@
-import logo from "../../assets/logociemne.png"
+import "../../css/footer.css"
 
 export default function Footer() {
     return (
-        <>
-            <div className="footer-logo">
-                <img src={logo} alt="logo"/>
-                <div className="app-description">
-                    We provide information about upcoming events and also support creating your own private party
-                </div>
-                <div className="social-media-logos">
-                    <div className="social-logo">
-                        <a href="https://www.facebook.com"><ion-icon name="logo-facebook"></ion-icon></a>
+        <footer className="footer">
+            <div className="container">
+                <div className="row">
+                    <div className="footer-col">
+                        <h4>Events</h4>
+                        <ul>
+                            <li><a href="">Music Events</a></li>
+                            <li><a href="">Expo</a></li>
+                            <li><a href="">Festivals</a></li>
+                        </ul>
                     </div>
-                    <div className="social-logo">
-                        <a href="https://www.twitter.com"><ion-icon name="logo-twitter"></ion-icon></a>
+                    <div className="footer-col">
+                        <h4>User</h4>
+                        <ul>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Register</a></li>
+                            <li><a href="/add-event">Add Event</a></li>
+                        </ul>
                     </div>
-                    <div className="social-logo">
-                        <a href="https://www.instagram.com"><ion-icon name="logo-instagram"></ion-icon></a>
+                    <div className="footer-col">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="">New Jersey 45463</a></li>
+                            <li><a href="">(671) 555-0110</a></li>
+                            <li><a href="">info@hounter.com</a></li>
+                        </ul>
+                    </div>
+                    <div className="footer-col">
+                        <h4>Follow Us</h4>
+                        <div className="social-links">
+                            <a href="https://www.facebook.com"><i className="fab fa-facebook-f"></i></a>
+                            <a href="https://www.twitter.com"><i className="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com"><i className="fab fa-instagram"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="footer-events">Events
-            <ul>
-                <a href="/home"><li>Music Events</li></a>
-                <a href="/home"><li>Expo</li></a>
-                <a href="/home"><li>Conferences</li></a>
-            </ul></div>
-            <div className="footer-user">User
-                <ul>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/add-event">Add Event</a></li>
+        </footer>
 
-               </ul></div>
-            <div className="footer-contact">Contact
-                <ul>
-                    <li>New Jersey 45463</li>
-                    <li>(671) 555-0110</li>
-                    <li>info@hounter.com</li>
-                </ul>
-            </div>
 
-        </>
     )
 }
