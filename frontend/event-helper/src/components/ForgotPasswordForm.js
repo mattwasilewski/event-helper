@@ -6,7 +6,7 @@ function ForgotPasswordForm() {
     const[email,setEmail]=useState('')
 
     const sendEmail = async () =>{
-        const response = await fetch(`http://localhost:8080/forgot-password?email=${email}`,{
+        const response = await fetch(`http://localhost:3000/forgot-password?email=${email}`,{
             method:"POST",
             headers:{"Content-Type":"application/json",
                 'Accept': 'application/json',

@@ -134,7 +134,7 @@ export default function RegistrationForm() {
                 password: password
             })
         };
-        fetch('http://localhost:8080/registration', requestOptions)
+        fetch('http://localhost:3000/registration', requestOptions)
             .then(response => response.json())
 
         navigate("/home")

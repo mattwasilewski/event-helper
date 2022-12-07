@@ -1,4 +1,29 @@
+/*#eventImg{*/
+/*    position: relative;*/
+/*    width: 350px;*/
+/*    height: 350px;*/
+/*    right: 35%;*/
+/*    margin-bottom: 5%;*/
 
+/*}*/
+
+/*#eventHeader{*/
+/*    font-size: xxx-large;*/
+/*    font-family: "Cooper Black";*/
+/*    color: white;*/
+/*}*/
+
+/*#eventText{*/
+/*    font-size: x-large;*/
+/*    font-family: "Cooper Black";*/
+/*    color: white;*/
+/*}*/
+
+
+
+/*#eventData {*/
+/*    background-color: #252525;*/
+/*}*/
 
 #event-page{
     /* Event */
@@ -171,7 +196,6 @@
     top: 122px;
 
     /* Neutral/N40
-
     Border on White
     */
     background: #ECECED;

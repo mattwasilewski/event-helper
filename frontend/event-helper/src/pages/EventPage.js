@@ -18,7 +18,7 @@ export default function EventPage() {
     }, []);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:8080/api/events/${id}`, {
+        const response = await fetch(`http://localhost:3000/api/events/${id}`, {
             method: 'GET',
         });
         const data = await response.json();
@@ -37,7 +37,7 @@ export default function EventPage() {
                 eventId: id,
                 userId: "af8afa53-4d00-4482-9758-c174b238dddb" })
         }
-        fetch('http://localhost:8080/api/events/assign-user-to-event', requestOptions)
+        fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
     }
 
@@ -59,7 +59,7 @@ export default function EventPage() {
                 eventId: id,
                 description: document.getElementById("hah").innerText })
         }
-        fetch('http://localhost:8080/api/events/edit-event-description', requestOptions)
+        fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
             .then(response => console.log(response.status))
         setEditable("false");
         setButton(editButton);
@@ -83,7 +83,7 @@ export default function EventPage() {
             {/*        </div>*/}
             {/*    </div>*/}
                 <p id="event-name">{event.name}</p>
-                <p id="event-description">{event.description}</p>
+                {/*<p id="event-description">{event.description}</p>*/}
 
                 <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
 
