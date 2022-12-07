@@ -76,6 +76,9 @@ export default function RecommendedEvents() {
                            location={event.location}
                            eventId={event.eventId}
                            logo={event.logo}
+                           startDate={event.startDate}
+                           eventType={event.eventType}
+                           description={event.description}
                 />
             ))}
         </>
