@@ -51,7 +51,7 @@ export default function AllEvents() {
         <div className="all-events">
             <Swiper
                 slidesPerView={5}
-                spaceBetween={-40}
+                spaceBetween={-15}
                 slidesPerGroup={5}
                 loop={true}
                 loopFillGroupWithBlank={true}
@@ -71,6 +71,9 @@ export default function AllEvents() {
                                             location={event.location}
                                             eventId={event.eventId}
                                             logo={event.logo}
+                                            startDate={event.startDate}
+                                            eventType={event.eventType}
+                                            description={event.description}
                     /></SwiperSlide>
                 ))}</>
             </Swiper>
