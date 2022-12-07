@@ -1,5 +1,5 @@
 import moment from "moment";
-import "../../eventTile.css";
+import "../../css/eventTile.css";
 import {useState,useEffect} from "react";
 export default function EventTile(props) {
 
