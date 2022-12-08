@@ -110,7 +110,9 @@ public class EventServiceImpl implements EventService {
                 event.offer.mainImage.standard,
                 EventType.CONCERT,
                 event.startDate,
-                event.endDate);
+                event.endDate,
+                event.location.lattiude,
+                event.location.longitude);
     }
 
 
