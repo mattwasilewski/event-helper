@@ -21,7 +21,7 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 @Builder
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Type(type="org.hibernate.type.PostgresUUIDType")
@@ -51,4 +51,33 @@ public class User {
         events.add(event);
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
