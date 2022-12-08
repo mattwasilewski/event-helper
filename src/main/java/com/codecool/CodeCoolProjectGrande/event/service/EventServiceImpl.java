@@ -106,7 +106,7 @@ public class EventServiceImpl implements EventService {
                 event.offer.title,
                 event.offer.longDescription,
                 event.offer.url,
-                String.format("%s, %s", event.address.street, event.address.street),
+                String.format("%s, %s", event.address.street, event.address.city),
                 event.offer.mainImage.standard,
                 EventType.CONCERT,
                 event.startDate,
