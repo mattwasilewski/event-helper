@@ -7,11 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID>, UserDetailsService {
+public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findUserByUserId(UUID id);
     Optional<User> findUserByEmail(String email);
     List<User> findByEmail(String email);
     Optional<User> findUserByResetPasswordTokenTokenId(UUID token);
-
-    UserDetails loadUserByUsername(String username);
 }
