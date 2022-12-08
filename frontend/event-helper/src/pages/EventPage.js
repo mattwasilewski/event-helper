@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import "../EventPage.css"
+import "../css/EventPage.css"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/utils/Navbar";
 import Footer from "../components/utils/Footer";
 import CalendarTile from "../components/utils/CalendarTile";
-import SubscribePanel from "../components/utils/SubscribePanel";
-import ReadMoreReact from 'read-more-react';
+import SubscribePanel from "../components/utils/SubscribePanel"
 import {Container} from "@mui/material";
 
 export default function EventPage() {
@@ -75,16 +74,29 @@ export default function EventPage() {
         setButton(editButton);
     }
 
+    let count = 0;
+    function showMore() {
+        if (count % 2 === 0){
+            document.querySelector("#eventDataSmall").id = "eventDataBig"
+            count += 1;
+        } else {
+            document.querySelector("#eventDataBig").id = "eventDataSmall"
+            count += 1;
+        }
+
+
+    }
 
     return (
-        <div id="event-page">
+        <div>
             <Navbar/>
-            <p id="eventHeader">{event.name}</p>
-            <Container id="eventData">
+            <div className="data-container">
+            <p className="event-header white-container">{event.name}</p>
+            <Container id="eventDataSmall" className="box-data box">
 
-                {/*<p id="event-description">{event.description}</p>*/}
                 <button id="event-join" onClick={(e) => assignToEvent(e)}>Join to event</button>
-                <div>
+
+                <div className="card">
                     <img id="eventImg" src={event.logo} alt=""/>
                     <p>{event.location}</p>
                 </div>
@@ -93,11 +105,9 @@ export default function EventPage() {
                 <p contentEditable={editable} dangerouslySetInnerHTML={{__html: event.description}}></p>
                     <button id="edit-description">{button}</button>
                 </Container>
-
-
-
             </Container>
-
+                <div onClick={showMore} className="swiper-button-next show-more-button"></div>
+            </div>
             <CalendarTile/>
             <SubscribePanel/>
             <Footer/>

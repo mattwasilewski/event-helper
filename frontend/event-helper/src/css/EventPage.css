@@ -3,29 +3,59 @@
     width: 350px;
     height: 350px;
     display: flex;
+    object-fit:cover;
 
 }
 
-#eventHeader{
+.event-header{
     font-size: xxx-large;
-    font-family: "Arial Black";
-    color: black;
+    font-family: sans-serif;
+    color: #ffffff;
+    position: sticky;
 }
+
+
+
+
 
 #eventText{
     font-size: x-large;
-    font-family: "Arial Black";
     color: black;
     position: relative;
     text-align: left;
     overflow:hidden;
+    right: 7%;
 }
 
-#eventData{
-    background-color: lightgrey;
+
+
+.white-container{
+    width: 100%;
+    color: #ffffff;
+    margin-top: 8%;
+    height: 30px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.box-data{
+    background: #ffffff;
+    border-radius: 70px;
+    width: 90%;
+    margin: auto;
+    color: black;
+}
+
+#eventDataSmall{
     max-width: 100%;
     display: flex;
     max-height: 400px;
+}
+
+#eventDataBig {
+    max-width: 100%;
+    display: flex;
+    max-height: fit-content;
 }
 
 #description{
@@ -39,6 +69,39 @@
 
 #edit-description {
     visibility: hidden;
+}
+
+
+
+.box{
+    width: 100%;
+    padding: 40px 60px;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+.data-container{
+    margin-top: 10vh;
+}
+
+
+.card {
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    color: black;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-width: 30vh;
+    height: 15%;
+    display: inline-block;
+}
+
+.show-more-button {
+    position: sticky;
+    left: 50%;
+    margin-top: 5px ;
+    transform: rotate(90deg);
 }
 
 
