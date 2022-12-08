@@ -8,6 +8,7 @@ import java.util.*;
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findUserByUserId(UUID id);
     Optional<User> findUserByEmail(String email);
+    List<User> findByEmail(String email);
     Optional<User> findUserByResetPasswordTokenTokenId(UUID token);
 
 }

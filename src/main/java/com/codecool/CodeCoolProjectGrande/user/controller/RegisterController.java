@@ -1,5 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.user.controller;
 
+import com.codecool.CodeCoolProjectGrande.user.UserType;
 import com.codecool.CodeCoolProjectGrande.user.configuration.EmailValidator;
 import com.codecool.CodeCoolProjectGrande.user.configuration.SecurityConfig;
 import com.codecool.CodeCoolProjectGrande.user.User;
@@ -35,6 +36,7 @@ public class RegisterController {
     public ResponseEntity registerAccount(@RequestBody User user){
         if (EmailValidator.patternMatches(user.getEmail()) && user.getPassword().length() >= 8){
             user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+            user.setUserType(UserType.USER);
             userRepository.save(user);
         }
         return ResponseEntity.ok(HttpStatus.OK);
