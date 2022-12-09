@@ -15,14 +15,14 @@ const register = (username, password) => {
     return axios.post(API_URL + "signup", json, customConfig)
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
     let customConfig = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
     let json = JSON.stringify({
-        username: username,
+        email: email,
         password: password,
     })
     return axios

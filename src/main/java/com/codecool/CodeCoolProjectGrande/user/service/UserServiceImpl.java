@@ -53,11 +53,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseCookie authenticateUser(LoginRequest loginRequest) {
+        System.out.println("WESZLO DO AUTHENTICATE USER IN SERVICE IMPL AAAAAAAAA");
+        System.out.println(loginRequest.getEmail());
+        System.out.println(loginRequest.getPassword());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-        System.out.println("post w loginiie");
-        System.out.println(authentication.getPrincipal());
+        System.out.println("authentication. get principal: ? " + authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("PRZESZLO AUTHENTICATE CZY JEDNAK NIE PRZESZLO?");
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
         return jwtCookie;

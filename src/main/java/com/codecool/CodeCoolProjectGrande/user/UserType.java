@@ -1,9 +1,9 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
 public enum UserType {
-    USER("user"),
-    MODERATOR("moderator"),
-    ADMIN("admin");
+    USER("USER"),
+    MODERATOR("MODERATOR"),
+    ADMIN("ADMIN");
 
     private final String role;
 
@@ -11,8 +11,14 @@ public enum UserType {
         this.role = role;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     @Override
     public String toString() {
         return role;
     }
+
+
 }

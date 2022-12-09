@@ -39,13 +39,13 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-    //    @PostMapping("/login")
+//        @PostMapping("/login")
 //    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest loginRequest) {
 //        System.out.println("MOJE WYNIKI: DLA EMAIL: "  + loginRequest.getEmail());
 //        System.out.println("MOJE WYNIKI: DLA USERNAME: "  + loginRequest.getUsername());
 //
 //        Authentication authentication = authenticationManager
-//                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 //
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 //

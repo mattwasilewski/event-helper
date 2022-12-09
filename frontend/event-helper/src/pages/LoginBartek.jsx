@@ -7,10 +7,10 @@ function Login() {
     const [errors, setErrors] = useState("");
 
     const [form, setForm] = useState({
-        username: "",
+        email: "",
         password: ""
     });
-    const {username, password} = form;
+    const {email, password} = form;
 
     function handleChange(e) {
         setForm({...form, [e.target.name]: e.target.value});
@@ -19,7 +19,7 @@ function Login() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        AuthService.login(username, password)
+        AuthService.login(email, password)
             .then(res => {
                 console.log("Request complete! response:", res);
             }).catch((error) => {
@@ -28,7 +28,7 @@ function Login() {
         });
         setErrors("logged in successfully");
         setForm({
-            username: "",
+            email: "",
             password: ""
         });
     }
@@ -42,9 +42,9 @@ function Login() {
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
-                            name="username"
-                            placeholder="username"
-                            value={username}
+                            name="email"
+                            placeholder="email"
+                            value={email}
                             onChange={handleChange}
                             required
                         />

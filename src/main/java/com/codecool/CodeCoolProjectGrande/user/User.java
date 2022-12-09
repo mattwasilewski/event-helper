@@ -34,7 +34,7 @@ public class User {
     private String password;
     @NotNull
     private String email;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private UserType userType;
     private String imgUrl;
     private String location;

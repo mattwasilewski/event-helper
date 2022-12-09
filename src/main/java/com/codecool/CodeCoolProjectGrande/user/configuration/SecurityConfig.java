@@ -5,6 +5,7 @@ import com.codecool.CodeCoolProjectGrande.user.jwt.AuthEntryPointJwt;
 import com.codecool.CodeCoolProjectGrande.user.jwt.AuthTokenFilter;
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -35,7 +36,7 @@ public class SecurityConfig {
     private final AuthEntryPointJwt unauthorizedHandler;
     private final UserDetailsServiceImpl userDetailsService;
 
-
+    @Autowired
     public SecurityConfig(AuthEntryPointJwt unauthorizedHandler, UserDetailsServiceImpl userDetailsService) {
         this.unauthorizedHandler = unauthorizedHandler;
         this.userDetailsService = userDetailsService;
@@ -56,7 +57,7 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .cors().configurationSource(new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -71,6 +72,8 @@ public class SecurityConfig {
             }
         }).and().csrf().disable()
                 .authorizeRequests() // a było: authorizeHttpRequests()
+//                .antMatchers("/add-event").hasRole(USER)
+                .antMatchers(HttpMethod.POST, "/api/events/create-event").hasAnyAuthority(USER) //TODO: CHECK IF SOMETHING WRONG WITH THE USER ROLES
                 .antMatchers("/css/**","/js/**","/images/**").permitAll()
                 .antMatchers( "/applications").authenticated()
                 .antMatchers("/home").permitAll()
