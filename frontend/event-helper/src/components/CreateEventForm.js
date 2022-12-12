@@ -3,7 +3,9 @@ import img from "../assets/login-img.png";
 import switchMode from "../assets/dark-switch.png"
 import "../App.css"
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
+const API_URl = "http://localhost:3000/api/events/";
 function CreateEventForm() {
     let navigate = useNavigate();
     const [name, setName] = useState("");
@@ -54,9 +56,7 @@ function CreateEventForm() {
         e.preventDefault()
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'},
+            headers: { 'Content-Type': 'application/json; charset=UTF-8'},
             body: JSON.stringify({
                 name: name,
                 startDate: startDate,
@@ -69,9 +69,10 @@ function CreateEventForm() {
                 publicEvent: publicEvent,
                 eventStatus: "TO_VERIFICATION"})   // TODO add userId after login implementation
         };
-        fetch('http://localhost:8080/api/events/create-event', requestOptions)
-            .then(response => console.log(response.status))
-        navigate('/home');
+        // fetch('http://localhost:3000/api/events/create-event', requestOptions)
+        //     .then(response => console.log(response.status))
+        // navigate('/home');
+        return axios.post(API_URl + "create-event", requestOptions).then(response => console.log(response.status))
     }
 
     return (

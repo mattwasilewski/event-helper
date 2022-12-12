@@ -33,6 +33,11 @@ function Login() {
         });
     }
 
+    function handleLogout(e){
+        e.preventDefault()
+        AuthService.logout();
+    }
+
     return (
         <div className={"wrapper-container"}>
             <div className={"outer-box"}>
@@ -65,7 +70,7 @@ function Login() {
                         <Link to="/login">
                             Login
                         </Link>
-                        <Link to="/logout">
+                        <Link to="/logout" onClick={handleLogout}>
                             Logout
                         </Link>
                     </form>

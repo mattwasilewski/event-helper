@@ -2,7 +2,8 @@ import LoginForm from "../components/LoginForm";
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
-import LoginBartek from "./LoginBartek";
+import LoginBartek from "./LoginPageJWT";
+import LoginPageJWT from "./LoginPageJWT";
 
 export default function LoginPage() {
 
@@ -43,7 +44,7 @@ export default function LoginPage() {
                 </div>
             ) : (
                 // <LoginForm Login={Login} error={error} />
-                <LoginBartek/>
+                <LoginPageJWT/>
             )}
         </div>
     )

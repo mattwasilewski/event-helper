@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = "http://localhost:3000/api/auth/";
 
 const register = (username, password) => {
     let customConfig = {
@@ -30,7 +30,7 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-    return axios.post(API_URL + "signout").then((response) => {
+    return axios.post(API_URL + "logout").then((response) => {
         return response.data;
     });
 };

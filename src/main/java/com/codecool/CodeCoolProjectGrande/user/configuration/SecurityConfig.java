@@ -73,7 +73,7 @@ public class SecurityConfig {
         }).and().csrf().disable()
                 .authorizeRequests() // a było: authorizeHttpRequests()
 //                .antMatchers("/add-event").hasRole(USER)
-                .antMatchers(HttpMethod.POST, "/api/events/create-event").hasAnyAuthority(USER) //TODO: CHECK IF SOMETHING WRONG WITH THE USER ROLES
+                .antMatchers(HttpMethod.POST, "/api/events/create-event").hasAnyAuthority(USER)//TODO: CHECK IF SOMETHING WRONG WITH THE USER ROLES
                 .antMatchers("/css/**","/js/**","/images/**").permitAll()
                 .antMatchers( "/applications").authenticated()
                 .antMatchers("/home").permitAll()
@@ -84,19 +84,6 @@ public class SecurityConfig {
     }
 
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable()
-//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
-//                .antMatchers("/**").permitAll().anyRequest().authenticated();
-//
-//
-//
-//        return http.build();
-//    }
 
 
     @Bean
