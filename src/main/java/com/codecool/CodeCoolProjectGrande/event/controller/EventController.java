@@ -70,6 +70,11 @@ public class EventController {
         eventService.saveWroclawData();
     }
 
+    @GetMapping("global-data")
+    public void saveGlobalData() {
+        eventService.saveGlobalData();
+    }
+
 
 
 }
