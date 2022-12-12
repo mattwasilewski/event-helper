@@ -1,8 +1,7 @@
-import LoginForm from "../components/LoginForm";
+
 import React, {useState} from "react";
-import Navbar from "../components/Navbar";
-import ForgotPasswordForm from "../components/ForgotPasswordForm";
-import LoginBartek from "./LoginPageJWT";
+import Navbar from "../components/utils/Navbar";
+
 import LoginPageJWT from "./LoginPageJWT";
 
 export default function LoginPage() {

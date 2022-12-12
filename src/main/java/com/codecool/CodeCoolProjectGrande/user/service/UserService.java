@@ -5,6 +5,7 @@ import com.codecool.CodeCoolProjectGrande.user.auth.LoginRequest;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,6 +15,9 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
     void saveUser(User user);
     Optional<User> getUserByToken(UUID token);
+
+    List<User> getUsers();
+
 
     ResponseCookie authenticateUser(LoginRequest loginRequest);
     ResponseCookie logoutUser();
