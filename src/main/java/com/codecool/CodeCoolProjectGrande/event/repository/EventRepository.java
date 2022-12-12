@@ -27,7 +27,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                 e.location, e.logo, e.name, e.price, e.public_event, e.start_date
             FROM events e
             JOIN assigned_users ON assigned_users.event_id = e.event_id
-            WHERE assigned_users.user_id = 'b0c79ff6-6a47-4541-acbc-a2cc0e9138cd'
+            WHERE assigned_users.user_id = 'ef077324-4b6f-4919-9c2b-7dbe55fdcc70'
             """)                            //'b0c79ff6-6a47-4541-acbc-a2cc0e9138cd'
     List<Event> getAssignedEventsToUser();
 

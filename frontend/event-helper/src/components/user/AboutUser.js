@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from "react";
+import {OrganizedByUser} from "../event/OrganizedByUser";
 
 export const AboutUser = (props) => {
 
@@ -23,6 +24,7 @@ export const AboutUser = (props) => {
             <p>User email: {user.email}</p>
             <p>User age: {user.age}</p>
             <p>User image: {user.imgUrl}</p>
+            <OrganizedByUser userId={props.userId}/>
         </>
     )
 }
