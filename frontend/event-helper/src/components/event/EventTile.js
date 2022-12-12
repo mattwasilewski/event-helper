@@ -17,7 +17,7 @@ export default function EventTile(props) {
             setName(props.name.toString().substring(0,42)+"...");
         }
         if(props.description.toString().length >= 300){
-            setDesc(props.name.toString().substring(0,297)+"...");
+            setDesc(props.description.toString().substring(0,297)+"...");
         }
     }
 
