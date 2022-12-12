@@ -1,7 +1,7 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../components/utils/Navbar";
 import React from "react";
 import ResetPasswordForm from "../components/ResetPasswordForm";
-import "../App.css"
+import "../css/App.css"
 
 export default function ResetPasswordPage() {
 

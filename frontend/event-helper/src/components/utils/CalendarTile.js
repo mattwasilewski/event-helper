@@ -18,7 +18,7 @@ export default function CalendarTile() {
     const [events, setEvents] = useState([]);
     let navigate = useNavigate();
     const getEvents = async () => {
-        const response = await fetch(`http://localhost:8080/api/events/`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:3000/api/events/`);
         const data = await response.json();
         setEvents(data)
     }

@@ -1,10 +1,11 @@
 import React,{useEffect,useState} from "react";
 import logo from "../assets/logociemne.png";
-import "../EventPage.css"
+import "../css/EventPage.css"
 import switchMode from "../assets/dark-switch.png"
 import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
+import Navbar from "../components/utils/Navbar";
 
 export default function EventPage() {
 
@@ -12,12 +13,12 @@ export default function EventPage() {
     const [event, setEvent] = useState([]);
 
     useEffect(() => {
-        getEvents().then(r => console.log("r: " + r))
+        getEvents().then(r => console.log(r))
 
     }, []);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:8080/api/events/${id}`, {
+        const response = await fetch(`http://localhost:3000/api/events/${id}`, {
             method: 'GET',
         });
         const data = await response.json();
@@ -27,7 +28,6 @@ export default function EventPage() {
 
     const assignToEvent = async (e) => {
         e.preventDefault()
-        console.log("Button działa, event uuid: " + id)
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json; charset=UTF-8',
@@ -37,13 +37,12 @@ export default function EventPage() {
                 eventId: id,
                 userId: "af8afa53-4d00-4482-9758-c174b238dddb" })
         }
-        fetch('http://localhost:8080/api/events/assign-user-to-event', requestOptions)
+        fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
     }
 
     const [editable, setEditable] = useState(["false"]);
     const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
-    const [description, setDescription] = useState("");
     const enableEditing = () =>{
         setEditable("true");
         setButton(saveButton)
@@ -60,7 +59,7 @@ export default function EventPage() {
                 eventId: id,
                 description: document.getElementById("hah").innerText })
         }
-        fetch('http://localhost:8080/api/events/edit-event-description', requestOptions)
+        fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
             .then(response => console.log(response.status))
         setEditable("false");
         setButton(editButton);
@@ -68,27 +67,28 @@ export default function EventPage() {
 
     return (
         <div id="event-page">
-            <div id="logo">
-                <img src={logo} alt="logo"/>
-            </div>
+            {/*<div id="logo">*/}
+            {/*    <img src={logo} alt="logo"/>*/}
+            {/*</div>*/}
             <div id="frame19">
-                <div id="top-nav">
-                    <p id="nav-home"><a href="/home">Home</a></p>
-                    <p id="nav-events"><a href="/events">Events</a></p>
-                    <p id="nav-community"><a href="/community">Community</a></p>
-                    <p id="nav-about-us">About us</p>
-                    <p id="nav-login">Login</p>
-                    <p id="nav-sign-up"><a href="/register">Sign up</a></p>
-                    <div id="switch-mode">
-                        <img src={switchMode} alt=""/>
-                    </div>
-                </div>
+            {/*    <div id="top-nav">*/}
+            {/*        <p id="nav-home"><a href="/home">Home</a></p>*/}
+            {/*        <p id="nav-events"><a href="/events">Events</a></p>*/}
+            {/*        <p id="nav-community"><a href="/community">Community</a></p>*/}
+            {/*        <p id="nav-about-us">About us</p>*/}
+            {/*        <p id="nav-login">Login</p>*/}
+            {/*        <p id="nav-sign-up"><a href="/register">Sign up</a></p>*/}
+            {/*        <div id="switch-mode">*/}
+            {/*            <img src={switchMode} alt=""/>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
                 <p id="event-name">{event.name}</p>
-                <p id="event-description">{event.description}</p>
+                {/*<p id="event-description">{event.description}</p>*/}
 
                 <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
 
             </div>
+            <Navbar/>
             <div id="destination">
                 <img id="rectangle-14" src={eventDj} alt=""/>
                 <div id="card-2">

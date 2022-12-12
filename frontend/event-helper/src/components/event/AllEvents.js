@@ -1,4 +1,3 @@
-import {Events} from "./Events";
 import React, {useState,useEffect} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -17,7 +16,7 @@ export default function AllEvents() {
     const getEvents = async () =>{
         let ascending = true;
         if (asc === "descending")  ascending = false;
-        const response = await fetch(`http://localhost:8080/api/events/sort/${sortBy}&${ascending}&${phrase}&0&100`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:3000/api/events/sort/${sortBy}&${ascending}&${phrase}&0&100`);
         const data = await response.json();
         setEvents(data);
     }
@@ -52,7 +51,7 @@ export default function AllEvents() {
         <div className="all-events">
             <Swiper
                 slidesPerView={5}
-                spaceBetween={-40}
+                spaceBetween={-15}
                 slidesPerGroup={5}
                 loop={true}
                 loopFillGroupWithBlank={true}
@@ -72,6 +71,9 @@ export default function AllEvents() {
                                             location={event.location}
                                             eventId={event.eventId}
                                             logo={event.logo}
+                                            startDate={event.startDate}
+                                            eventType={event.eventType}
+                                            description={event.description}
                     /></SwiperSlide>
                 ))}</>
             </Swiper>

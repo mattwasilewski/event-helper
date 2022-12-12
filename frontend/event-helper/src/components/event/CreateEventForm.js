@@ -127,9 +127,9 @@ function CreateEventForm() {
                           id="description" className="big-input" placeholder="Description"/>
                 </div>
                 <div>
-                    <a href="/home"><button onClick={(e) => handleSubmit(e)} type="submit" id="submit-btn" className="btn">
+                   <button onClick={(e) => handleSubmit(e)} type="submit" id="submit-btn" className="btn">
                         Add Event
-                    </button></a>
+                    </button>
                 </div>
             </div>
         </div>

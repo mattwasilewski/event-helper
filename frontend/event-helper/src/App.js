@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import MainPage from "./pages/MainPage";
@@ -18,8 +18,6 @@ Sentry.init({
             levels: ['error']
         })
     ],
-    // We recommend adjusting this value in production, or using tracesSampler
-    // for finer control
     tracesSampleRate: 1.0,
 });
 

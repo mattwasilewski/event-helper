@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import img from "../assets/login-img.png";
 import logo from "../assets/logociemne.png";
-import "../register.css"
+import "../css/register.css"
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 
@@ -33,7 +33,7 @@ function LoginForm({Login, error}) {
                         <button type="submit" id="login-submit" value="LOGIN">LOGIN</button>
                     </div>
 
-                    <a href={"/admin"}> Admin </a>
+                    <a href={"/admin"} style={{color:"white"}}> Admin </a>
                 </form>
 
             </div>

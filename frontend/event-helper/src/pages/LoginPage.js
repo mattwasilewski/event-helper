@@ -43,7 +43,6 @@ export default function LoginPage() {
                     <button onClick={Logout}>Logout</button>
                 </div>
             ) : (
-                // <LoginForm Login={Login} error={error} />
                 <LoginPageJWT/>
             )}
         </div>

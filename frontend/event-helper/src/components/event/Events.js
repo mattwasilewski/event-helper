@@ -13,7 +13,7 @@ export const Events = (props) => {
     const getEvents = async () =>{
         let ascending = true;
         if (props.asc === "descending")  ascending = false;
-        const response = await fetch(`http://localhost:8080/api/events/sort/${props.sortBy}&${ascending}&${props.phrase}&0&5`); //sort?sortBy=name&ascending=true
+        const response = await fetch(`http://localhost:3000/api/events/sort/${props.sortBy}&${ascending}&${props.phrase}&0&5`);
         const data = await response.json();
         setEvents(data);
     }
@@ -25,6 +25,8 @@ export const Events = (props) => {
                        eventId={event.eventId}
                        logo={event.logo}
                        startDate={event.startDate}
+                       eventType={event.eventType}
+                       description={event.description}
             />
         ))}
         </>
