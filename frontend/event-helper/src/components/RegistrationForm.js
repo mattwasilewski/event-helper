@@ -1,5 +1,5 @@
 import {useState} from "react";
-import "../register.css"
+import "../css/register.css"
 import img from "../assets/login-img.png";
 import logo from "../assets/logociemne.png";
 import { useNavigate } from 'react-router-dom' ;
@@ -134,7 +134,7 @@ export default function RegistrationForm() {
                 password: password
             })
         };
-        fetch('http://localhost:3000/registration', requestOptions)
+        fetch('http://localhost:3000/api/registration', requestOptions)
             .then(response => response.json())
 
         navigate("/home")

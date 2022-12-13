@@ -1,46 +1,39 @@
-import logo from "../../assets/logociemne.png";
-import DarkMode from "./DarkMode";
+import "../../css/navbar.css";
 
 export default function Navbar() {
-    return (
-        <nav className="nav">
-            <a href="/home" className="site-logo">
-                <div id="navbar-logo">
-                    <img src={logo} alt="Event Helper"/>
-                </div>
-            </a>
-            <div className="toggle-button">
-                <span className="bar"></span>
-                <span className="bar"></span>
-                <span className="bar"></span>
-            </div>
-            <ul>
-                <li>
-                    <a href="/home">Home</a>
-                </li>
-                <li>
-                    <a href="/events">Events</a>
-                </li>
-                <li>
-                    <a href="/community">Community</a>
-                </li>
-                <li>
-                    <a href="/about">About Us</a>
-                </li>
-                <li>
-                    <a href="/login">
-                        <button className="loginButton">Login</button>
-                    </a>
-                </li>
-                <li>
-                    <a href="/register">
-                        <button className="signUpButton">Sign Up</button>
-                    </a>
-                </li>
-                <li>
-                    <DarkMode/>
-                </li>
-            </ul>
-        </nav>
+
+    window.addEventListener("scroll",function(){
+        const header = document.querySelector("header");
+       header.classList.toggle("sticky",window.scrollY >0);
+    })
+    return (<>
+            <header>
+                <a href="/home" className="logo">Event Helper</a>
+                    <ul>
+                        <li>
+                            <a href="/home">Home</a>
+                        </li>
+                        <li>
+                            <a href="/events">Events</a>
+                        </li>
+                        <li>
+                            <a href="/community">Community</a>
+                        </li>
+                        <li>
+                            <a href="/about">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/login">Login
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register">Register
+                            </a>
+                        </li>
+
+                    </ul>
+            </header>
+        </>
     )
 }

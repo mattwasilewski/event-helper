@@ -1,13 +1,18 @@
 package com.codecool.CodeCoolProjectGrande.user.service;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.auth.LoginRequest;
+import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserDetailsImpl;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +22,20 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
     }
 
-//    @Override
-//    public Optional<User> getUserById(UUID id) {
-//        return userRepository.findUserByUserId(id);
-//    }
-
+    @Override
+    public Optional<User> getUserById(UUID id) {
+        return userRepository.findUserByUserId(id);
+    }
 
     @Override
     public Optional<User> getUserByEmail(String email) {
@@ -40,21 +48,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public void createUser(User user) {
+    @Override
+    @Modifying
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
-    public Optional<User> getUserByID(UUID userId) {
-        Optional<User> user = userRepository.findUserByUserId(userId);
-        return user;
+    @Override
+    public ResponseCookie authenticateUser(LoginRequest loginRequest) {
+        System.out.println("WESZLO DO AUTHENTICATE USER IN SERVICE IMPL AAAAAAAAA");
+        System.out.println(loginRequest.getEmail());
+        System.out.println(loginRequest.getPassword());
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        System.out.println("authentication. get principal: ? " + authentication.getPrincipal());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("PRZESZLO AUTHENTICATE CZY JEDNAK NIE PRZESZLO?");
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        return jwtCookie;
     }
+
+    @Override
+    public ResponseCookie logoutUser() {
+        return jwtUtils.getCleanJwtCookie();
+    }
+
 
 }

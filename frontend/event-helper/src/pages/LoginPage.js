@@ -1,5 +1,8 @@
-import LoginForm from "../components/LoginForm";
+
 import React, {useState} from "react";
+import Navbar from "../components/utils/Navbar";
+
+import LoginPageJWT from "./LoginPageJWT";
 
 export default function LoginPage() {
 
@@ -39,7 +42,7 @@ export default function LoginPage() {
                     <button onClick={Logout}>Logout</button>
                 </div>
             ) : (
-                <LoginForm Login={Login} error={error} />
+                <LoginPageJWT/>
             )}
         </div>
     )

@@ -36,12 +36,14 @@ public class UserController {
 
     @GetMapping("{userId}")
     public Optional<User> getUserByID(@PathVariable UUID userId) {
-        return userService.getUserByID(userId);
+        return userService.getUserById(userId);
     }
 
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.createUser(user);
+//        userService.createUser(user);
+        userService.saveUser(user);
+
         return new ResponseEntity<>("User added", HttpStatus.OK);
     }
 
