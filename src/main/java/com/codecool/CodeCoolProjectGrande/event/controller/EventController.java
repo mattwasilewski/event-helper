@@ -74,7 +74,7 @@ public class EventController {
     @GetMapping("organised-by-user/{userId}&{page}&{size}")
     public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
         System.out.println("Działa, size:" + size);
-        List <Event> evenst = eventService.getAssignedEvents(userId);
+        List <Event> evenst = eventService.getAssigned(userId);
         System.out.println(evenst);
         System.out.println(evenst.size());
         return evenst;

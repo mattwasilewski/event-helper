@@ -85,5 +85,9 @@ public class EventServiceImpl implements EventService {
         return eventRepository.getAssignedEventsToUser();
     }
 
+    public List<Event> getAssigned(UUID userId) {
+        return eventRepository.findAllByAssignedUsers(userId);
+    }
+
 
 }
