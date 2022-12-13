@@ -39,8 +39,10 @@ public class PasswordController {
     @PostMapping("/forgot-password")
     public void forgotPassword(@RequestParam("email") String userEmail){
         Optional<User> user = userServiceImpl.getUserByEmail(userEmail);
+        System.out.println("1");
         if (user.isPresent()) {
-            String appUrl = "http://localhost:3000";
+            System.out.println("2");
+            String appUrl = "http://localhost:8080";
             ResetPasswordToken token = new ResetPasswordToken();
             user.get().setResetPasswordToken(token);
             userServiceImpl.saveUser(user.get());
@@ -52,25 +54,17 @@ public class PasswordController {
                     + "/reset-password/" + token.getTokenId());
             emailService.sendEmail(passwordResetEmail);// TODO only one walid token
             logger.info("Email for password reset send successfully");
-        }
-    }
-    @GetMapping("/reset-password")
-    public void resetPasswordPage(@RequestParam("token") UUID token) {
-        Optional<User> user = userServiceImpl.getUserByToken(token);
-        if (user.isPresent()) { // Token found in DB
-            System.out.println("Add parameter token: " + token);
-        } else { // Token not found in DB
-            System.out.println("error message");
+            System.out.println("3");
         }
     }
 
     @PutMapping("/reset-password/{token}")     // TODO change password to request body
-    public void setNewPassword(@PathVariable("token") UUID token){
+    public void setNewPassword(@PathVariable("token") UUID token, @RequestBody String password){
         Optional<User> user = userServiceImpl.getUserByToken(token);
         if (user.isPresent()) {
             User resetUser = user.get();
             if (!resetUser.getResetPasswordToken().isExpired(new Date())) {
-                resetUser.setPassword(UUID.randomUUID().toString());
+                resetUser.setPassword(password);
                 resetUser.setResetPasswordToken(null);
                 userServiceImpl.saveUser(resetUser);
             } else {
