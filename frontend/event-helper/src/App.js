@@ -6,10 +6,11 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
-import RegistrationForm from "./components/RegistrationForm";
 import AddEventPage from "./pages/AddEventPage";
 import EventPage from "./pages/EventPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import RegisterForm2 from "./components/RegisterForm2";
+import RegistrationForm from "./components/RegistrationForm";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -32,7 +33,7 @@ function App() {
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="/home" element={<MainPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegistrationForm/>}/>
+                    <Route path="/register" element={<RegisterForm2/>}/>
                     <Route path="/add-event" element={<AddEventPage/>}/>
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/event/:id" element={<EventPage/>}/>

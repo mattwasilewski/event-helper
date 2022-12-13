@@ -134,9 +134,12 @@ export default function RegistrationForm() {
                 password: password
             })
         };
-        fetch('http://localhost:3000/registration', requestOptions)
+        fetch('http://localhost:3000/api/registration', requestOptions)
             .then(response => response.json())
-
+        console.log(name);
+        console.log(age);
+        console.log(email);
+        console.log(password);
         navigate("/home")
 
     }

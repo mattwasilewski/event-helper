@@ -1,5 +1,8 @@
 import LoginForm from "../components/LoginForm";
 import React, {useState} from "react";
+import LoginForm2 from "../components/LoginForm2";
+import RecommendedEvents from "../components/event/RecommendedEvents";
+import RegisterForm2 from "../components/RegisterForm2";
 
 export default function LoginPage() {
 
@@ -39,7 +42,8 @@ export default function LoginPage() {
                     <button onClick={Logout}>Logout</button>
                 </div>
             ) : (
-                <LoginForm Login={Login} error={error} />
+                <LoginForm2 Login={Login} error={error}/>
+                // <LoginForm Login={Login} error={error} />
             )}
         </div>
     )
