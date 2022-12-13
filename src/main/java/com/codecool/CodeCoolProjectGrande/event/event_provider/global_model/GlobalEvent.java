@@ -1,19 +1,10 @@
 package com.codecool.CodeCoolProjectGrande.event.event_provider.global_model;
 
-
-
-import java.util.List;
 import java.util.UUID;
-
-import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.Image;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

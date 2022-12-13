@@ -8,6 +8,7 @@ import CalendarTile from "../components/utils/CalendarTile";
 import SubscribePanel from "../components/utils/SubscribePanel"
 import {Container} from "@mui/material";
 
+
 export default function EventPage() {
 
 
@@ -86,6 +87,8 @@ export default function EventPage() {
 
 
     }
+
+
 
     return (
         <div>

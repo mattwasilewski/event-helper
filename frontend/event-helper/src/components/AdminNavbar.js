@@ -14,6 +14,7 @@ export default function AdminNavbar() {
             <MenuItem> <a href="https://sentry.io/organizations/event-helper/issues/?referrer=sidebar">React Logs</a> </MenuItem>
             <MenuItem> <a href="/home">Home</a> </MenuItem>
             <MenuItem> <a href="http://localhost:8080/api/events/data">Update Wroclaw data</a> </MenuItem>
+            <MenuItem> <a href="http://localhost:8080/api/events/global-data">Update Global data</a> </MenuItem>
             </main>
         </Menu>
     </Sidebar>
