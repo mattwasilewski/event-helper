@@ -35,7 +35,7 @@ export default function EventPage() {
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                userId: "b0c79ff6-6a47-4541-acbc-a2cc0e9138cd" })
+                userId: "bf199137-647e-4808-ae17-9110a1072e90" })
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))

@@ -11,7 +11,7 @@ export const OrganizedByUser = (props) => {
     }, [props.userId]);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:3000/api/events/organised-by-user/${props.userId}&0&5`);
+        const response = await fetch(`http://localhost:3000/api/events/assign-to-user/${props.userId}&0&5`);
         const data = await response.json();
         setEvents(data);
     }

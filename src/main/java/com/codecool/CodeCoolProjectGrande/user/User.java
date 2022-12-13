@@ -47,11 +47,11 @@ public class User {
     @OneToOne(cascade=CascadeType.ALL)
     private BanToken banToken;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "assignedUsers")
-    private Set<Event> events = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "assignedUsers", fetch = FetchType.EAGER)
+//    private Set<Event> events = new HashSet<>();
 
-    public void addEvent(Event event) {
-        events.add(event);
-    }
+//    public void addEvent(Event event) {
+//        events.add(event);
+//    }
 }

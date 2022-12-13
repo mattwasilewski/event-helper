@@ -27,6 +27,7 @@ public interface EventService {
 
     ResponseEntity<?> editEventDescriptionByEventId(Map data);
 
-    List<Event> getAssignedEvents(UUID userId);
+//    List<Event> getAssigned(UUID userId);
+
 
 }

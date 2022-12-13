@@ -1,16 +1,16 @@
 import Navbar from "../components/utils/Navbar";
 import Footer from "../components/utils/Footer";
 import {AboutUser} from "../components/user/AboutUser";
+import {OrganizedByUser} from "../components/event/OrganizedByUser";
 
 export default function UserPage() {
-
 
 
     return(
         <div>
             <Navbar/>
-            <AboutUser userId={"ef077324-4b6f-4919-9c2b-7dbe55fdcc70"}/>
-            {/*<AssignedEvents userId={"b0c79ff6-6a47-4541-acbc-a2cc0e9138cd"}/>*/}
+            <AboutUser userId={"bf199137-647e-4808-ae17-9110a1072e90"}/>
+            {/*<OrganizedByUser userId={"bf199137-647e-4808-ae17-9110a1072e90"}/>*/}
             <Footer/>
         </div>
     )

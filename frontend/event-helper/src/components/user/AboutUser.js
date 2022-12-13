@@ -14,6 +14,7 @@ export const AboutUser = (props) => {
         const response = await fetch(`http://localhost:3000/api/user/${props.userId}`);
         const data = await response.json();
         setUser(data);
+        console.log("Otrzymany user:")
         console.log(data)
     }
 
@@ -24,6 +25,7 @@ export const AboutUser = (props) => {
             <p>User email: {user.email}</p>
             <p>User age: {user.age}</p>
             <p>User image: {user.imgUrl}</p>
+            <p>--------------{user.events}</p>
             <OrganizedByUser userId={props.userId}/>
         </>
     )

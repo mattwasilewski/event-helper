@@ -2,11 +2,8 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
-import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -73,12 +70,9 @@ public class EventController {
     }
 
 
-    @GetMapping("organised-by-user/{userId}&{page}&{size}")
+    @GetMapping("assign-to-user/{userId}&{page}&{size}")
     public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
-        System.out.println("Działa, size:" + size);
-        List <Event> evenst = eventService.getAssigned(userId);
-        System.out.println(evenst);
-        System.out.println(evenst.size());
+        List <Event> evenst = eventService.getAssignedEvents(userId);
         return evenst;
     }
 

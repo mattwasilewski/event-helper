@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 @Repository
@@ -26,11 +25,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                 e.location, e.logo, e.name, e.price, e.public_event, e.start_date
             FROM events e
             JOIN assigned_users ON assigned_users.event_id = e.event_id
-            WHERE assigned_users.user_id = 'ef077324-4b6f-4919-9c2b-7dbe55fdcc70'
-            """)                            //'b0c79ff6-6a47-4541-acbc-a2cc0e9138cd'
+            WHERE assigned_users.user_id = 'bf199137-647e-4808-ae17-9110a1072e90'
+            """)
     List<Event> getAssignedEventsToUser();
 
-    List<Event> findAllByAssignedUsers(UUID userid);
+    List<Event> findAllByAssignedUsersIn(Set<User> assignedUsers);
 
 
 

@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -112,13 +110,12 @@ public class EventServiceImpl implements EventService {
                 event.endDate);
     }
 
-    @Override
     public List<Event> getAssignedEvents(UUID userId) {
-        return null;
-    }
-
-    public List<Event> getAssigned(UUID userId) {
-        return eventRepository.findAllByAssignedUsers(userId);
+        User user = userRepository.findUserByUserId(userId).get();
+        Set<User> set = new HashSet<>();
+        set.add(user);
+        System.out.println(set.size());
+        return eventRepository.findAllByAssignedUsersIn(set);
     }
 
 
