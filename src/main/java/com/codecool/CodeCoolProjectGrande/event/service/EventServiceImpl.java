@@ -86,8 +86,6 @@ public class EventServiceImpl implements EventService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
-
     public void saveWroclawData() {
         int firstPage = 10;
         int lastPage = 20;
@@ -112,6 +110,11 @@ public class EventServiceImpl implements EventService {
                 EventType.CONCERT,
                 event.startDate,
                 event.endDate);
+    }
+
+    @Override
+    public List<Event> getAssignedEvents(UUID userId) {
+        return null;
     }
 
     public List<Event> getAssigned(UUID userId) {
