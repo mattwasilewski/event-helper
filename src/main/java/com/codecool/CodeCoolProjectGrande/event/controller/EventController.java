@@ -69,6 +69,11 @@ public class EventController {
         eventService.saveWroclawData();
     }
 
+    @GetMapping("global-data")
+    public void saveGlobalData() {
+        eventService.saveGlobalData();
+    }
+
 
     @GetMapping("assign-to-user/{userId}&{page}&{size}")
     public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
