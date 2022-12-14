@@ -31,6 +31,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findAllByAssignedUsersIn(Set<User> assignedUsers);
 
+    void removeEventByEventId(UUID eventId);
+
 
 
 }
