@@ -2,6 +2,7 @@ package com.codecool.CodeCoolProjectGrande.event;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
@@ -13,8 +14,8 @@ import java.time.*;
 import java.util.*;
 
 
+@Builder
 @AllArgsConstructor
-
 @NoArgsConstructor
 @Data
 @Entity
