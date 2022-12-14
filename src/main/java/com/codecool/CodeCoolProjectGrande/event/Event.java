@@ -41,6 +41,9 @@ public class Event {
     private EventType eventType;
     private UUID userId;
     @JsonIgnore
+    private Double latitude;
+    private Double longitude;
+    private String source;
     @ManyToMany
     @JoinTable(
             name = "assigned_users",
@@ -48,7 +51,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignedUsers = new HashSet<>();
 
-    public Event(String name, String description, String url, String location, String logo, EventType eventType, String startDate, String endDate) {
+    public Event(String name, String description, String url, String location, String logo, EventType eventType, String startDate, String endDate, Double latitude, Double longitude, String source) {
         this.name = name;
         this.description = description;
         this.linkToEventPage = url;
@@ -58,6 +61,9 @@ public class Event {
         this.eventStatus = EventStatus.TO_VERIFICATION;
         this.startDate = parseStringToLocalDate(startDate);
         this.endDate = parseStringToLocalDate(endDate);
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.source = source;
 
     }
 
