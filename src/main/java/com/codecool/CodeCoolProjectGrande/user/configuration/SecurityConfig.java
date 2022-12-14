@@ -73,7 +73,7 @@ public class SecurityConfig {
         }).and().csrf().disable()
                 .authorizeRequests() // a było: authorizeHttpRequests()
 //                .antMatchers("/add-event").hasRole(USER)
-                .antMatchers(HttpMethod.POST, "/api/events/create-event").hasAnyAuthority(USER)//TODO: CHECK IF SOMETHING WRONG WITH THE USER ROLES
+                .antMatchers(HttpMethod.POST, "/api/events/create-event").permitAll()//TODO: CHECK IF SOMETHING WRONG WITH THE USER ROLES
                 .antMatchers("/css/**","/js/**","/images/**").permitAll()
                 .antMatchers( "/applications").authenticated()
                 .antMatchers("/home").permitAll()
