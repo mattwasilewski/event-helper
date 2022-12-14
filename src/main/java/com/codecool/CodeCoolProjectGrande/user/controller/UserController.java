@@ -34,9 +34,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/user/{userId}")
-    public Optional<User> getUserById(@PathVariable UUID userId) {
-        return userService.getUserById(userId);
+    @GetMapping("/user/{userEmail}")
+    public Optional<User> getUserById(@PathVariable String userEmail) {
+        return userService.getUserByEmail(userEmail);
     }
 
     @PostMapping("/user")
