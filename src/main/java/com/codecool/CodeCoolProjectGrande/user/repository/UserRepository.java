@@ -1,4 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.user.repository;
+import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findUserByEmail(String email);
     List<User> findByEmail(String email);
     Optional<User> findUserByResetPasswordTokenTokenId(UUID token);
+
+
 }

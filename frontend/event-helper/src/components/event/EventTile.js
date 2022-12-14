@@ -7,6 +7,9 @@ export default function EventTile(props) {
 
     const [desc, setDesc] = useState(props.description);
 
+    const regex = /(<([^>]+)>)/ig;
+    const result = desc.replace(regex, '');
+
     useEffect(() => {
         formatEventProps().then(r => console.log(r))
 
@@ -33,7 +36,7 @@ export default function EventTile(props) {
                         {name}
                     </h4>
                     <p id="event-desc">
-                        {desc}
+                        {result}
                     </p>
                     <div className="user">
                         <div className="user-info">
