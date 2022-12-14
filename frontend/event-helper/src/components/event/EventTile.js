@@ -28,17 +28,17 @@ export default function EventTile(props) {
                     <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover"/>
                 </div>
                 <div className="card-body">
-                    <span className={`tag ${props.eventType}`}>{props.eventType}</span>
-                    <h4>
+                    <span className={`tag ${props.eventType}`} id="event-type">{props.eventType}</span>
+                    <h4 id="event-names">
                         {name}
                     </h4>
-                    <p>
+                    <p id="event-desc">
                         {desc}
                     </p>
                     <div className="user">
                         <div className="user-info">
-                            <h5>{props.location}</h5>
-                            <small>{moment.utc(props.startDate).local().startOf('seconds').fromNow()}</small>
+                            <h5 id="event-location">{props.location}</h5>
+                            <small id="event-date">{moment.utc(props.startDate).local().startOf('seconds').fromNow()}</small>
                         </div>
                     </div>
                 </div>
