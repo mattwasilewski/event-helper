@@ -2,8 +2,23 @@ import "./EventPage.css";
 import Navbar from "../components/utils/Navbar";
 import EventTile from "../components/event/EventTile";
 import React from "react";
+import {useEffect, useState} from "@types/react";
 
-export default function UserPage() {
+export default function UserPage(props) {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        getUser().then(r => console.log(r))
+
+    }, [props.userId]);
+
+    const getUser = async () =>{
+        const response = await fetch(`http://localhost:3000/api/user/${props.userId}`);
+        const data = await response.json();
+        setUser(data);
+
+    }
 
     return (
         <>
@@ -11,7 +26,7 @@ export default function UserPage() {
             <div className="wrapper">
                 <div className="left">
                     <img src="https://i.imgur.com/cMy8V5j.png" alt="user" width="80%"/>
-                    <h4>Alex William</h4>
+                    <h4>{user.name}</h4>
                     <div className="social_media">
                         <ul>
                             <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
@@ -26,7 +41,7 @@ export default function UserPage() {
                         <div className="info_data">
                             <div className="data">
                                 <h4>Email</h4>
-                                <p>alex@gmail.com</p>
+                                <p>{user.email}</p>
                             </div>
                             <div className="data">
                                 <h4>Location</h4>
@@ -34,7 +49,7 @@ export default function UserPage() {
                             </div>
                             <div className="data">
                                 <h4>Age</h4>
-                                <p>22</p>
+                                <p>{user.age}</p>
                             </div>
                         </div>
                     </div>
@@ -44,54 +59,16 @@ export default function UserPage() {
                         <div className="projects_data">
                             <div className="serv">
                                 <ul>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
-                                    <li><EventTile name={"Fajny"}
-                                                   location={"Dupa"}
-                                                   eventId={"aaaa"}
-                                                   logo={"event.logo"}
-                                                   startDate={"event.startDate"}
-                                                   eventType={"event.eventType"}
-                                                   description={"EYP"}
-                                    /></li>
+                                    {user.events.map((event) => (
+                                        <li><EventTile name={event.name}
+                                                   location={event.location}
+                                                   eventId={event.eventId}
+                                                   logo={event.logo}
+                                                   startDate={event.startDate}
+                                                   eventType={event.eventType}
+                                                   description={event.description}
+                                        /></li>
+                                    ))}
                                 </ul>
                             </div>
 

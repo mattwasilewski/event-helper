@@ -10,6 +10,9 @@ import RegistrationForm from "./components/RegistrationForm";
 import AddEventPage from "./pages/AddEventPage";
 import EventPage from "./pages/EventPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import UserPage from "./pages/UserPage";
+import EventPage2 from "./pages/EventPage2";
+import RegisterForm2 from "./components/RegisterForm2";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
