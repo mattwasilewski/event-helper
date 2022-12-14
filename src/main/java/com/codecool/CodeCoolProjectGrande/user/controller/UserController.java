@@ -34,11 +34,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("{userId}")
-    public User getUserByID(@PathVariable UUID userId) {
-        User user = userService.getUserById(userId).orElse(new User());
-//        System.out.println(user.getEvents());
-        return user;
+    @GetMapping("/user/{userId}")
+    public Optional<User> getUserById(@PathVariable UUID userId) {
+        return userService.getUserById(userId);
     }
 
     @PostMapping("/user")

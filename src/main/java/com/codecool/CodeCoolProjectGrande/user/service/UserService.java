@@ -1,6 +1,5 @@
 package com.codecool.CodeCoolProjectGrande.user.service;
 
-import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.auth.LoginRequest;
 import org.springframework.http.ResponseCookie;
