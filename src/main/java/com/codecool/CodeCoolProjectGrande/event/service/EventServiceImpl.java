@@ -6,6 +6,7 @@ import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.ExternalEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
+import com.codecool.CodeCoolProjectGrande.event.service.EventService;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
