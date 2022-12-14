@@ -45,7 +45,6 @@ public class UserTests {
             .userType(UserType.USER)
             .banToken(initBanToken())
             .location("Warsaw")
-            .events(new HashSet<>())
             .build();
 
 
