@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import EventTile from "./EventTile";
 import Footer from "../utils/Footer";
+import authSerivce from "../../auth.serivce";
 
 const API_URl = "http://localhost:3000/api/events/";
 
@@ -19,6 +20,7 @@ function CreateEventForm() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [publicEvent, setPublicEvent] = useState("");
+    const [logo, setLogo] = useState("");
 
 
     const handleInputChange = (e) => {
@@ -51,14 +53,24 @@ function CreateEventForm() {
             case "publicEvent":
                 setPublicEvent(value)
                 break;
+            case "logo":
+                setLogo(value);
+                break;
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit  = (e) => {
+        if (!authSerivce.getCurrentUser()){
+            navigate('/login')
+            return
+        }
+        console.log("przeszlo jest user")
         e.preventDefault()
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            headers: { 'Content-Type': 'application/json; charset=UTF-8'
+
+            },
             body: JSON.stringify({
                 name: name,
                 startDate: startDate,
@@ -69,13 +81,12 @@ function CreateEventForm() {
                 description: description,
                 price: price,
                 publicEvent: publicEvent,
-                eventStatus: "TO_VERIFICATION"
-            })   // TODO add userId after login implementation
+                logo:logo,
+                eventStatus: "TO_VERIFICATION"})   // TODO add userId after login implementation
         };
-        // fetch('http://localhost:3000/api/events/create-event', requestOptions)
-        //     .then(response => console.log(response.status))
-        // navigate('/home');
-        return axios.post(API_URl + "create-event", requestOptions).then(response => console.log(response.status))
+        fetch('http://localhost:3000/api/events/create-event', requestOptions)
+            .then(response => console.log(response.status))
+        navigate('/home');
     }
 
     return (
@@ -97,11 +108,11 @@ function CreateEventForm() {
                 </select>
                 {/*    </div>*/}
                 {/*    <div>*/}
-                <input type="date" value={startDate} onChange={(e) => handleInputChange(e)}
+                <input type="datetime-local" value={startDate} onChange={(e) => handleInputChange(e)}
                        id="startDate" className="input"/>
                 {/*    </div>*/}
                 {/*    <div>*/}
-                <input type="date" value={endDate} onChange={(e) => handleInputChange(e)}
+                <input type="datetime-local" value={endDate} onChange={(e) => handleInputChange(e)}
                        id="endDate" className="input"/>
                 <input type="number" value={price} onChange={(e) => handleInputChange(e)}
                        id="price" className="input" placeholder="Price"/>
@@ -113,6 +124,8 @@ function CreateEventForm() {
                 {/*    <div>*/}
                 <input type="text" value={link} onChange={(e) => handleInputChange(e)}
                        id="link" className="input" placeholder="Link to event page"/>
+                <input type="text" value={logo} onChange={(e) => handleInputChange(e)}
+                       id="logo" className="input" placeholder="Image URL"/>
                 {/*    </div>*/}
                 {/*    <div>*/}
 

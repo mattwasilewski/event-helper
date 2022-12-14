@@ -1,4 +1,5 @@
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const API_URL = "http://localhost:3000/api/auth/";
 
@@ -30,9 +31,6 @@ const login = (email, password) => {
         .post(API_URL + "login", json, customConfig).then((response) => {
             localStorage.setItem("user", JSON.stringify(response.data))
             const user = JSON.parse(localStorage.getItem('user'))
-            console.log('moj user: ' + user.value)
-            const zabawa = parseJwt(user.value)
-            console.log('login chyba hehe: ' + zabawa.sub)
         })
 }
 
@@ -51,6 +49,7 @@ const getCurrentUser = () => {
 const logout = () => {
     return axios.post(API_URL + "logout").then((response) => {
         localStorage.removeItem("user");
+        useNavigate("/home");
         return response.data;
     });
 };

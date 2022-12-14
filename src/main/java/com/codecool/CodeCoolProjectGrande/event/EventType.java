@@ -4,5 +4,6 @@ public enum EventType {
     FESTIVAL,
     CONCERT,
     EXHIBITION,
-    PARTY
+    PARTY,
+    OTHER
 }

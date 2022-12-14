@@ -19,7 +19,7 @@ import java.util.UUID;
 @Controller
 @ResponseBody
 @CrossOrigin
-@RequestMapping("/api/user/")
+@RequestMapping("/api/")
 public class UserController {
     private final UserServiceImpl userService;
 
@@ -34,12 +34,15 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/user/{userEmail}")
+    @GetMapping("user/{userEmail}")
     public Optional<User> getUserById(@PathVariable String userEmail) {
+        System.out.println(userEmail);
+        System.out.println(userService.getUserByEmail(userEmail).get().getEmail());
+
         return userService.getUserByEmail(userEmail);
     }
 
-    @PostMapping("/user")
+    @PostMapping("user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
 //        userService.createUser(user);
         userService.saveUser(user);
