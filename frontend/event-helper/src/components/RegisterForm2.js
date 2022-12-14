@@ -1,4 +1,4 @@
-import "./aa.css";
+import "../css/LoginAndRegister.css";
 import {useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router-dom";

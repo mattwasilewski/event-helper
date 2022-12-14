@@ -27,7 +27,7 @@ export default function MainPage() {
                     dolor malesuada egestas tristique. Praesent feugiat posuere dapibus.
                 </div>
                 <a href="/add-event">
-                    <button id="add-event" className="add-event">Add Event</button>
+                    <button id="add-event" className="add-event">Create Event</button>
                 </a>
             </div>
 
