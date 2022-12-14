@@ -2,7 +2,6 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
-import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +67,13 @@ public class EventController {
     @GetMapping("data")
     public void saveWroclawData() {
         eventService.saveWroclawData();
+    }
+
+
+    @GetMapping("assign-to-user/{userId}&{page}&{size}")
+    public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
+        List <Event> evenst = eventService.getAssignedEvents(userId);
+        return evenst;
     }
 
 

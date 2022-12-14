@@ -66,11 +66,10 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<?> assignUserToEvent(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
-        //TODO czy zwracac responseentity/ true/false
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK); // TODO czy zwracać statusy http albo true/false albo void
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -80,12 +79,10 @@ public class EventServiceImpl implements EventService {
         if(event.isPresent()){
             event.get().setDescription(String.valueOf(data.get("description")));
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);     // TODO to samo co wyżej
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
 
     public void saveWroclawData() {
         int firstPage = 10;
@@ -113,6 +110,13 @@ public class EventServiceImpl implements EventService {
                 event.endDate);
     }
 
+    public List<Event> getAssignedEvents(UUID userId) {
+        User user = userRepository.findUserByUserId(userId).get();
+        Set<User> set = new HashSet<>();
+        set.add(user);
+        System.out.println(set.size());
+        return eventRepository.findAllByAssignedUsersIn(set);
+    }
 
 
 }

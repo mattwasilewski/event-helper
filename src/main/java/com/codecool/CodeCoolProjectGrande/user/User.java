@@ -2,6 +2,7 @@ package com.codecool.CodeCoolProjectGrande.user;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,10 +47,11 @@ public class User {
     @OneToOne(cascade=CascadeType.ALL)
     private BanToken banToken;
 
-    @ManyToMany(mappedBy = "assignedUsers")
-    private Set<Event> events = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "assignedUsers", fetch = FetchType.EAGER)
+//    private Set<Event> events = new HashSet<>();
 
-    public void addEvent(Event event) {
-        events.add(event);
-    }
+//    public void addEvent(Event event) {
+//        events.add(event);
+//    }
 }

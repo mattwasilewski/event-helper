@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.user.User;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -25,5 +26,8 @@ public interface EventService {
     ResponseEntity<?> assignUserToEvent(Map data);
 
     ResponseEntity<?> editEventDescriptionByEventId(Map data);
+
+//    List<Event> getAssigned(UUID userId);
+
 
 }

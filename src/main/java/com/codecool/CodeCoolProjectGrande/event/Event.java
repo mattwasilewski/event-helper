@@ -1,5 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.event;
 import com.codecool.CodeCoolProjectGrande.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class Event {
     @Enumerated
     private EventType eventType;
     private UUID userId;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "assigned_users",
