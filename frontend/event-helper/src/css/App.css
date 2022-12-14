@@ -25,7 +25,23 @@ body.dark{
   color: #a99d9d;
 }
 #submit-btn{
-  margin-left: 20%;
+  /*margin-left: 20%;*/
+  background: -webkit-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+  background: -o-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+  background: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+  border: none;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 241px;
+  height: 58px;
+  text-transform: uppercase;
+  color: white;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
 }
 /*.nav{*/
 /*  display: flex;*/
@@ -317,62 +333,63 @@ h4{
   border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.input {
-  box-sizing: border-box;
+/*.input {*/
+/*  box-sizing: border-box;*/
 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 12px 28px;
-  gap: 10px;
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  align-items: flex-start;*/
+/*  padding: 12px 28px;*/
+/*  gap: 10px;*/
 
-  position: relative;
-  width: 486.13px;
-  height: 44px;
-  left: 192.23px;
-  top: 100px;
+/*  position: relative;*/
+/*  width: 486.13px;*/
+/*  height: 44px;*/
+/*  left: 192.23px;*/
+/*  top: 100px;*/
 
-  background: #E9E9E9;
-  border: 1px solid #000000;
-  border-radius: 5px;
-}
+/*  background: #E9E9E9;*/
+/*  border: 1px solid #000000;*/
+/*  border-radius: 5px;*/
+/*}*/
 .big-input {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*align-items: flex-start;*/
   padding: 12px 28px;
-  gap: 10px;
+  /*gap: 10px;*/
 
-  position: relative;
-  width: 486.13px;
+  /*position: relative;*/
+  width: 80%;
   height: 140px;
-  left: 192.23px;
-  top: 100px;
+  resize: none;
+  /*left: 192.23px;*/
+  /*top: 100px;*/
 
-  background: #E9E9E9;
-  border: 1px solid #000000;
-  border-radius: 5px;
+  /*background: #E9E9E9;*/
+  /*border: 1px solid #000000;*/
+  /*border-radius: 5px;*/
 }
 .btn {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 12px 26px 12px 28px;
-  gap: 10px;
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*align-items: flex-start;*/
+  /*padding: 12px 26px 12px 28px;*/
+  /*gap: 10px;*/
 
-  position: absolute;
-  width: 120px;
-  height: 44px;
-  left: 560px;
-  top: 750px;
+  /*position: absolute;*/
+  /*width: 120px;*/
+  /*height: 44px;*/
+  /*left: 560px;*/
+  /*top: 750px;*/
 
-  background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);
-  border: 1px solid #000000;
-  border-radius: 5px;
+  /*background: linear-gradient(92.51deg, #F0F0F0 0.48%, #C2C2C2 99.99%, #8054FF 100%);*/
+  /*border: 1px solid #000000;*/
+  /*border-radius: 5px;*/
 }
 
 
@@ -637,9 +654,9 @@ h4{
 /*.footer-events ul li{*/
 /*  padding: 5px;*/
 /*}*/
-#name{
-  margin-top: 20%;
-}
+/*#name{*/
+/*  margin-top: 20%;*/
+/*}*/
 /*.footer-user{*/
 /*  float: left;*/
 /*  margin-top: -10%;*/
@@ -742,17 +759,17 @@ a{
   font-weight: bold;
   padding-top: 10%;
 }
-#name{
-  width: 350px;
-  height: 44px;
-  left: 25%;
-  top: 28%;
+/*#name{*/
+/*  width: 350px;*/
+/*  height: 44px;*/
+/*  left: 25%;*/
+/*  top: 28%;*/
 
-  background: #E9E9E9;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  padding: 5px;
-}
+/*  background: #E9E9E9;*/
+/*  border: 1px solid #000000;*/
+/*  border-radius: 5px;*/
+/*  padding: 5px;*/
+/*}*/
 #password{
   width: 350px;
   height: 44px;
@@ -837,3 +854,42 @@ ul li:focus {
 #event-name{
   color: white;
 }
+.add-event-form{
+  background-color: #ffffff;
+  height: 1000px;
+  width: 800px;
+  margin-top: 10%;
+  margin-left: 30%;
+  border-radius: 125px;
+  text-align: center;
+  float: left;
+}
+.add-event-form h1{
+  top:10%;
+  padding: 5%;
+}
+.add-event-form #name,#startDate,#endDate,#location,#link,#eventType,#publicEvent,#price,textarea{
+  font-size: 16px;
+  font-weight: normal;
+  background: rgba(57, 57, 57, 0.07);
+  margin: 12.5px 0;
+  height: 68px;
+  border: none;
+  padding: 0 30px;
+  border-radius: 10px;
+  width: 80%;
+}
+#startDate, #endDate,#location, #link{
+  width: 38%;
+}
+#startDate, #location{
+  margin-right: 4%;
+}
+.event-tile-preview{
+  /*display: flex;*/
+  float: left;
+  margin-top: 20%;
+  margin-left: 10%;
+  display: none;
+}
+
