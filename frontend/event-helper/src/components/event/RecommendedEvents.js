@@ -31,7 +31,6 @@ export default function RecommendedEvents() {
         )
         const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
         const data = await response.json();
-        console.log(data)
         setEvents(data);
 
     }

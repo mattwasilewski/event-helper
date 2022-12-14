@@ -6,11 +6,6 @@ import eventDj from "../assets/dj.png"
 import img from "../assets/login-img.png";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/utils/Navbar";
-import Footer from "../components/utils/Footer";
-import CalendarTile from "../components/utils/CalendarTile";
-import SubscribePanel from "../components/utils/SubscribePanel"
-import {Container} from "@mui/material";
-
 
 export default function EventPage() {
 
@@ -22,7 +17,7 @@ export default function EventPage() {
 
     }, []);
 
-    const getEvents = async () => {
+    const getEvents = async () =>{
         const response = await fetch(`http://localhost:3000/api/events/${id}`, {
             method: 'GET',
         });
@@ -35,15 +30,12 @@ export default function EventPage() {
         e.preventDefault()
         const requestOptions = {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'
-            },
+                'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                userId: "af8afa53-4d00-4482-9758-c174b238dddb"
-            })
+                userEmail: "af8afa53-4d00-4482-9758-c174b238dddb" })
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
@@ -51,7 +43,7 @@ export default function EventPage() {
 
     const [editable, setEditable] = useState(["false"]);
     const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
-    const enableEditing = () => {
+    const enableEditing = () =>{
         setEditable("true");
         setButton(saveButton)
     }
@@ -60,15 +52,12 @@ export default function EventPage() {
     const editEventDescription = async () => {
         const requestOptions = {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'
-            },
+                'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                description: document.getElementById("hah").innerText
-            })
+                description: document.getElementById("hah").innerText })
         }
         fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
             .then(response => console.log(response.status))
