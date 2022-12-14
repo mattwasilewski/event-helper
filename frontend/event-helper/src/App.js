@@ -9,6 +9,7 @@ import { CaptureConsole } from '@sentry/integrations';
 import RegistrationForm from "./components/RegistrationForm";
 import AddEventPage from "./pages/AddEventPage";
 import EventPage from "./pages/EventPage";
+import axios from "axios";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 Sentry.init({
@@ -20,6 +21,7 @@ Sentry.init({
     ],
     tracesSampleRate: 1.0,
 });
+
 
 
 
