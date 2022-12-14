@@ -41,7 +41,7 @@ class EventServiceTests {
 
     @Test
     @Order(2)
-    void removeEventTest() {
+    void removeEventTest() {               // TODO not working
         eventService.removeEvent(event);
         Assertions.assertFalse(eventService.getEventByID(event.getEventId()).isPresent());
     }
