@@ -16,6 +16,6 @@ public interface UserService {
 
     void createUser(User user);
 
-    Optional<User> getUserByID(UUID userId);
+    Optional<User> getUserById(UUID userId);
 
 }

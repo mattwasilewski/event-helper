@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public Optional<User> getUserByID(UUID userId) {
+    public Optional<User> getUserById(UUID userId) {
         return userRepository.findById(userId);
     }
 

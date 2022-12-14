@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public Optional<User> getUserByID(@PathVariable UUID userId) {
-        return userService.getUserByID(userId);
+    public Optional<User> getUserById(@PathVariable UUID userId) {
+        return userService.getUserById(userId);
     }
 
     @PostMapping("/user")

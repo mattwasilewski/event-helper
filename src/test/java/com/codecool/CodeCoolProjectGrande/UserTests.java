@@ -58,8 +58,8 @@ public class UserTests {
 
     @Test
     public void saveUserTest(){
-        userService.createUser(user);
-        Assertions.assertTrue(userService.getUserByID(user.getUserId()).isPresent());
+        userService.saveUser(user);
+        Assertions.assertTrue(userService.getUserById(user.getUserId()).isPresent());
         Assertions.assertEquals(1, userService.getUsers().size());
     }
 
