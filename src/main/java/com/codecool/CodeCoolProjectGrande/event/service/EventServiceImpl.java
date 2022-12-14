@@ -52,8 +52,14 @@ public class EventServiceImpl implements EventService {
 
 
     public void createEvent(Event event) {
-        if (!eventRepository.findEventByName(event.getName()).isPresent()) {
+        if (eventRepository.findEventByEventId(event.getEventId()).isEmpty()) {
             eventRepository.save(event);
+        }
+    }
+
+    public void removeEvent(Event event) {
+        if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
+            eventRepository.removeEventByEventId(event.getEventId());
         }
     }
 
@@ -61,8 +67,8 @@ public class EventServiceImpl implements EventService {
         eventRepository.saveAll(events);
     }
 
-    public List<Event> findEventsByEventType(EventType eventType){
-        return eventRepository.findEventsByEventType(eventType);
+    public List<Event> findEventsByEventType(EventType eventType, int page, int size){
+        return eventRepository.findEventsByEventType(eventType, PageRequest.of(page, size));
     }
 
     public List<Event> sortEvents(String sortBy, boolean ascending, String phrase, int page, int size) {
@@ -76,7 +82,7 @@ public class EventServiceImpl implements EventService {
 
     public ResponseEntity<?> assignUserToEvent(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
-        Optional<User> user = userRepository.findUserByUserId(UUID.fromString(String.valueOf(data.get("userId"))));
+        Optional<User> user = userRepository.findUserByEmail(String.valueOf(data.get("userEmail")));
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
