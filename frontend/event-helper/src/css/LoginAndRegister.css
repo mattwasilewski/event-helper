@@ -16,7 +16,7 @@ img {
     position: relative;
     height: 100vh;
     width: 1194px;
-    background: url("src/assets/login-image.jpg") no-repeat center center scroll;
+    background: url("../assets/login-image.jpg") no-repeat center center scroll;
     background-size: cover;
     float: left;
     -webkit-animation: bgslide 2.3s forwards;
