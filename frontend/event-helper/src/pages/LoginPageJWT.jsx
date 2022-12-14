@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import AuthService from "../auth.serivce";
+import {useNavigate} from "react-router-dom";
+import {navigate} from "react-big-calendar/lib/utils/constants";
+import authSerivce from "../auth.serivce";
 
 function Login() {
+
+    let navigate = useNavigate();
 
     const [errors, setErrors] = useState("");
 
@@ -22,6 +27,9 @@ function Login() {
         AuthService.login(email, password)
             .then(res => {
                 console.log("Request complete! response:", res);
+                if (authSerivce.getCurrentUser()){
+                    navigate('/home')
+                }
             }).catch((error) => {
             console.log("login error", error);
             setErrors("login error");

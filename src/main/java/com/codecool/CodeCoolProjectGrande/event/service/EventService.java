@@ -21,7 +21,7 @@ public interface EventService {
 
     void createEvent(Event event);
 
-    List<Event> findEventsByEventType(EventType eventType);
+    List<Event> findEventsByEventType(EventType eventType, int page, int size);
 
     List<Event> sortEvents(String sortBy, boolean ascending, String phrase, int page, int size);
 

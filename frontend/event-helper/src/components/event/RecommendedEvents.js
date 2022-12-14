@@ -15,7 +15,7 @@ export default function RecommendedEvents() {
     }, []);
 
     const getEvents = async () =>{
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL`);
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
         const data = await response.json();
         setEvents(data);
     }
@@ -29,7 +29,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL`);
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
         const data = await response.json();
         setEvents(data);
 
@@ -43,7 +43,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/CONCERT`);
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/CONCERT&0&5`);
         const data = await response.json();
         setEvents(data);
 
@@ -57,7 +57,7 @@ export default function RecommendedEvents() {
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/PARTY`);
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/PARTY&0&5`);
         const data = await response.json();
         setEvents(data);
     }
