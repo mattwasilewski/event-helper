@@ -61,8 +61,8 @@ public class EventServiceImpl implements EventService {
         eventRepository.saveAll(events);
     }
 
-    public List<Event> findEventsByEventType(EventType eventType){
-        return eventRepository.findEventsByEventType(eventType);
+    public List<Event> findEventsByEventType(EventType eventType, int page, int size){
+        return eventRepository.findEventsByEventType(eventType, PageRequest.of(page, size));
     }
 
     public List<Event> sortEvents(String sortBy, boolean ascending, String phrase, int page, int size) {

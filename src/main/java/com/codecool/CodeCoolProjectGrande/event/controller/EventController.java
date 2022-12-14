@@ -42,9 +42,10 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/getEventByType/{eventType}")
-    public List<Event> getEventsByEventType(@PathVariable EventType eventType){
-        return eventService.findEventsByEventType(eventType);
+    @GetMapping("/getEventByType/{eventType}&{page}&{size}")
+    public List<Event> getEventsByEventType(@PathVariable EventType eventType, @PathVariable int page,
+                                            @PathVariable int size) {
+        return eventService.findEventsByEventType(eventType, page, size);
 
     }
 
