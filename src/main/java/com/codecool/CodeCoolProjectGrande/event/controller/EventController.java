@@ -45,6 +45,7 @@ public class EventController {
     @GetMapping("/getEventByType/{eventType}&{page}&{size}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType, @PathVariable int page,
                                             @PathVariable int size) {
+        System.out.println(eventService.findEventsByEventType(eventType,page,size));
         return eventService.findEventsByEventType(eventType, page, size);
 
     }

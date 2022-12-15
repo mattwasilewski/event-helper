@@ -24,7 +24,7 @@ export default function EventTile(props) {
         if(props.description.toString().length >= 300){
             setDesc(props.description.toString().substring(0,297)+"...");
         }
-        if(props.description.toString().length >= 30){
+        if(props.location.toString().length >= 30){
             setLocation(props.location.toString().substring(0,27)+"...");
         }
     }

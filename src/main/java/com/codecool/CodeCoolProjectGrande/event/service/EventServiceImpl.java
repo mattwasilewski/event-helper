@@ -52,7 +52,8 @@ public class EventServiceImpl implements EventService {
 
 
     public void createEvent(Event event) {
-        if (eventRepository.findEventByEventId(event.getEventId()).isEmpty()) {
+        if (eventRepository.findEventByName(event.getName()).isEmpty() && !event.getName().contains("3D")
+                && !event.getName().contains("dubbing")) {
             eventRepository.save(event);
         }
     }

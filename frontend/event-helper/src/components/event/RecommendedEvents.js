@@ -22,44 +22,47 @@ export default function RecommendedEvents() {
 
 
     async function popularButtonClick() {
-        setPopularButtonStyle(function (prevState) {
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
+        const data = await response.json();
+        setEvents(data);
+        console.log(events);
+        await setPopularButtonStyle(function (prevState) {
                 if (prevState === "disabled-button")
                     setFestivalsButtonStyle("disabled-button");
                 setMusicButtonStyle("disabled-button");
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
-        const data = await response.json();
-        setEvents(data);
 
     }
 
     async function musicButtonClick() {
-        setMusicButtonStyle( function (prevState) {
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/CONCERT&0&5`);
+        const data = await response.json();
+        setEvents(data);
+        console.log(events);
+        await setMusicButtonStyle( function (prevState) {
                 if (prevState === "disabled-button")
                     setPopularButtonStyle("disabled-button");
                 setFestivalsButtonStyle("disabled-button");
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/CONCERT&0&5`);
-        const data = await response.json();
-        setEvents(data);
 
     }
 
     async function festivalsButtonClick() {
-        setFestivalsButtonStyle(function (prevState) {
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/EXHIBITION&0&5`);
+        const data = await response.json();
+        setEvents(data);
+        console.log(events);
+        await setFestivalsButtonStyle(function (prevState) {
                 if (prevState === "disabled-button")
                     setPopularButtonStyle("disabled-button");
                 setMusicButtonStyle("disabled-button");
                 return "active-button";
             }
         )
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/PARTY&0&5`);
-        const data = await response.json();
-        setEvents(data);
     }
 
 

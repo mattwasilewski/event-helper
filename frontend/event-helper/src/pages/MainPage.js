@@ -22,9 +22,11 @@ export default function MainPage() {
         <>
             <Navbar/>
             <div className="section-1 box">
-                <div id="app-desc" className="app-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                <div id="app-desc" className="app-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
                     mollis nibh quis malesuada viverra. Quisque fringilla sollicitudin est ac consectetur. Nam bibendum
                     dolor malesuada egestas tristique. Praesent feugiat posuere dapibus.
+                    {/*Your events from around the world and Wroclaw!*/}
                 </div>
                 <a href="/add-event">
                     <button id="add-event" className="add-event">Create Event</button>
@@ -33,7 +35,7 @@ export default function MainPage() {
 
             <div className="section-2 box">
 
-                <h1>Newest Events</h1>
+                <h1>Recommended Events</h1>
                 <Events sortBy="startDate" asc="descending" phrase=""/>
 
             </div>
@@ -43,12 +45,12 @@ export default function MainPage() {
                 <AllEvents/>
             </div>
 
-            <div className="section-4 box">
+            {/*<div className="section-4 box">*/}
 
-                <h1>Recommended Events</h1>
-                <RecommendedEvents/>
+            {/*    <h1>Recommended Events</h1>*/}
+            {/*    <RecommendedEvents/>*/}
 
-            </div>
+            {/*</div>*/}
             <div className="section-5 box">
                 <div className="calendar-background">
                     <CalendarTile/></div>
