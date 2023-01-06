@@ -59,7 +59,7 @@ public class PasswordServiceImpl {
         Optional<User> user = userService.getUserByToken(token);
         if (user.isPresent()) {
             User resetUser = user.get();
-            if (!resetUser.getResetPasswordToken().isExpired(new Date())) {
+            if (!resetUser.getResetPasswordToken().isExpired()) {
                 resetUser.setPassword(password);
                 resetUser.setResetPasswordToken(null);
                 userService.saveUser(resetUser);
