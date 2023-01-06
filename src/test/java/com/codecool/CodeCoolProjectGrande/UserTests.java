@@ -5,6 +5,7 @@ import com.codecool.CodeCoolProjectGrande.user.BanToken;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserType;
 import com.codecool.CodeCoolProjectGrande.user.configuration.EmailValidator;
+import com.codecool.CodeCoolProjectGrande.user.passwordreset.PasswordController;
 import com.codecool.CodeCoolProjectGrande.user.passwordreset.PasswordServiceImpl;
 import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
@@ -41,7 +42,11 @@ public class UserTests {
     private UserServiceImpl userService;
 
     @Autowired
+    private PasswordController passwordController;
+
+    @Autowired
     private PasswordServiceImpl passwordService;
+
 
 
 
@@ -64,6 +69,7 @@ public class UserTests {
         return banToken;
     }
 
+
     @Test
     public void saveUserTest(){
         when(userRepository.findAll()).thenReturn(Stream.of(user, user).collect(Collectors.toList()));
@@ -79,6 +85,25 @@ public class UserTests {
         when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
         Assertions.assertEquals(passwordService.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
 
+    }
+
+    @Test
+    public void forgotPasswordPathTest() {
+        when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordController.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
+    }
+
+    @Test
+    public void setNewPasswordPathTest() {
+        String mockPassword = "test";
+        when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), mockPassword), new ResponseEntity<>(HttpStatus.OK));
+    }
+
+    @Test
+    public void isCreatedDateOkTest() {
+        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        Assertions.assertEquals(resetPasswordToken.getCreatedDate().getTime(), new Date().getTime());
     }
 
 
@@ -109,6 +134,21 @@ public class UserTests {
     }
 
     @Test
+    public void notChangePasswordWhenTokenIsExpiredTest() {
+        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        LocalDate pastDate = LocalDate.now().minusDays(5);
+        ZoneId systemTimeZone = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = pastDate.atStartOfDay(systemTimeZone);
+        Date pastUtilDate = Date.from(zonedDateTime.toInstant());
+        resetPasswordToken.setCreatedDate(pastUtilDate);
+        resetPasswordToken.isExpired();
+        user.setResetPasswordToken(resetPasswordToken);
+        when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), "password"), new ResponseEntity<>(HttpStatus.GONE));
+    }
+
+
+    @Test
     public void isEmailValidatorWorkingWithInvalidMailTest(){
         String testEmail = "sadasdasad";
         Assertions.assertFalse(EmailValidator.patternMatches(testEmail));
@@ -127,7 +167,8 @@ public class UserTests {
         ZoneId systemTimeZone = ZoneId.systemDefault();
         ZonedDateTime zonedDateTime = futureDate.atStartOfDay(systemTimeZone);
         Date futureUtilDate = Date.from(zonedDateTime.toInstant());
-        Assertions.assertTrue(resetPasswordToken.isExpired(futureUtilDate));
+        resetPasswordToken.setCreatedDate(futureUtilDate);
+        Assertions.assertFalse(resetPasswordToken.isExpired());
     }
 
     @Test
@@ -136,8 +177,9 @@ public class UserTests {
         LocalDate pastDate = LocalDate.now().minusDays(5);
         ZoneId systemTimeZone = ZoneId.systemDefault();
         ZonedDateTime zonedDateTime = pastDate.atStartOfDay(systemTimeZone);
-        Date futureUtilDate = Date.from(zonedDateTime.toInstant());
-        Assertions.assertFalse(resetPasswordToken.isExpired(futureUtilDate));
+        Date pastUtilDate = Date.from(zonedDateTime.toInstant());
+        resetPasswordToken.setCreatedDate(pastUtilDate);
+        Assertions.assertTrue(resetPasswordToken.isExpired());
     }
 
 
