@@ -102,7 +102,7 @@ public class EventServiceImpl implements EventService {
     }
 
     public void saveWroclawData() {
-        int firstPage = 10;
+        int firstPage = 10; //TODO wyciagnac do app properties
         int lastPage = 20;
         for (int startPage = firstPage; startPage < lastPage; startPage++) {
             String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
@@ -117,14 +117,11 @@ public class EventServiceImpl implements EventService {
 
     public void saveGlobalData() {
         RestTemplate restTemplate = new RestTemplate();
+        //TODO artystow wrzucic do admin panelu
         String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
                 "justinbieber", "thrice", "redhotchilipeppers", "afi", "keshi"};
-//        String[] artists = {"bobmalone"};
         for (String artist : artists) {
             String uri = String.format("https://rest.bandsintown.com/artists/%s/events/?app_id=%s", artist, globalApiKey);
-//            GlobalEvent globalEvent = new RestTemplateBuilder()
-//                    .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-//                    .build().getForObject(uri, GlobalEvent.class);
             ResponseEntity<List<GlobalEvent>> rateResponse =
                     restTemplate.exchange(uri,
                             HttpMethod.GET, null, new ParameterizedTypeReference<>() {
@@ -132,7 +129,6 @@ public class EventServiceImpl implements EventService {
             List<GlobalEvent> events = rateResponse.getBody();
             assert events != null;
             events.forEach(event -> event.setArtist(events.get(0).getArtist()));
-            events.forEach(event -> System.out.println(serializeGlobalData(event)));
             List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
             saveAll(serializedEvents);
         }

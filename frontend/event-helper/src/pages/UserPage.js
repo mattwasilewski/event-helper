@@ -2,7 +2,7 @@ import "./EventPage.css";
 import Navbar from "../components/utils/Navbar";
 import EventTile from "../components/event/EventTile";
 import React from "react";
-import {useEffect, useState} from "@types/react";
+import {useEffect, useState} from "react";
 
 export default function UserPage(props) {
 

@@ -22,8 +22,8 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping("/api")
 public class RegisterController {
-    private UserRepository userRepository;
-    private SecurityConfig securityConfig;
+    private final UserRepository userRepository;
+    private final SecurityConfig securityConfig;
 
     @Autowired
     public RegisterController(UserRepository userRepository, SecurityConfig securityConfig) {
@@ -32,7 +32,8 @@ public class RegisterController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity registerAccount(@RequestBody User user){
+    public ResponseEntity<?> registerAccount(@RequestBody User user){
+        //TODO to do servisu
         if (EmailValidator.patternMatches(user.getEmail()) && user.getPassword().length() >= 8){
             user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
             user.setUserType(UserType.USER);

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,7 +22,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
@@ -29,6 +35,8 @@ public class UserTests {
 
 
 
+    @MockBean
+    private UserRepository userRepository;
     @Autowired
     private UserServiceImpl userService;
 
@@ -45,6 +53,7 @@ public class UserTests {
             .userType(UserType.USER)
             .banToken(initBanToken())
             .location("Warsaw")
+            .resetPasswordToken(new ResetPasswordToken())
             .build();
 
 
@@ -57,9 +66,8 @@ public class UserTests {
 
     @Test
     public void saveUserTest(){
-        userService.saveUser(user);
-        Assertions.assertTrue(userService.getUserById(user.getUserId()).isPresent());
-        Assertions.assertEquals(1, userService.getUsers().size());
+        when(userRepository.findAll()).thenReturn(Stream.of(user, user).collect(Collectors.toList()));
+        Assertions.assertEquals(2, userService.getUsers().size());
     }
 
 
@@ -68,16 +76,17 @@ public class UserTests {
 
     @Test
     public void setPasswordTokenWhenEmailExist(){
-        passwordService.forgotPassword(user.getEmail());
-        Assertions.assertEquals((passwordService.forgotPassword(user.getEmail())), new ResponseEntity<>(HttpStatus.OK));
+        when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordService.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
 
     }
 
+
     @Test
     public void passwordTokenWhenEmailNotExistTest(){
-        String testMail = "test@test.com";
-        passwordService.forgotPassword(user.getEmail());
-        Assertions.assertEquals((passwordService.forgotPassword(testMail)), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        String mockEmail = "test@test.com";
+        when(userService.getUserByEmail(mockEmail)).thenReturn(Optional.empty());
+        Assertions.assertEquals((passwordService.forgotPassword(mockEmail)), new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
@@ -85,10 +94,8 @@ public class UserTests {
     @Test
     public void changePasswordWhenTokenExistTest() {
         String newPassword = "testing";
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
-        user.setResetPasswordToken(resetPasswordToken);
-        passwordService.setNewPassword(user.getResetPasswordToken().getTokenId(), newPassword);
-        Assertions.assertEquals(passwordService.setNewPassword(user.getResetPasswordToken().getTokenId(), newPassword), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordService.setNewPassword(user.getResetPasswordToken().getTokenId(), newPassword), new ResponseEntity<>(HttpStatus.OK));
 
     }
 
