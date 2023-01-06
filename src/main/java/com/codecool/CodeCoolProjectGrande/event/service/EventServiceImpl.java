@@ -103,7 +103,7 @@ public class EventServiceImpl implements EventService {
     }
 
     public void saveWroclawData() {
-        int firstPage = 10;
+        int firstPage = 10; //TODO wyciagnac do app properties
         int lastPage = 20;
         for (int startPage = firstPage; startPage < lastPage; startPage++) {
             String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
@@ -138,6 +138,7 @@ public class EventServiceImpl implements EventService {
 //            saveAll(serializedEvents);
 //        }
         RestTemplate restTemplate = new RestTemplate();
+        //TODO artystow wrzucic do admin panelu
         String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
                 "justinbieber", "thrice", "redhotchilipeppers", "afi", "keshi"};
         for (String artist : artists) {
