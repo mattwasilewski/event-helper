@@ -5,24 +5,27 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.controller.EventController;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
-import org.checkerframework.checker.nullness.Opt;
-import org.junit.jupiter.api.AfterAll;
+import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.UserType;
+import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +44,15 @@ class EventServiceTests {
     @MockBean
     private EventRepository eventRepository;
 
+    @MockBean
+    UserRepository userRepository;
+
+    @MockBean
+    RestTemplate restTemplate;
+
+    @Value("${globalApiKey}")
+    private String globalApiKey;
+
 
     private final Event event =
             Event.builder()
@@ -53,7 +65,20 @@ class EventServiceTests {
                     .linkToEventPage("Junit test.com")
                     .price(10)
                     .publicEvent(true)
+                    .assignedUsers(new HashSet<>())
                     .build();
+
+
+    private final User user = User.builder().userId(UUID.randomUUID())
+            .name("Test")
+            .age(22)
+            .email("email@gmail.com")
+            .password("test1")
+            .userType(UserType.USER)
+            .location("Warsaw")
+            .resetPasswordToken(new ResetPasswordToken())
+            .build();
+
 
     @Test
     @Order(1)
@@ -144,6 +169,111 @@ class EventServiceTests {
                 thenReturn(events);
         Assertions.assertEquals(eventService.sortEvents("name", false, event.getName(),1 ,2), events);
     }
+
+    @Test
+    @Order(11)
+    void assignUserToEventSuccessfullyTest() {
+        event.assignUser(user);
+        Map data = new HashMap<>();
+        data.put("eventId", event.getEventId());
+        data.put("userEmail", user.getEmail());
+
+        when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
+        when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.OK));
+    }
+
+    @Test
+    @Order(12)
+    void assignUserToEventFailureUserNotExistTest() {
+        event.assignUser(user);
+        String mockFailEmail = "test@test.pl";
+        Map data = new HashMap<>();
+        data.put("eventId", event.getEventId());
+        data.put("userEmail", user.getEmail());
+
+        when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
+        when(userRepository.findUserByEmail(mockFailEmail)).thenReturn(Optional.empty());
+        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    @Order(13)
+    void assignUserToEventFailureEventNotExistTest() {
+        event.assignUser(user);
+        UUID mockEventId = UUID.randomUUID();
+        Map<Object, Object> data = new HashMap<>();
+        data.put("eventId", event.getEventId());
+        data.put("userEmail", user.getEmail());
+
+        when(eventRepository.findEventByEventId(mockEventId)).thenReturn(Optional.empty());
+        when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    @Test
+    @Order(14)
+    void editEventDescriptionByEventIdSuccessfullyTest() {
+        Map<Object, Object> data = new HashMap<>();
+        data.put("eventId", event.getEventId());
+        data.put("userEmail", user.getEmail());
+
+        when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
+        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), new ResponseEntity<>(HttpStatus.OK));
+
+
+    }
+
+
+    @Test
+    @Order(14)
+    void editEventDescriptionByEventIdFailureTest() {
+        UUID mockNotExistEventId = UUID.randomUUID();
+        Map<Object, Object> data = new HashMap<>();
+        data.put("eventId", event.getEventId());
+        data.put("userEmail", user.getEmail());
+
+        when(eventRepository.findEventByEventId(mockNotExistEventId)).thenReturn(Optional.empty());
+        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+
+    }
+
+
+
+    //TODO refactor i powazne testy
+    @Test
+    @Order(14)
+    void saveGlobalDataSuccessfullyTest(){
+        Assertions.assertEquals(eventService.saveGlobalData(), new ResponseEntity<>(HttpStatus.CREATED));
+    }
+
+    @Test
+    @Order(15)
+    void saveWroclawDataSuccessfullyTest(){
+        Assertions.assertEquals(eventService.saveWroclawData(), new ResponseEntity<>(HttpStatus.CREATED));
+    }
+
+
+
+    @Test
+    @Order(16)
+    void getAssignedEventsSuccessfully() {
+        List<Event> events = new ArrayList<>();
+        Set<User> users = new HashSet<>();
+        users.add(user);
+        events.add(event);
+        events.add(new Event());
+        event.setAssignedUsers(users);
+        when(userRepository.findUserByUserId(user.getUserId())).thenReturn(Optional.of(user));
+        when(eventRepository.findAllByAssignedUsersIn(users)).thenReturn(events);
+        Assertions.assertEquals(eventService.getAssignedEvents(user.getUserId()), events);
+    }
+
+
+
+
 
 
 
