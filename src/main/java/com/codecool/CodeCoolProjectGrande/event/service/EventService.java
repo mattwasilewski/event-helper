@@ -19,7 +19,7 @@ public interface EventService {
 
     Optional<Event> getEventByID(UUID eventID);
 
-    void createEvent(Event event);
+    ResponseEntity<?> createEvent(Event event);
 
     List<Event> findEventsByEventType(EventType eventType, int page, int size);
 

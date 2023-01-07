@@ -51,20 +51,25 @@ public class EventServiceImpl implements EventService {
     }
 
 
-    public void createEvent(Event event) {
+    public ResponseEntity<?> createEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isEmpty()) {
             eventRepository.save(event);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public void removeEvent(Event event) {
+    public ResponseEntity<?> removeEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
             eventRepository.removeEventByEventId(event.getEventId());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public void saveAll(List<Event> events){
+    public ResponseEntity<?> saveAll(List<Event> events){
         eventRepository.saveAll(events);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     public List<Event> findEventsByEventType(EventType eventType, int page, int size){
