@@ -51,11 +51,13 @@ public class EventServiceImpl implements EventService {
     }
 
 
-    public void createEvent(Event event) {
+    public ResponseEntity<?> createEvent(Event event) {
         if (eventRepository.findEventByName(event.getName()).isEmpty() && !event.getName().contains("3D")
                 && !event.getName().contains("dubbing")) {
             eventRepository.save(event);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public void removeEvent(Event event) {
@@ -117,26 +119,6 @@ public class EventServiceImpl implements EventService {
 
 
     public void saveGlobalData() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
-//                "justinbieber", "thrice", "redhotchilipeppers", "afi", "keshi"};
-////        String[] artists = {"bobmalone"};
-//        for (String artist : artists) {
-//            String uri = String.format("https://rest.bandsintown.com/artists/%s/events/?app_id=%s", artist, globalApiKey);
-////            GlobalEvent globalEvent = new RestTemplateBuilder()
-////                    .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-////                    .build().getForObject(uri, GlobalEvent.class);
-//            ResponseEntity<List<GlobalEvent>> rateResponse =
-//                    restTemplate.exchange(uri,
-//                            HttpMethod.GET, null, new ParameterizedTypeReference<>() {
-//                            });
-//            List<GlobalEvent> events = rateResponse.getBody();
-//            assert events != null;
-//            events.forEach(event -> event.setArtist(events.get(0).getArtist()));
-//            events.forEach(event -> System.out.println(serializeGlobalData(event)));
-//            List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
-//            saveAll(serializedEvents);
-//        }
         RestTemplate restTemplate = new RestTemplate();
         //TODO artystow wrzucic do admin panelu
         String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
@@ -187,7 +169,7 @@ public class EventServiceImpl implements EventService {
                 event.url,
                 String.format("%s, %s, %s", event.venue.streetAddress, event.venue.city, event.venue.country),
                 event.artist.imageUrl,
-                EventType.PARTY,
+                EventType.CONCERT,
                 event.datetime,
                 event.datetime,
                 Double.parseDouble(event.venue.latitude),
