@@ -9,7 +9,7 @@ import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
     @Data
-    public class ExternalEvent implements Serializable
+    public class WroclawEvent implements Serializable
     {
         @Id
         public UUID uuid = UUID.randomUUID();
