@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.user.passwordreset;
+package com.codecool.CodeCoolProjectGrande.user.password_reset;
 
 import lombok.Data;
 import org.hibernate.annotations.Type;
