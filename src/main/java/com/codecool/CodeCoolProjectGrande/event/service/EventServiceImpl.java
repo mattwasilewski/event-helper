@@ -4,6 +4,7 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
@@ -18,6 +19,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -64,14 +66,18 @@ public class EventServiceImpl implements EventService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public void removeEvent(Event event) {
+    //TODO zapytac co zwracac w takim przypadku optional/responseentity
+    public Optional<Event> removeEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
             eventRepository.removeEventByEventId(event.getEventId());
+            return Optional.of(event);
         }
+        return Optional.empty();
     }
 
-    public void saveAll(List<Event> events){
+    public List<Event> saveAll(List<Event> events){
         eventRepository.saveAll(events);
+        return events;
     }
 
     public List<Event> findEventsByEventType(EventType eventType, int page, int size){
@@ -122,6 +128,7 @@ public class EventServiceImpl implements EventService {
         return successfullyAddedEvents;
     }
 
+
     private void saveWroclawEvent(EventStorage storage) {
         storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
     }
@@ -147,7 +154,7 @@ public class EventServiceImpl implements EventService {
 
     private void saveSerializedGlobalEvents(List<GlobalEvent> events) {
         List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
-        saveAll(serializedEvents);
+        saveAll(eventsWithoutDuplicateName(serializedEvents));
     }
 
 

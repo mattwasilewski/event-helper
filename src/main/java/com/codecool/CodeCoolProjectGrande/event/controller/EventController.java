@@ -86,9 +86,9 @@ public class EventController {
     }
 
 
-    @GetMapping("assign-to-user/{userId}&{page}&{size}")
-    public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
-        return eventService.getAssignedEvents(userId);
+    @GetMapping("assign-to-user/{email}&{page}&{size}")
+    public List<Event> getAssignedEvents(@PathVariable String email, @PathVariable int page, @PathVariable int size) {
+        return eventService.getAssignedEvents(email);
     }
 
 

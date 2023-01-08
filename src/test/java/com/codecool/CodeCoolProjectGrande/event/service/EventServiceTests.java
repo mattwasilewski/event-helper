@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.event.controller.EventController;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserType;
@@ -33,8 +34,12 @@ class EventServiceTests {
     @Autowired
     private EventServiceImpl eventService;
 
+    @Autowired
+    private EventController eventController;
+
     @MockBean
     private EventRepository eventRepository;
+
 
     @MockBean
     UserRepository userRepository;
@@ -75,7 +80,7 @@ class EventServiceTests {
 
     @Test
     void createEventFailure() {
-        when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.ofNullable(event));
+        when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.of(event));
         Assertions.assertEquals(eventService.createEvent(event), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -83,13 +88,13 @@ class EventServiceTests {
     @Test
     void removeEventSuccessTest() {
         when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
-        Assertions.assertEquals(eventService.removeEvent(event), new ResponseEntity<>(HttpStatus.OK));
+        Assertions.assertEquals(eventService.removeEvent(event), Optional.of(event));
     }
 
     @Test
-    void removeEventFailure() {
-        when(eventRepository.removeEventByEventId(event.getEventId())).thenReturn(Optional.ofNullable(event));
-        Assertions.assertEquals(eventService.removeEvent(event), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    void removeEventFailureTest() {
+        when(eventRepository.removeEventByEventId(event.getEventId())).thenReturn(Optional.empty());
+        Assertions.assertEquals(eventService.removeEvent(event), Optional.empty());
     }
 
 
@@ -111,7 +116,7 @@ class EventServiceTests {
         events.add(new Event());
         events.add(new Event());
         when(eventRepository.saveAll(events)).thenReturn(events);
-        Assertions.assertEquals(eventService.saveAll(events), new ResponseEntity<>(HttpStatus.CREATED));
+        Assertions.assertEquals(eventService.saveAll(events), events);
 
     }
 
@@ -213,12 +218,17 @@ class EventServiceTests {
     //TODO refactor and right tests
     @Test
     void saveGlobalDataSuccessfullyTest(){
-        Assertions.assertEquals(eventService.saveGlobalData(), new ResponseEntity<>(HttpStatus.CREATED));
+        List<String> artists = Stream.of("test", "test").toList();
+        when(eventService.saveGlobalData()).thenReturn(artists);
+        Assertions.assertEquals(eventController.saveGlobalData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
 
     @Test
     void saveWroclawDataSuccessfullyTest(){
-        Assertions.assertEquals(eventService.saveWroclawData(), new ResponseEntity<>(HttpStatus.CREATED));
+        List<String> titles = Stream.of("test", "test").toList();
+        when(eventService.saveWroclawData()).thenReturn(titles);
+        when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.empty());
+        Assertions.assertEquals(eventController.saveWroclawData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
 
 
@@ -231,9 +241,9 @@ class EventServiceTests {
         events.add(event);
         events.add(new Event());
         event.setAssignedUsers(users);
-        when(userRepository.findUserByUserId(user.getUserId())).thenReturn(Optional.of(user));
+        when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(eventRepository.findAllByAssignedUsersIn(users)).thenReturn(events);
-        Assertions.assertEquals(eventService.getAssignedEvents(user.getUserId()), events);
+        Assertions.assertEquals(eventService.getAssignedEvents(user.getEmail()), events);
     }
 
 }

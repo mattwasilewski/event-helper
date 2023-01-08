@@ -20,7 +20,7 @@ public interface EventService {
 
     Optional<Event> getEventByID(UUID eventID);
 
-    ResponseEntity<?> createEvent(Event event);
+    ResponseEntity<?>  createEvent(Event event);
 
     List<Event> findEventsByEventType(EventType eventType, int page, int size);
 
@@ -35,7 +35,7 @@ public interface EventService {
     List<String> saveGlobalData();
     List<String> saveWroclawData();
 
-    List<Event> getAssignedEvents(UUID userId);
+    List<Event> getAssignedEvents(String email);
 
 
 }
