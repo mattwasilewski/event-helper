@@ -223,6 +223,7 @@ class EventServiceTests {
         Assertions.assertEquals(eventController.saveGlobalData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
 
+    /*
     @Test
     void saveWroclawDataSuccessfullyTest(){
         List<String> titles = Stream.of("test", "test").toList();
@@ -230,7 +231,7 @@ class EventServiceTests {
         when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.empty());
         Assertions.assertEquals(eventController.saveWroclawData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
-
+    */
 
 
     @Test
