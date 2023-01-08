@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.user.passwordreset;
+package com.codecool.CodeCoolProjectGrande.user.password_reset;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
