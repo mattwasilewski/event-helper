@@ -3,7 +3,8 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
-import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,12 @@ public interface EventService {
 
     ResponseEntity<?> editEventDescriptionByEventId(Map data);
 
-//    List<Event> getAssigned(UUID userId);
+    Event serializeWroclawData(WroclawEvent event);
+    Event serializeGlobalData(GlobalEvent event);
+    List<String> saveGlobalData();
+    List<String> saveWroclawData();
+
+    List<Event> getAssignedEvents(UUID userId);
 
 
 }

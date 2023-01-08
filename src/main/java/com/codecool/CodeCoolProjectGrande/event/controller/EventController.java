@@ -39,7 +39,7 @@ public class EventController {
     @PostMapping("create-event")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         eventService.createEvent(event);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/getEventByType/{eventType}&{page}&{size}")
@@ -66,20 +66,29 @@ public class EventController {
     }
 
     @GetMapping("data")
-    public void saveWroclawData() {
-        eventService.saveWroclawData();
+    public ResponseEntity<?> saveWroclawData() {
+        List<String> saveWroclawData = eventService.saveWroclawData();
+        if(saveWroclawData == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
     @GetMapping("global-data")
-    public void saveGlobalData() {
-        eventService.saveGlobalData();
+    public ResponseEntity<?> saveGlobalData() {
+        List<String> saveGlobalEvents = eventService.saveGlobalData();
+        if(saveGlobalEvents == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
 
     @GetMapping("assign-to-user/{userId}&{page}&{size}")
     public List<Event> getAssignedEvents(@PathVariable UUID userId, @PathVariable int page, @PathVariable int size) {
-        List <Event> evenst = eventService.getAssignedEvents(userId);
-        return evenst;
+        return eventService.getAssignedEvents(userId);
     }
 
 

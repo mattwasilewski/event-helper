@@ -5,9 +5,9 @@ import com.codecool.CodeCoolProjectGrande.user.BanToken;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserType;
 import com.codecool.CodeCoolProjectGrande.user.configuration.EmailValidator;
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.PasswordController;
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.PasswordServiceImpl;
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
+import com.codecool.CodeCoolProjectGrande.user.password_reset.PasswordController;
+import com.codecool.CodeCoolProjectGrande.user.password_reset.PasswordServiceImpl;
+import com.codecool.CodeCoolProjectGrande.user.password_reset.ResetPasswordToken;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -69,15 +68,16 @@ public class UserTests {
         return banToken;
     }
 
+//User service tests
 
     @Test
-    public void saveUserTest(){
+    public void getUsersTest(){
         when(userRepository.findAll()).thenReturn(Stream.of(user, user).collect(Collectors.toList()));
         Assertions.assertEquals(2, userService.getUsers().size());
     }
 
 
-
+//Password service tests
 
 
     @Test
@@ -85,25 +85,6 @@ public class UserTests {
         when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
         Assertions.assertEquals(passwordService.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
 
-    }
-
-    @Test
-    public void forgotPasswordPathTest() {
-        when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        Assertions.assertEquals(passwordController.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
-    }
-
-    @Test
-    public void setNewPasswordPathTest() {
-        String mockPassword = "test";
-        when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
-        Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), mockPassword), new ResponseEntity<>(HttpStatus.OK));
-    }
-
-    @Test
-    public void isCreatedDateOkTest() {
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
-        Assertions.assertEquals(resetPasswordToken.getCreatedDate().getTime(), new Date().getTime());
     }
 
 
@@ -133,6 +114,27 @@ public class UserTests {
 
     }
 
+//Password controller tests
+
+    @Test
+    public void forgotPasswordPathTest() {
+        when(userService.getUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordController.forgotPassword(user.getEmail()), new ResponseEntity<>(HttpStatus.OK));
+    }
+
+    @Test
+    public void setNewPasswordPathTest() {
+        String mockPassword = "test";
+        when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), mockPassword), new ResponseEntity<>(HttpStatus.OK));
+    }
+
+    @Test
+    public void isCreatedDateOkTest() {
+        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        Assertions.assertEquals(resetPasswordToken.getCreatedDate().getTime(), new Date().getTime());
+    }
+
     @Test
     public void notChangePasswordWhenTokenIsExpiredTest() {
         ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
@@ -146,6 +148,11 @@ public class UserTests {
         when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
         Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), "password"), new ResponseEntity<>(HttpStatus.GONE));
     }
+
+
+
+
+//ResetPasswordToken tests
 
 
     @Test
@@ -181,12 +188,5 @@ public class UserTests {
         resetPasswordToken.setCreatedDate(pastUtilDate);
         Assertions.assertTrue(resetPasswordToken.isExpired());
     }
-
-
-
-
-
-
-
 
 }

@@ -4,9 +4,8 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
-import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.ExternalEvent;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
-import com.codecool.CodeCoolProjectGrande.event.service.EventService;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -19,10 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -35,6 +31,15 @@ public class EventServiceImpl implements EventService {
 
     @Value("${globalApiKey}")
     private String globalApiKey;
+
+    @Value("${apiWroFirstPage}")
+    private int apiWroFirstPage;
+
+    @Value("${apiWroLastPage}")
+    private int apiWroLastPage;
+
+    @Value("#{'${globalArtists}'.split(',')}")
+    private String[] globalArtists;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
@@ -106,27 +111,29 @@ public class EventServiceImpl implements EventService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> saveWroclawData() {
-        int firstPage = 10; //TODO wyciagnac do app properties
-        int lastPage = 20;
-        for (int startPage = firstPage; startPage < lastPage; startPage++) {
+    public List<String> saveWroclawData() {
+        List<String> successfullyAddedEvents = new ArrayList<>();
+        for (int startPage = apiWroFirstPage; startPage < apiWroLastPage; startPage++) {
             String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
             EventStorage storage = new RestTemplateBuilder()
                     .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                     .build().getForObject(uri, EventStorage.class);
             assert storage != null;
-            storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+            saveWroclawEvent(storage);
+            storage.getItems().forEach(event -> successfullyAddedEvents.add(event.offer.title));
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return successfullyAddedEvents;
+    }
+
+    private void saveWroclawEvent(EventStorage storage) {
+        storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
     }
 
 
-    public ResponseEntity<?> saveGlobalData() {
+    public List<String> saveGlobalData() {
         RestTemplate restTemplate = new RestTemplate();
-        //TODO artystow wrzucic do admin panelu
-        String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
-                "justinbieber", "thrice", "redhotchilipeppers", "afi", "keshi"};
-        for (String artist : artists) {
+        List<String> successfullyAddedEvents = new ArrayList<>();
+        for (String artist : globalArtists) {
             String uri = String.format("https://rest.bandsintown.com/artists/%s/events/?app_id=%s", artist, globalApiKey);
             ResponseEntity<List<GlobalEvent>> rateResponse =
                     restTemplate.exchange(uri,
@@ -134,15 +141,25 @@ public class EventServiceImpl implements EventService {
                             });
             List<GlobalEvent> events = rateResponse.getBody();
             assert events != null;
-            events.forEach(event -> event.setArtist(events.get(0).getArtist()));
-            List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
-            saveAll(serializedEvents);
+            setArtistNameToGlobalEvents(events);
+            events.forEach(event -> successfullyAddedEvents.add(event.title));
+            saveSerializedGlobalEvents(events);
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return successfullyAddedEvents;
+    }
+
+    private void saveSerializedGlobalEvents(List<GlobalEvent> events) {
+        List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
+        saveAll(serializedEvents);
+    }
+
+
+    private void setArtistNameToGlobalEvents(List<GlobalEvent> events) {
+        events.forEach(event -> event.setArtist(events.get(0).getArtist()));
     }
 
     @NotNull
-    private Event serializeWroclawData(ExternalEvent event) {
+    public Event serializeWroclawData(WroclawEvent event) {
         return new Event(
                 event.offer.title,
                 event.offer.longDescription,
@@ -159,7 +176,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @NotNull
-    private Event serializeGlobalData(GlobalEvent event) {
+    public Event serializeGlobalData(GlobalEvent event) {
         return new Event(
                 event.artist.name,
                 String.format("%s%s%s", event.description,
