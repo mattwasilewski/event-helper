@@ -73,12 +73,12 @@ export default function UserPage(props) {
                                 <ul>
                                     {events.map((event) => (
                                         <li><EventTile name={event.name}
-                                                   location={event.location}
-                                                   eventId={event.eventId}
-                                                   logo={event.logo}
-                                                   startDate={event.startDate}
-                                                   eventType={event.eventType}
-                                                   description={event.description}
+                                                       location={event.location}
+                                                       eventId={event.eventId}
+                                                       logo={event.logo}
+                                                       startDate={event.startDate}
+                                                       eventType={event.eventType}
+                                                       description={event.description}
                                         /></li>
                                     ))}
                                 </ul>

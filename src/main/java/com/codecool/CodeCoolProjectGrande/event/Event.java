@@ -51,7 +51,8 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignedUsers = new HashSet<>();
 
-    public Event(String name, String description, String url, String location, String logo, EventType eventType, String startDate, String endDate, Double latitude, Double longitude, String source) {
+    public Event(String name, String description, String url, String location, String logo, EventType eventType,
+                 String startDate, String endDate, Double latitude, Double longitude, String source, Set<User> assignedUsers) {
         this.name = name;
         this.description = description;
         this.linkToEventPage = url;
@@ -64,6 +65,7 @@ public class Event {
         this.latitude = latitude;
         this.longitude = longitude;
         this.source = source;
+        this.assignedUsers = assignedUsers;
 
     }
 

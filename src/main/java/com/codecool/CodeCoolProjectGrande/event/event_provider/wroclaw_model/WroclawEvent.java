@@ -2,16 +2,14 @@ package com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model;
 
 import java.io.Serializable;
 import java.util.UUID;
-import javax.annotation.Generated;
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
 
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class ExternalEvent implements Serializable
+@JsonInclude(JsonInclude.Include.NON_NULL)
+    @Data
+    public class WroclawEvent implements Serializable
     {
         @Id
         public UUID uuid = UUID.randomUUID();
