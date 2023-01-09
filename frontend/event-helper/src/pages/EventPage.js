@@ -1,10 +1,11 @@
 import Navbar from "../components/utils/Navbar";
 import EventTile from "../components/event/EventTile";
 import React, {useEffect, useState} from "react";
-import "./EventPage.css";
+import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
-export default function EventPage2() {
+import ChatRoom from "./ChatRoom";
+export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
 
@@ -113,7 +114,6 @@ export default function EventPage2() {
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </>)

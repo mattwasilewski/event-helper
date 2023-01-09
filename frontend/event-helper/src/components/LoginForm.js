@@ -5,14 +5,8 @@ import {useNavigate} from "react-router-dom";
 import AuthService from "../auth.serivce";
 import authSerivce from "../auth.serivce";
 
-export default function LoginForm2({Login, error}) {
+export default function LoginForm({Login, error}) {
 
-    // const [details, setDetails] = useState({name: "", password: ""});
-    //
-    // const submitHandler = e => {
-    //     e.preventDefault();
-    //     Login(details);
-    // }
     let navigate = useNavigate();
 
     const [errors, setErrors] = useState("");
@@ -47,10 +41,6 @@ export default function LoginForm2({Login, error}) {
         });
     }
 
-    function handleLogout(e){
-        e.preventDefault()
-        AuthService.logout();
-    }
 
     return (
         <>
@@ -70,7 +60,7 @@ export default function LoginForm2({Login, error}) {
                     <div className="login">
                         <div className="container">
                             <h1>Login to Event Helper</h1>
-
+                            <h4>{errors}</h4>
                             <div className="login-form">
                                 <form onSubmit={handleSubmit}>
                                     {(error !== "") ? (<div className="error">{error}</div>) : ""}
