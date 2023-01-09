@@ -1,50 +1,89 @@
-import React, {useState} from "react";
-import img from "../assets/login-img.png";
-import logo from "../assets/logociemne.png";
-import "../css/register.css";
-import ForgotPasswordForm from "./ForgotPasswordForm";
+import "../css/LoginAndRegister.css";
+import {useState} from "react";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import AuthService from "../auth.serivce";
+import authSerivce from "../auth.serivce";
 
+export default function LoginForm({Login, error}) {
 
+    let navigate = useNavigate();
 
-function LoginForm({Login, error}) {
+    const [errors, setErrors] = useState("");
 
-    const [details, setDetails] = useState({name: "", password: ""});
+    const [form, setForm] = useState({
+        email: "",
+        password: ""
+    });
+    const {email, password} = form;
 
-    const submitHandler = e => {
-        e.preventDefault();
-        Login(details);
+    function handleChange(e) {
+        setForm({...form, [e.target.name]: e.target.value});
     }
 
-    return (<>
-            <div className="container-left">
-                <a href="/home"><div id="navbar-logo"><img src={logo} alt="Event Helper"/></div></a>
-                <div id="login-heading">Login</div>
-                <form onSubmit={submitHandler}>
-                    <div className="form-inner">
-                        {(error !== "") ? (<div className="error">{error}</div>) : ""}
-                        <div className="form-group">
-                            <input type="text" name="name" id="name" placeholder="login" onChange={e =>
-                                setDetails({...details, name: e.target.value})} value={details.name}/>
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        AuthService.login(email, password)
+            .then(res => {
+                console.log("Request complete! response:", res);
+                if (authSerivce.getCurrentUser()){
+                    navigate('/home')
+                }
+            }).catch((error) => {
+            console.log("login error", error);
+            setErrors("login error");
+        });
+        setErrors("logged in successfully");
+        setForm({
+            email: "",
+            password: ""
+        });
+    }
+
+
+    return (
+        <>
+            <div className="section-1">
+                <div className="parent clearfix">
+                    <div className="bg-illustration">
+                        <a href="/home"><img src={require("../assets/logo-duza-rozdzielczosc-jasne.png")} alt="logo"></img></a>
+
+                        <div className="burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        <div className="form-group">
-                            <input type="password" name="password" id="password" placeholder="password" onChange={e =>
-                                setDetails({...details, password: e.target.value})} value={details.password}/>
-                        </div>
-                        <button type="submit" id="login-submit" value="LOGIN">LOGIN</button>
+
                     </div>
 
-                    <a href={"/admin"} style={{color:"white"}}> Admin </a>
-                </form>
+                    <div className="login">
+                        <div className="container">
+                            <h1>Login to Event Helper</h1>
+                            <h4>{errors}</h4>
+                            <div className="login-form">
+                                <form onSubmit={handleSubmit}>
+                                    {(error !== "") ? (<div className="error">{error}</div>) : ""}
+                                    <input type="email" name="email" placeholder="E-mail Address" onChange={handleChange}/>
+                                    <input type="password"  name="password" placeholder="Password"  onChange={handleChange}/>
 
-            </div>
-            <ForgotPasswordForm/>
-            <div className="container-right">
-                <img className="login-photo" src={img} alt={"img"}/>
+                                    <div className="remember-form">
+                                        <a href="/register"><span>Create new account</span></a>
+                                    </div>
+                                    <div className="forget-pass">
+                                        <a href="#">Forgot Password ?</a>
+                                    </div>
+
+                                    <button type="submit">LOG-IN</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
-
-
     )
-}
 
-export default LoginForm
+}

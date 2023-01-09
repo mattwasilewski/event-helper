@@ -5,7 +5,6 @@ import "../css/App.css"
 
 export default function ResetPasswordPage() {
 
-
     return (
         <div>
             <Navbar/>

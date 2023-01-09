@@ -3,7 +3,7 @@ import {useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
-export default function RegisterForm2({Login, error}) {
+export default function RegisterForm({Login, error}) {
 
     const pass = document.querySelector('#password-signup')
     const mail = document.querySelector('#email')
@@ -178,10 +178,6 @@ export default function RegisterForm2({Login, error}) {
                                 <div className="remember-form">
                                     <a href="/login"><span>Already have an account?</span></a>
                                 </div>
-                                {/*<div className="forget-pass">*/}
-                                {/*    <a href="#">Already have an account?</a>*/}
-                                {/*</div>*/}
-
                                 <button disabled={valid} onClick={() => handleSubmit()} type="submit"
                                         id="signup-btn">Sign Up
                                 </button>

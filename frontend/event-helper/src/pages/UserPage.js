@@ -1,4 +1,4 @@
-import "./EventPage.css";
+import "../css/EventPage.css";
 import Navbar from "../components/utils/Navbar";
 import EventTile from "../components/event/EventTile";
 import React from "react";
@@ -21,11 +21,8 @@ export default function UserPage(props) {
 
     const getUser = async () =>{
         const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
-        console.log(userDetails.sub);
         const data = await response.json();
         setUser(data);
-        console.log(events);
-        console.log("FINISHEEEEED")
 
     }
 

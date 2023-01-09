@@ -1,5 +1,4 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import {useNavigate} from "react-router-dom";
 import "../css/App.css";
 export default function AdminNavbar() {
 

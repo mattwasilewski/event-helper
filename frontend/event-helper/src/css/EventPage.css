@@ -1,105 +1,132 @@
-/*#eventImg{*/
-/*    position: relative;*/
-/*    width: 350px;*/
-/*    height: 350px;*/
-/*    display: flex;*/
-/*    object-fit:cover;*/
+.wrapper{
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    margin-top: 15%;
+    margin-left: auto;
+    /*transform: translate(-50%,-50%);*/
+    width: 90%;
+    display: flex;
+    color: #353c4e;
+}
 
-/*}*/
+.wrapper .left{
+    width: 25%;
+    height: 20%;
+    background: white;
+    padding: 30px 25px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-align: center;
+    color: #050505;
+    font-size: 24px;
+}
 
-/*.event-header{*/
-/*    font-size: xxx-large;*/
-/*    font-family: sans-serif;*/
-/*    color: #ffffff;*/
-/*    position: sticky;*/
-/*}*/
+.wrapper .left img{
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
+.wrapper .left h4{
+    margin-bottom: 10px;
+}
 
+.wrapper .left p{
+    font-size: 12px;
+}
 
+.wrapper .right{
+    width: 65%;
+    background: rgba(255, 255, 255, 0.75);
+    padding: 30px 25px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 
+.wrapper .right .info,
+.wrapper .right .projects{
+    margin-bottom: 25px;
+}
 
-/*#eventText{*/
-/*    font-size: x-large;*/
-/*    color: black;*/
-/*    position: relative;*/
-/*    text-align: left;*/
-/*    overflow:hidden;*/
-/*    right: 7%;*/
-/*}*/
+.wrapper .right .info h3,
+.wrapper .right .projects h3{
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #353c4e;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
 
-
-
-/*.white-container{*/
-/*    width: 100%;*/
-/*    color: #ffffff;*/
-/*    margin-top: 8%;*/
-/*    height: 30px;*/
-/*    text-align: center;*/
-/*    border-radius: 25px;*/
-/*}*/
-
-/*.box-data{*/
-/*    background: #ffffff;*/
-/*    border-radius: 70px;*/
-/*    width: 90%;*/
-/*    margin: auto;*/
-/*    color: black;*/
-/*}*/
-
-/*#eventDataSmall{*/
-/*    max-width: 100%;*/
-/*    display: flex;*/
-/*    max-height: 400px;*/
-/*}*/
-
-/*#eventDataBig {*/
-/*    max-width: 100%;*/
-/*    display: flex;*/
-/*    max-height: fit-content;*/
-/*}*/
-
-/*#description{*/
-/*    width: 50%;*/
-/*    display: flex;*/
-/*}*/
-
-/*#event-join{*/
-/*    visibility: hidden;*/
-/*}*/
-
-/*#edit-description {*/
-/*    visibility: hidden;*/
-/*}*/
+.wrapper .right .info_data{
+    display: flex;
+    justify-content: space-between;
+}
 
 
+.wrapper .right .projects_data{
+    /*display: flex;*/
+    justify-content: space-between;
+}
 
-/*.box{*/
-/*    width: 100%;*/
-/*    padding: 40px 60px;*/
-/*    color: white;*/
-/*    font-family: sans-serif;*/
-/*    text-align: center;*/
-/*}*/
-/*.data-container{*/
-/*    margin-top: 10vh;*/
-/*}*/
+.wrapper .right .info_data .data{
+    width: 45%;
+}
+
+.wrapper .right .info_data .data h4,
+.wrapper .right .projects_data .data h4{
+    color: #353c4e;
+    margin-bottom: 5px;
+}
+
+.wrapper .right .info_data .data p,
+.wrapper .right .projects_data .data p{
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #050505;
+    padding: 5px;
+}
+
+.wrapper .social_media ul{
+    margin-left: 30%;
+    display: flex;
+
+}
+
+.wrapper .social_media ul li{
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(to right,#01a9ac,#01dbdf);
+    margin-right: 10px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.wrapper .social_media ul li a{
+    color :#fff;
+    display: block;
+    font-size: 18px;
+}
+.wrapper .right .projects_data .data .event-data{
+    display: flex;
+}
 
 
-/*.card {*/
-/*    margin: 10px;*/
-/*    background-color: #fff;*/
-/*    border-radius: 10px;*/
-/*    color: black;*/
-/*    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);*/
-/*    overflow: hidden;*/
-/*    max-width: 30vh;*/
-/*    height: 15%;*/
-/*    display: inline-block;*/
-/*}*/
 
-/*.show-more-button {*/
-/*    position: sticky;*/
-/*    left: 50%;*/
-/*    margin-top: 5px ;*/
-/*    transform: rotate(90deg);*/
-/*}*/
+.serv ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+}
+
+.serv ul li {
+    list-style: none;
+    flex: 0 0 33.333333%;
+}
+
+.wrapper .right .projects_data .data {
+    display: inline-block;
+    margin: 3%;
+
+}
