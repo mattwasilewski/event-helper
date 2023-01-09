@@ -2,22 +2,37 @@ import "./EventPage.css";
 import Navbar from "../components/utils/Navbar";
 import EventTile from "../components/event/EventTile";
 import React from "react";
-import {useEffect, useState} from "@types/react";
+import {useEffect, useState} from "react";
+import authSerivce from "../auth.serivce";
 
 export default function UserPage(props) {
 
     const [user, setUser] = useState([]);
 
+    const [events, setEvents] = useState([]);
+
     useEffect(() => {
-        getUser().then(r => console.log(r))
+        getUser().then(getEvents)
 
     }, [props.userId]);
 
+    const isLoggedIn = authSerivce.getCurrentUser();
+    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
+
     const getUser = async () =>{
-        const response = await fetch(`http://localhost:3000/api/user/${props.userId}`);
+        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+        console.log(userDetails.sub);
         const data = await response.json();
         setUser(data);
+        console.log(events);
+        console.log("FINISHEEEEED")
 
+    }
+
+    const getEvents = async() =>{
+        const response2 = await fetch(`http://localhost:3000/api/events/assign-to-user/${userDetails.sub}&10&10`);
+        const data2 = await response2.json();
+        setEvents(data2);
     }
 
     return (
@@ -59,14 +74,14 @@ export default function UserPage(props) {
                         <div className="projects_data">
                             <div className="serv">
                                 <ul>
-                                    {user.events.map((event) => (
+                                    {events.map((event) => (
                                         <li><EventTile name={event.name}
-                                                   location={event.location}
-                                                   eventId={event.eventId}
-                                                   logo={event.logo}
-                                                   startDate={event.startDate}
-                                                   eventType={event.eventType}
-                                                   description={event.description}
+                                                       location={event.location}
+                                                       eventId={event.eventId}
+                                                       logo={event.logo}
+                                                       startDate={event.startDate}
+                                                       eventType={event.eventType}
+                                                       description={event.description}
                                         /></li>
                                     ))}
                                 </ul>

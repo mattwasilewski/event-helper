@@ -4,9 +4,8 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
-import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.ExternalEvent;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
-import com.codecool.CodeCoolProjectGrande.event.service.EventService;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -19,8 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +32,15 @@ public class EventServiceImpl implements EventService {
 
     @Value("${globalApiKey}")
     private String globalApiKey;
+
+    @Value("${apiWroFirstPage}")
+    private int apiWroFirstPage;
+
+    @Value("${apiWroLastPage}")
+    private int apiWroLastPage;
+
+    @Value("#{'${globalArtists}'.split(',')}")
+    private String[] globalArtists;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
@@ -51,20 +57,27 @@ public class EventServiceImpl implements EventService {
     }
 
 
-    public void createEvent(Event event) {
-        if (eventRepository.findEventByEventId(event.getEventId()).isEmpty()) {
+    public ResponseEntity<?> createEvent(Event event) {
+        if (eventRepository.findEventByName(event.getName()).isEmpty() && !event.getName().contains("3D")
+                && !event.getName().contains("dubbing")) {
             eventRepository.save(event);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public void removeEvent(Event event) {
+    //TODO zapytac co zwracac w takim przypadku optional/responseentity
+    public Optional<Event> removeEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
             eventRepository.removeEventByEventId(event.getEventId());
+            return Optional.of(event);
         }
+        return Optional.empty();
     }
 
-    public void saveAll(List<Event> events){
+    public List<Event> saveAll(List<Event> events){
         eventRepository.saveAll(events);
+        return events;
     }
 
     public List<Event> findEventsByEventType(EventType eventType, int page, int size){
@@ -101,61 +114,80 @@ public class EventServiceImpl implements EventService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public void saveWroclawData() {
-        int firstPage = 10;
-        int lastPage = 20;
-        for (int startPage = firstPage; startPage < lastPage; startPage++) {
+    public List<String> saveWroclawData() {
+        List<String> successfullyAddedEvents = new ArrayList<>();
+        for (int startPage = apiWroFirstPage; startPage < apiWroLastPage; startPage++) {
             String uri = String.format("http://go.wroclaw.pl/api/v1.0/events?key=%s&page=%d", apiKey, startPage);
             EventStorage storage = new RestTemplateBuilder()
                     .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                     .build().getForObject(uri, EventStorage.class);
             assert storage != null;
-            storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+            saveWroclawEvent(storage);
+            storage.getItems().forEach(event -> successfullyAddedEvents.add(event.offer.title));
         }
+        return successfullyAddedEvents;
     }
 
 
-    public void saveGlobalData() {
+    private void saveWroclawEvent(EventStorage storage) {
+        storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+    }
+
+
+    public List<String> saveGlobalData() {
         RestTemplate restTemplate = new RestTemplate();
-        String[] artists = {"marcocarola", "edsheeran", "arcticmonkeys","bradwilliams", "war", "bobmalone",
-                "justinbieber", "thrice", "redhotchilipeppers", "afi", "keshi"};
-//        String[] artists = {"bobmalone"};
-        for (String artist : artists) {
+        List<String> successfullyAddedEvents = new ArrayList<>();
+        for (String artist : globalArtists) {
             String uri = String.format("https://rest.bandsintown.com/artists/%s/events/?app_id=%s", artist, globalApiKey);
-//            GlobalEvent globalEvent = new RestTemplateBuilder()
-//                    .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-//                    .build().getForObject(uri, GlobalEvent.class);
             ResponseEntity<List<GlobalEvent>> rateResponse =
                     restTemplate.exchange(uri,
                             HttpMethod.GET, null, new ParameterizedTypeReference<>() {
                             });
             List<GlobalEvent> events = rateResponse.getBody();
             assert events != null;
-            events.forEach(event -> event.setArtist(events.get(0).getArtist()));
-            events.forEach(event -> System.out.println(serializeGlobalData(event)));
-            List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
-            saveAll(serializedEvents);
+            setArtistNameToGlobalEvents(events);
+            events.forEach(event -> successfullyAddedEvents.add(event.title));
+            saveSerializedGlobalEvents(events);
         }
+        return successfullyAddedEvents;
+    }
+
+    private void saveSerializedGlobalEvents(List<GlobalEvent> events) {
+        List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
+        saveAll(eventsWithoutDuplicateName(serializedEvents));
+    }
+
+
+    private void setArtistNameToGlobalEvents(List<GlobalEvent> events) {
+        events.forEach(event -> event.setArtist(events.get(0).getArtist()));
+    }
+
+    public List<Event> eventsWithoutDuplicateName(List<Event> events){
+        return events.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Event:: getName))),
+                        ArrayList::new));
     }
 
     @NotNull
-    private Event serializeWroclawData(ExternalEvent event) {
+    public Event serializeWroclawData(WroclawEvent event) {
         return new Event(
                 event.offer.title,
                 event.offer.longDescription,
                 event.offer.url,
                 String.format("%s, %s", event.address.street, event.address.city),
                 event.offer.mainImage.standard,
-                EventType.CONCERT,
+                EventType.OTHER,
                 event.startDate,
                 event.endDate,
                 event.location.lattiude,
                 event.location.longitude,
-                "Generated by wroclaw.pl");
+                "Generated by wroclaw.pl",
+                new HashSet<>());
     }
 
     @NotNull
-    private Event serializeGlobalData(GlobalEvent event) {
+    public Event serializeGlobalData(GlobalEvent event) {
         return new Event(
                 event.artist.name,
                 String.format("%s%s%s", event.description,
@@ -168,11 +200,12 @@ public class EventServiceImpl implements EventService {
                 event.datetime,
                 Double.parseDouble(event.venue.latitude),
                 Double.parseDouble(event.venue.longitude),
-                "Generated by bandsintown.com");
+                "Generated by bandsintown.com",
+                new HashSet<>());
     }
 
-    public List<Event> getAssignedEvents(UUID userId) {
-        User user = userRepository.findUserByUserId(userId).get();
+    public List<Event> getAssignedEvents(String email) {
+        User user = userRepository.findUserByEmail(email).get();
         Set<User> set = new HashSet<>();
         set.add(user);
         System.out.println(set.size());

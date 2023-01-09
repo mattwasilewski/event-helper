@@ -3,9 +3,12 @@ import EventTile from "../components/event/EventTile";
 import React, {useEffect, useState} from "react";
 import "./EventPage.css";
 import {useParams} from "react-router-dom";
+import authSerivce from "../auth.serivce";
 export default function EventPage2() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
+
+    const [buttonText, setButtonText] = useState(["Join Event"]);
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
@@ -22,6 +25,12 @@ export default function EventPage2() {
     }
 
     const assignToEvent = async (e) => {
+        const isLoggedIn = authSerivce.getCurrentUser();
+        let userDetails;
+        if (isLoggedIn) {
+            console.log("JESTEM ZALOGOWANY");
+            userDetails = authSerivce.parseJwt(isLoggedIn.value)
+        }
         e.preventDefault()
         const requestOptions = {
             method: 'PUT',
@@ -30,10 +39,11 @@ export default function EventPage2() {
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                userId: "af8afa53-4d00-4482-9758-c174b238dddb" })
+                userEmail: userDetails.sub })
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
+        setButtonText("Leave Event");
     }
 
     const [editable, setEditable] = useState(["false"]);
@@ -67,10 +77,10 @@ export default function EventPage2() {
             <Navbar/>
             <div className="wrapper">
                 <div className="left">
-                    <img src="https://i.imgur.com/cMy8V5j.png" alt="user" width="80%"/>
+                    <img src={event.logo} width="80%"/>
                     <h4>{event.name}</h4>
-                    <button  type="submit" id="submit-btn" className="btn">
-                        Join Event
+                    <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignToEvent(e)}>
+                        {buttonText}
                     </button>
                 </div>
                 <div className="right">
@@ -97,7 +107,8 @@ export default function EventPage2() {
                         <div className="projects_data">
                             <div className="data">
                                 <h4>Description {button}</h4>
-                                <label id="event-descs" contentEditable={editable}>{event.description}</label>
+                                {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
+                                <p  id="event-descs" contentEditable={editable} dangerouslySetInnerHTML={{__html: event.description}}></p>
                             </div>
 
                         </div>

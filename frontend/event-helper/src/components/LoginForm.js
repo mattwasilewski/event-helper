@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import img from "../assets/login-img.png";
 import logo from "../assets/logociemne.png";
-import "../css/register.css"
+import "../css/register.css";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 

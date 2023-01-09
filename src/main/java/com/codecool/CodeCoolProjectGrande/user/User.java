@@ -1,19 +1,12 @@
 package com.codecool.CodeCoolProjectGrande.user;
 
-import com.codecool.CodeCoolProjectGrande.event.Event;
-import com.codecool.CodeCoolProjectGrande.user.passwordreset.ResetPasswordToken;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.codecool.CodeCoolProjectGrande.user.password_reset.ResetPasswordToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.*;
 

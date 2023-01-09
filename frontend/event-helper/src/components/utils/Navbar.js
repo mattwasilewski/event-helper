@@ -2,9 +2,10 @@ import "../../css/navbar.css";
 import authSerivce from "../../auth.serivce";
 import authHeader from "../auth-header";
 import AuthService from "../../auth.serivce";
+import {useNavigate} from "react-router-dom";
 
 export default function Navbar() {
-
+    let navigate = useNavigate();
     window.addEventListener("scroll",function(){
         const header = document.querySelector("header");
         header.classList.toggle("sticky",window.scrollY >0);
@@ -13,15 +14,14 @@ export default function Navbar() {
     function handleLogout(e){
         e.preventDefault()
         AuthService.logout();
+        navigate('/home');
+        window.location.reload();
     }
 
     const isLoggedIn = authSerivce.getCurrentUser();
     let userDetails;
     if (isLoggedIn){
         userDetails = authSerivce.parseJwt(isLoggedIn.value)
-        console.log("MAM USERA JEST ZALOGOWANY!")
-        // const userName = document.querySelector('#user-name')
-        // userName.textContent = userDetails.sub
         return (<>
                 <header>
                     <a href="/home" className="logo">Event Helper</a>
@@ -39,7 +39,7 @@ export default function Navbar() {
                             <a href="/about">About Us</a>
                         </li>
                         <li>
-                            <a id="user-name" href="/login">{userDetails.sub}
+                            <a id="user-name" href={'/user/'}>{userDetails.sub}
 
                             </a>
                         </li>
