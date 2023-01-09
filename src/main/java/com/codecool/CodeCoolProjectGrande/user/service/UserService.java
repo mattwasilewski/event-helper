@@ -21,6 +21,8 @@ public interface UserService {
 
     ResponseCookie authenticateUser(LoginRequest loginRequest);
     ResponseCookie logoutUser();
+    Optional<User> createUser(User user);
+    boolean isUserDataValid(User user);
 
 
 

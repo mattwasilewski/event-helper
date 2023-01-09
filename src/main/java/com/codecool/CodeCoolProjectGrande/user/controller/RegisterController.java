@@ -5,6 +5,7 @@ import com.codecool.CodeCoolProjectGrande.user.configuration.EmailValidator;
 import com.codecool.CodeCoolProjectGrande.user.configuration.SecurityConfig;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import com.codecool.CodeCoolProjectGrande.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +23,22 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping("/api")
 public class RegisterController {
-    private final UserRepository userRepository;
     private final SecurityConfig securityConfig;
+    private final UserService userService;
+
 
     @Autowired
-    public RegisterController(UserRepository userRepository, SecurityConfig securityConfig) {
-        this.userRepository = userRepository;
+    public RegisterController(SecurityConfig securityConfig, UserService userService) {
         this.securityConfig = securityConfig;
+        this.userService = userService;
     }
 
     @PostMapping("/registration")
     public ResponseEntity<?> registerAccount(@RequestBody User user){
-        //TODO to do servisu
-        if (EmailValidator.patternMatches(user.getEmail()) && user.getPassword().length() >= 8){
-            user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
-            user.setUserType(UserType.USER);
-            userRepository.save(user);
+        if (userService.isUserDataValid(user)){
+            userService.createUser(user);
+            return ResponseEntity.ok(HttpStatus.OK);
         }
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
     }
 }
