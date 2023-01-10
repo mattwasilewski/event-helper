@@ -1,6 +1,5 @@
-package com.codecool.CodeCoolProjectGrande.user.passwordreset;
+package com.codecool.CodeCoolProjectGrande.user.password_reset;
 
-import com.codecool.CodeCoolProjectGrande.user.User;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -22,8 +21,9 @@ public class ResetPasswordToken {
         tokenId = UUID.randomUUID();
     }
 
-    public boolean isExpired(Date accessDate){
+    public boolean isExpired(){
         int expirationDays = 1;
+        Date accessDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.createdDate);
         calendar.add(Calendar.DAY_OF_MONTH, expirationDays);

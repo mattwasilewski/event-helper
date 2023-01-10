@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.user.passwordreset;
+package com.codecool.CodeCoolProjectGrande.user.password_reset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

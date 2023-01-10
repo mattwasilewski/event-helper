@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface UserService {
     Optional<User> getUserById(UUID id);
     Optional<User> getUserByEmail(String email);
-    void saveUser(User user);
+    Optional<User> saveUser(User user);
     Optional<User> getUserByToken(UUID token);
 
     List<User> getUsers();

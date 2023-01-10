@@ -54,8 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Modifying
-    public void saveUser(User user) {
+    public Optional<User> saveUser(User user) {
         userRepository.save(user);
+        return Optional.of(user);
     }
 
     @Override
