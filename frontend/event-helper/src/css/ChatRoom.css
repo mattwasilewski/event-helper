@@ -16,14 +16,14 @@ input {
     padding: 10px;
     font-size: 1.2em;
 }
-button{
-    border: none;
-    padding: 10px;
-    background: green;
-    color:#fff;
-    font-size: 1.2em;
-    font-weight: bold;
-}
+/*button{*/
+/*    border: none;*/
+/*    padding: 10px;*/
+/*    background: green;*/
+/*    color:#fff;*/
+/*    font-size: 1.2em;*/
+/*    font-weight: bold;*/
+/*}*/
 
 
 .container{
@@ -46,20 +46,24 @@ button{
     padding: 10px;
     display: flex;
     flex-direction: row;
+    background-color: white;
 }
 
-.member-list{
-    width: 20%;
-}
+/*.member-list{*/
+/*    width: 20%;*/
+/*}*/
 
 .chat-content{
-    width:80%;
+    width:100%;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .chat-messages{
     height: 80%;
     border: 1px solid #000;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .send-message{
@@ -82,6 +86,13 @@ ul {
     border-radius: 50px;
     margin-left: 5px;
     cursor: pointer;
+
+    border: none;
+    padding: 10px;
+    background: green;
+    color:#fff;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 .member{
     padding: 10px;
@@ -115,11 +126,15 @@ ul {
     width: auto;
     display: flex;
     flex-direction: row;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    /*box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);*/
     margin: 5px 10px;
 }
 .message-data{
     padding:5px;
+    /*border: solid black 1px;*/
+    margin-left: 5px;
+    margin-right: 5px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 .message.self{
     justify-content: end;
