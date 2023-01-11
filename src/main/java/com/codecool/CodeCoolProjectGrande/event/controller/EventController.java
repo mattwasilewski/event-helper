@@ -57,12 +57,22 @@ public class EventController {
 
     @PutMapping("/assign-user-to-event")
     public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
-        return eventService.assignUserToEvent(data);
+        Optional<Event> event = eventService.assignUserToEvent(data);
+        if(event.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @PutMapping("/edit-event-description")
     public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
-        return eventService.editEventDescriptionByEventId(data);
+        Optional<Event> event = eventService.editEventDescriptionByEventId(data);
+        if(event.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @GetMapping("data")

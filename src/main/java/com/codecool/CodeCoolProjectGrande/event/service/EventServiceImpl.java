@@ -57,16 +57,19 @@ public class EventServiceImpl implements EventService {
     }
 
 
-    public ResponseEntity<?> createEvent(Event event) {
-        if (eventRepository.findEventByName(event.getName()).isEmpty() && !event.getName().contains("3D")
-                && !event.getName().contains("dubbing")) {
+    public Optional<Event> createEvent(Event event) {
+        if (checkEventName(event)) {
             eventRepository.save(event);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return Optional.of(event);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return Optional.empty();
     }
 
-    //TODO zapytac co zwracac w takim przypadku optional/responseentity
+    private boolean checkEventName(Event event) {
+        return eventRepository.findEventByName(event.getName()).isEmpty() && !event.getName().contains("3D")
+                && !event.getName().contains("dubbing");
+    }
+
     public Optional<Event> removeEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
             eventRepository.removeEventByEventId(event.getEventId());
@@ -93,25 +96,25 @@ public class EventServiceImpl implements EventService {
                 PageRequest.of(page, size), Sort.by(sortBy).descending());
     }
 
-    public ResponseEntity<?> assignUserToEvent(Map data) {
+    public Optional<Event> assignUserToEvent(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByEmail(String.valueOf(data.get("userEmail")));
         if (event.isPresent() && user.isPresent()) {
             event.get().assignUser(user.get());
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return event;
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return Optional.empty();
     }
 
-    public ResponseEntity<?> editEventDescriptionByEventId(Map data) {
+    public Optional<Event> editEventDescriptionByEventId(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         if(event.isPresent()){
             event.get().setDescription(String.valueOf(data.get("description")));
             eventRepository.save(event.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return event;
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return Optional.empty();
     }
 
     public List<String> saveWroclawData() {
@@ -169,7 +172,6 @@ public class EventServiceImpl implements EventService {
                         ArrayList::new));
     }
 
-    @NotNull
     public Event serializeWroclawData(WroclawEvent event) {
         return new Event(
                 event.offer.title,

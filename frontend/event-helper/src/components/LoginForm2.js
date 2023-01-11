@@ -81,7 +81,7 @@ export default function LoginForm2({Login, error}) {
                                         <a href="/register"><span>Create new account</span></a>
                                     </div>
                                     <div className="forget-pass">
-                                        <a href="#">Forgot Password ?</a>
+                                        <a href="/forgot-password">Forgot Password ?</a>
                                     </div>
 
                                     <button type="submit">LOG-IN</button>

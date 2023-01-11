@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api/")
 public class PasswordController {
 
     private PasswordServiceImpl passwordService;
@@ -17,13 +18,13 @@ public class PasswordController {
         this.passwordService = passwordService;
     }
 
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam("email") String userEmail){
-        return passwordService.forgotPassword(userEmail);
+    @PostMapping("forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody String email){
+        return passwordService.forgotPassword(email);
 
     }
 
-    @PutMapping("/reset-password/{token}")     // TODO change password to request body
+    @PutMapping("reset-password/{token}")     // TODO change password to request body
     public ResponseEntity<?> setNewPassword(@PathVariable("token") UUID token, @RequestBody String password) {
         return passwordService.setNewPassword(token, password);
     }

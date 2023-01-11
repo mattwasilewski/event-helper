@@ -30,8 +30,7 @@ public class PasswordServiceImpl {
     }
 
     public ResponseEntity<?> forgotPassword(String userEmail) {
-        Optional<User> user = userService.getUserByEmail(userEmail);
-        System.out.println("1");
+        Optional<User> user = userService.getUserByEmail(userEmail.replaceAll("\"", ""));
         if (user.isPresent()) {
             System.out.println("2");
             String appUrl = "http://localhost:8080";
@@ -49,6 +48,7 @@ public class PasswordServiceImpl {
             System.out.println("3");
             return new ResponseEntity<>(HttpStatus.OK);
         }
+        System.out.println("4");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

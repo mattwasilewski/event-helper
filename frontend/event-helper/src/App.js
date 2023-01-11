@@ -15,6 +15,7 @@ import UserPage from "./pages/UserPage";
 import EventPage2 from "./pages/EventPage2";
 import RegisterForm2 from "./components/RegisterForm2";
 import authSerivce from "./auth.serivce";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -48,6 +49,7 @@ function App() {
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/event/:id" element={<EventPage2/>}/>
+                    <Route path="/forgot-password" element={<ForgotPasswordForm/>}/>
                     <Route path="/reset-password/:token" element={<ResetPasswordPage/>}/>
                 </Routes>
             </Router>

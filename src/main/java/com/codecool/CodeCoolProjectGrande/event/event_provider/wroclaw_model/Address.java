@@ -4,8 +4,10 @@ import java.util.UUID;
 import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+    @Data
     public class Address implements Serializable
     {
         @Id
