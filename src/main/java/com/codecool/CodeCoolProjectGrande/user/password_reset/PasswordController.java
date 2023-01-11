@@ -24,8 +24,10 @@ public class PasswordController {
 
     }
 
-    @PutMapping("reset-password/{token}")     // TODO change password to request body
-    public ResponseEntity<?> setNewPassword(@PathVariable("token") UUID token, @RequestBody String password) {
+    @PutMapping("reset-password")
+    public ResponseEntity<?> setNewPassword(@RequestParam("token") UUID token, @RequestBody String password) {
+        System.out.println(token);
+        System.out.println(password);
         return passwordService.setNewPassword(token, password);
     }
 }

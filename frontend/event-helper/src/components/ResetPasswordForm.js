@@ -1,58 +1,69 @@
 import {useParams} from "react-router-dom";
 import {useState} from "react";
+import React from "react";
 
 function ResetPasswordForm() {
 
     let { token } = useParams()
-    const [password, setPassword] = useState(null)
+    const [password, setPassword] = useState('')
 
-    const handleInputChange = (e) => {
-        const {id, value} = e.target;
-        if (id === "password-signup") {
-            setPassword(value);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("1")
+        try {
+            await fetch(`http://localhost:3000/api/reset-password/?token=${token}`,{
+                method:"PUT",
+                headers:{"Content-Type":"application/json",
+                    'Accept': 'application/json',
+                    'Origin': 'http://localhost:3000',
+                    "Access-Control-Allow-Origin": "*"},
+                body: JSON.stringify({
+                    password: password
+                })
+            })
+        } catch (error) {
+            console.log("3")
         }
-    }
-
-
-    const sendEmail = async () =>{
-    await fetch(`http://localhost:3000/reset-password/${token}`,{
-        method:"PUT",
-        headers:{"Content-Type":"application/json",
-            'Accept': 'application/json',
-            'Origin': 'http://localhost:3000',
-            "Access-Control-Allow-Origin": "*"},
-        body: JSON.stringify({
-            password: password,
-        })
-    })
-    }
-
-
+    };
 
 
 
     return(
-        // onSubmit={ sendEmail }
-        // <button value="Submit">Reset password</button>
-        <div>
-        <div className="password">
-            <p id="pass-info">Too short password</p>
-            <label className="form__label" htmlFor="password"></label>
-            <input className="form__input password-input" type="password" id="password-signup"
-                   value={password}
-                   onChange={(e) => handleInputChange(e)} placeholder="Password"/>
-        </div>
-    <div className="password">
-        <p id="confirm-pass-info">Password not match!</p>
-        <label className="form__label" htmlFor="password"></label>
-        <input className="form__input password-input" type="password" id="confirm-password-input"
-               onChange={(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-    </div>
+        <>
+            <div className="section-1">
+                <div className="parent clearfix">
+                    <div className="bg-illustration">
+                        <a href="/home"><img src={require("../assets/logo-duza-rozdzielczosc-jasne.png")} alt="logo"></img></a>
 
-            <div className="register-button">
-                <button onClick={() => sendEmail()} type="submit" id="signup-btn" className="btn">Submit password</button>
+                        <div className="burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                    <div className="login">
+                        <div className="container">
+                            <h1>Reset Password</h1>
+
+                            <div className="login-form">
+                                <form onSubmit={handleSubmit}>
+                                    <input
+                                        placeholder="password"
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                    <button type="submit">CHANGE PASSWORD</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
