@@ -40,7 +40,13 @@ public class User {
     @OneToOne(cascade=CascadeType.ALL)
     private BanToken banToken;
 
-//    @JsonIgnore
+    public User(@NotNull String name, @NotNull String password, @NotNull String email) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
+    //    @JsonIgnore
 //    @ManyToMany(mappedBy = "assignedUsers", fetch = FetchType.EAGER)
 //    private Set<Event> events = new HashSet<>();
 
