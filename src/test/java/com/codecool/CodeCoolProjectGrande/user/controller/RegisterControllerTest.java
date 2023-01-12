@@ -47,5 +47,17 @@ public class RegisterControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
+    @Test
+    public void newUserWithIncorrectDataShouldReturn400() throws Exception {
+        when(userService.isUserDataValid(Mockito.any(User.class))).thenReturn(false);
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/api/registration")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Maciek\",\"email\":\"maciek22\",\"password\":\"Maciek231\"}")
+                )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
 
 }
