@@ -2,8 +2,13 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.EventStatus;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.controller.EventController;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.Address;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.Location;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.Offer;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.UserType;
@@ -58,6 +63,11 @@ class EventServiceTests {
                     .price(10)
                     .publicEvent(true)
                     .assignedUsers(new HashSet<>())
+                    .location("test")
+                    .latitude(222.0)
+                    .longitude(222.0)
+                    .eventStatus(EventStatus.PROMOTED)
+                    .logo("test.com")
                     .build();
 
 
@@ -75,13 +85,13 @@ class EventServiceTests {
     @Test
     void createEventSuccessTest() {
         when(eventRepository.save(event)).thenReturn(event);
-        Assertions.assertEquals(eventService.createEvent(event), new ResponseEntity<>(HttpStatus.CREATED));
+        Assertions.assertEquals(eventService.createEvent(event), Optional.of(event));
     }
 
     @Test
     void createEventFailure() {
         when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.of(event));
-        Assertions.assertEquals(eventService.createEvent(event), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Assertions.assertEquals(eventService.createEvent(event), Optional.empty());
     }
 
 
@@ -141,7 +151,6 @@ class EventServiceTests {
     }
 
     @Test
-    @Order(10)
     void sortEventsDescTest() {
         List<Event> events = new ArrayList<>();
         events.add(event);
@@ -153,7 +162,6 @@ class EventServiceTests {
     }
 
     @Test
-    @Order(11)
     void assignUserToEventSuccessfullyTest() {
         event.assignUser(user);
         Map<Object, Object> data = new HashMap<>();
@@ -161,7 +169,7 @@ class EventServiceTests {
         data.put("userEmail", user.getEmail());
         when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
         when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.OK));
+        Assertions.assertEquals(eventService.assignUserToEvent(data), Optional.of(event));
     }
 
     @Test
@@ -173,7 +181,7 @@ class EventServiceTests {
         data.put("userEmail", user.getEmail());
         when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
         when(userRepository.findUserByEmail(mockFailEmail)).thenReturn(Optional.empty());
-        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Assertions.assertEquals(eventService.assignUserToEvent(data), Optional.empty());
     }
 
     @Test
@@ -185,7 +193,7 @@ class EventServiceTests {
         data.put("userEmail", user.getEmail());
         when(eventRepository.findEventByEventId(mockEventId)).thenReturn(Optional.empty());
         when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        Assertions.assertEquals(eventService.assignUserToEvent(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Assertions.assertEquals(eventService.assignUserToEvent(data), Optional.empty());
     }
 
 
@@ -195,7 +203,7 @@ class EventServiceTests {
         data.put("eventId", event.getEventId());
         data.put("userEmail", user.getEmail());
         when(eventRepository.findEventByEventId(event.getEventId())).thenReturn(Optional.of(event));
-        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), new ResponseEntity<>(HttpStatus.OK));
+        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), Optional.of(event));
 
 
     }
@@ -208,7 +216,7 @@ class EventServiceTests {
         data.put("eventId", event.getEventId());
         data.put("userEmail", user.getEmail());
         when(eventRepository.findEventByEventId(mockNotExistEventId)).thenReturn(Optional.empty());
-        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Assertions.assertEquals(eventService.editEventDescriptionByEventId(data), Optional.empty());
 
 
     }
@@ -223,15 +231,14 @@ class EventServiceTests {
         Assertions.assertEquals(eventController.saveGlobalData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
 
-    /*
+
     @Test
     void saveWroclawDataSuccessfullyTest(){
-        List<String> titles = Stream.of("test", "test").toList();
-        when(eventService.saveWroclawData()).thenReturn(titles);
-        when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.empty());
+        when(eventRepository.findEventByName(event.getName())).thenReturn(Optional.of(event));
+        when(eventService.createEvent(event)).thenReturn(Optional.of(event));
         Assertions.assertEquals(eventController.saveWroclawData(), new ResponseEntity<>(HttpStatus.CREATED));
     }
-    */
+
 
 
     @Test
@@ -246,5 +253,25 @@ class EventServiceTests {
         when(eventRepository.findAllByAssignedUsersIn(users)).thenReturn(events);
         Assertions.assertEquals(eventService.getAssignedEvents(user.getEmail()), events);
     }
+
+//    @Test
+//    void serializeWroclawDataTest(){
+//        WroclawEvent wroclawEvent = new WroclawEvent();
+//        Offer offer = new Offer();
+//        offer.setTitle("test");
+//        Address address = new Address();
+//        address.setCity("test");
+//        address.setStreet("test");
+//        Location location = new Location();
+//        location.setLattiude(222.0);
+//        location.setLongitude(222.0);
+//        wroclawEvent.setAddress(address);
+//        wroclawEvent.setOffer(offer);
+//        wroclawEvent.setLocation(location);
+//        wroclawEvent.setStartDate("2022-07-28T10:15:30");
+//        wroclawEvent.setEndDate("2022-07-28T10:15:30");
+//        Assertions.assertEquals(eventService.serializeWroclawData(wroclawEvent).getEventType(), EventType.OTHER);
+//        Assertions.assertEquals(eventService.serializeWroclawData(wroclawEvent));
+//    }
 
 }
