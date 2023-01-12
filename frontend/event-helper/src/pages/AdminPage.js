@@ -3,9 +3,7 @@ import {ProSidebarProvider} from "react-pro-sidebar";
 
 export default function AdminPage() {
 
-
-
-    return(
+    return (
         <ProSidebarProvider>
             <AdminNavbar/>
         </ProSidebarProvider>

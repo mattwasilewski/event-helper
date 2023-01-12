@@ -1,16 +1,15 @@
-import React,{useEffect,useState} from "react";
-import logo from "../assets/logociemne.png";
-import "../css/EventPage.css"
-import switchMode from "../assets/dark-switch.png"
-import eventDj from "../assets/dj.png"
-import img from "../assets/login-img.png";
-import {useParams} from "react-router-dom";
 import Navbar from "../components/utils/Navbar";
-
+import EventTile from "../components/event/EventTile";
+import React, {useEffect, useState} from "react";
+import "../css/EventPage.css";
+import {useParams} from "react-router-dom";
+import authSerivce from "../auth.serivce";
+import ChatRoom from "./ChatRoom";
 export default function EventPage() {
-
     let { id } = useParams()
     const [event, setEvent] = useState([]);
+
+    const [buttonText, setButtonText] = useState(["Join Event"]);
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
@@ -27,6 +26,12 @@ export default function EventPage() {
     }
 
     const assignToEvent = async (e) => {
+        const isLoggedIn = authSerivce.getCurrentUser();
+        let userDetails;
+        if (isLoggedIn) {
+            console.log("JESTEM ZALOGOWANY");
+            userDetails = authSerivce.parseJwt(isLoggedIn.value)
+        }
         e.preventDefault()
         const requestOptions = {
             method: 'PUT',
@@ -35,10 +40,11 @@ export default function EventPage() {
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                userEmail: "af8afa53-4d00-4482-9758-c174b238dddb" })
+                userEmail: userDetails.sub })
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
+        setButtonText("Leave Event");
     }
 
     const [editable, setEditable] = useState(["false"]);
@@ -57,7 +63,7 @@ export default function EventPage() {
                 'Access-Control-Allow-Credentials': 'true'},
             body: JSON.stringify({
                 eventId: id,
-                description: document.getElementById("hah").innerText })
+                description: document.getElementById("event-descs").innerText })
         }
         fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
             .then(response => console.log(response.status))
@@ -65,42 +71,50 @@ export default function EventPage() {
         setButton(editButton);
     }
 
+
+
     return (
-        <div id="event-page">
-            {/*<div id="logo">*/}
-            {/*    <img src={logo} alt="logo"/>*/}
-            {/*</div>*/}
-            <div id="frame19">
-            {/*    <div id="top-nav">*/}
-            {/*        <p id="nav-home"><a href="/home">Home</a></p>*/}
-            {/*        <p id="nav-events"><a href="/events">Events</a></p>*/}
-            {/*        <p id="nav-community"><a href="/community">Community</a></p>*/}
-            {/*        <p id="nav-about-us">About us</p>*/}
-            {/*        <p id="nav-login">Login</p>*/}
-            {/*        <p id="nav-sign-up"><a href="/register">Sign up</a></p>*/}
-            {/*        <div id="switch-mode">*/}
-            {/*            <img src={switchMode} alt=""/>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-                <p id="event-name">{event.name}</p>
-                {/*<p id="event-description">{event.description}</p>*/}
-
-                <button id="event-description" onClick={(e) => assignToEvent(e)}>Join to event</button>
-
-            </div>
+        <>
             <Navbar/>
-            <div id="destination">
-                <img id="rectangle-14" src={eventDj} alt=""/>
-                <div id="card-2">
-                    <div id="rectangle-15">
-                        <p>{event.location}</p>
-                        <label id="hah" contentEditable={editable}>{event.description}</label>
-                        {button}
+            <div className="wrapper">
+                <div className="left">
+                    <img src={event.logo} width="80%"/>
+                    <h4>{event.name}</h4>
+                    <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignToEvent(e)}>
+                        {buttonText}
+                    </button>
+                </div>
+                <div className="right">
+                    <div className="info">
+                        <h3>Information</h3>
+                        <div className="info_data">
+                            <div className="data">
+                                <h4>Start Date</h4>
+                                <p>{event.startDate}</p>
+                            </div>
+                            <div className="data">
+                                <h4>Location</h4>
+                                <p>{event.location}</p>
+                            </div>
+                            <div className="data">
+                                <h4>Link</h4>
+                                <p><a href={event.linkToEventPage}>Link to official page</a> </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="projects">
+                        <h3>Events</h3>
+                        <div className="projects_data">
+                            <div className="data">
+                                <h4>Description {button}</h4>
+                                {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
+                                <p  id="event-descs" contentEditable={editable} dangerouslySetInnerHTML={{__html: event.description}}></p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
-
-
+        </>)
 }

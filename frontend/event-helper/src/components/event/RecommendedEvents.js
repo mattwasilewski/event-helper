@@ -25,8 +25,7 @@ export default function RecommendedEvents() {
         const response = await fetch(`http://localhost:3000/api/events/getEventByType/FESTIVAL&0&5`);
         const data = await response.json();
         setEvents(data);
-        console.log(events);
-        await setPopularButtonStyle(function (prevState) {
+        setPopularButtonStyle(function (prevState) {
                 if (prevState === "disabled-button")
                     setFestivalsButtonStyle("disabled-button");
                 setMusicButtonStyle("disabled-button");
@@ -40,8 +39,7 @@ export default function RecommendedEvents() {
         const response = await fetch(`http://localhost:3000/api/events/getEventByType/CONCERT&0&5`);
         const data = await response.json();
         setEvents(data);
-        console.log(events);
-        await setMusicButtonStyle( function (prevState) {
+        setMusicButtonStyle( function (prevState) {
                 if (prevState === "disabled-button")
                     setPopularButtonStyle("disabled-button");
                 setFestivalsButtonStyle("disabled-button");
@@ -52,11 +50,10 @@ export default function RecommendedEvents() {
     }
 
     async function festivalsButtonClick() {
-        const response = await fetch(`http://localhost:3000/api/events/getEventByType/EXHIBITION&0&5`);
+        const response = await fetch(`http://localhost:3000/api/events/getEventByType/PARTY&0&5`);
         const data = await response.json();
         setEvents(data);
-        console.log(events);
-        await setFestivalsButtonStyle(function (prevState) {
+        setFestivalsButtonStyle(function (prevState) {
                 if (prevState === "disabled-button")
                     setPopularButtonStyle("disabled-button");
                 setMusicButtonStyle("disabled-button");

@@ -1,7 +1,10 @@
 package com.codecool.CodeCoolProjectGrande.user.service;
 
 import com.codecool.CodeCoolProjectGrande.user.User;
+import com.codecool.CodeCoolProjectGrande.user.UserType;
 import com.codecool.CodeCoolProjectGrande.user.auth.LoginRequest;
+import com.codecool.CodeCoolProjectGrande.user.configuration.EmailValidator;
+import com.codecool.CodeCoolProjectGrande.user.configuration.SecurityConfig;
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserDetailsImpl;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
@@ -24,12 +27,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final SecurityConfig securityConfig;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils, SecurityConfig securityConfig) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.securityConfig = securityConfig;
     }
 
     @Override
@@ -59,16 +64,27 @@ public class UserServiceImpl implements UserService {
         return Optional.of(user);
     }
 
+    public boolean isUserDataValid(User user){
+        if (EmailValidator.patternMatches(user.getEmail())
+                && user.getPassword().length() >= 8
+                && userRepository.findUserByEmail(user.getEmail()).isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    public Optional<User> createUser(User user){
+        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+        user.setUserType(UserType.USER);
+        userRepository.save(user);
+        return Optional.of(user);
+    }
+
     @Override
     public ResponseCookie authenticateUser(LoginRequest loginRequest) {
-        System.out.println("WESZLO DO AUTHENTICATE USER IN SERVICE IMPL AAAAAAAAA");
-        System.out.println(loginRequest.getEmail());
-        System.out.println(loginRequest.getPassword());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-        System.out.println("authentication. get principal: ? " + authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println("PRZESZLO AUTHENTICATE CZY JEDNAK NIE PRZESZLO?");
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
         return jwtCookie;

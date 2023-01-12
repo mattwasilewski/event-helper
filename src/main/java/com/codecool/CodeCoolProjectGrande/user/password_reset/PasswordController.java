@@ -27,8 +27,6 @@ public class PasswordController {
 
     @PutMapping("reset-password")
     public ResponseEntity<?> setNewPassword(@RequestParam("token") UUID token, @RequestBody String password) throws JsonProcessingException {
-        System.out.println(token);
-        System.out.println(password);
         return passwordService.setNewPassword(token, password);
     }
 }
