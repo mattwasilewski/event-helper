@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.user.password_reset;
 import com.codecool.CodeCoolProjectGrande.user.SampleUserData;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -48,7 +49,7 @@ class PasswordServiceImplTest {
 
 
     @Test
-    public void changePasswordWhenTokenExistTest() {
+    public void changePasswordWhenTokenExistTest() throws JsonProcessingException {
         String newPassword = "testing";
         when(userService.getUserByToken(Mockito.any(UUID.class))).thenReturn(Optional.ofNullable(SampleUserData.getValidUser()));
         Assertions.assertEquals(passwordService.setNewPassword(SampleUserData.getValidUser().getResetPasswordToken().getTokenId(), newPassword), new ResponseEntity<>(HttpStatus.OK));
@@ -57,7 +58,7 @@ class PasswordServiceImplTest {
 
 
     @Test
-    public void notChangePasswordWhenTokenNotExistTest() {
+    public void notChangePasswordWhenTokenNotExistTest() throws JsonProcessingException {
         String newPassword = "testing";
         passwordService.setNewPassword(SampleUserData.getValidUser().getUserId(), newPassword);
         Assertions.assertEquals(passwordService.setNewPassword(SampleUserData.getValidUser().getUserId(), newPassword), new ResponseEntity<>(HttpStatus.NOT_FOUND));
