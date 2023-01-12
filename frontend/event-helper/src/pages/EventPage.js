@@ -5,15 +5,18 @@ import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import ChatRoom from "./ChatRoom";
+
+
 export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
-
     const [buttonText, setButtonText] = useState(["Join Event"]);
+    const [userAssignToEvent, setUserAssignToEvent] = useState([])
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
-
+        isAssignToEvent().then(r => console.log(r))
+        console.log(userAssignToEvent)
     }, []);
 
     const getEvents = async () =>{
@@ -22,7 +25,20 @@ export default function EventPage() {
         });
         const data = await response.json();
         setEvent(data);
+    }
 
+    const isAssignToEvent = async () => {
+        const isLoggedIn = authSerivce.getCurrentUser();
+        let userDetails;
+        if (isLoggedIn) {
+            console.log("JESTEM ZALOGOWANY");
+            userDetails = authSerivce.parseJwt(isLoggedIn.value)
+            const response = await fetch(`http://localhost:3000/api/events/${id}&${userDetails.sub}`, {
+                method: 'GET'
+            })
+            const data = await response.json();
+            setUserAssignToEvent(data)
+        }
     }
 
     const assignToEvent = async (e) => {

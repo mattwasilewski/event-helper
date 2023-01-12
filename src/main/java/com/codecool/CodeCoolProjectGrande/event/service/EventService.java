@@ -37,5 +37,7 @@ public interface EventService {
 
     List<Event> getAssignedEvents(String email);
 
+    boolean isUserAssignToEvent(UUID eventId, String userEmail);
+
 
 }

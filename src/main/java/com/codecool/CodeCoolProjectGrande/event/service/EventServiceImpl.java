@@ -66,7 +66,6 @@ public class EventServiceImpl implements EventService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //TODO zapytac co zwracac w takim przypadku optional/responseentity
     public Optional<Event> removeEvent(Event event) {
         if (eventRepository.findEventByEventId(event.getEventId()).isPresent()) {
             eventRepository.removeEventByEventId(event.getEventId());
@@ -210,6 +209,11 @@ public class EventServiceImpl implements EventService {
         set.add(user);
         System.out.println(set.size());
         return eventRepository.findAllByAssignedUsersIn(set);
+    }
+
+    public boolean isUserAssignToEvent(UUID eventId, String userEmail) {   // TODO dokończyć
+        User user = userRepository.findUserByEmail(userEmail).get();
+        return eventRepository.getEventByEventIdAndAssignedUsersIn(eventId, user).isPresent();
     }
 
 

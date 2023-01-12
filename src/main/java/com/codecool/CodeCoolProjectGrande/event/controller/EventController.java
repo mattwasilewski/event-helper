@@ -55,6 +55,11 @@ public class EventController {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
+    @GetMapping("/{eventId}&{userEmail}")
+    public boolean isUserAssignToEvent(@PathVariable UUID eventId, @PathVariable String userEmail) {
+        return eventService.isUserAssignToEvent(eventId, userEmail);
+    }
+
     @PutMapping("/assign-user-to-event")
     public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
         return eventService.assignUserToEvent(data);
