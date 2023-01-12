@@ -20,10 +20,9 @@ public class PasswordController {
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam("email") String userEmail){
         return passwordService.forgotPassword(userEmail);
-
     }
 
-    @PutMapping("/reset-password/{token}")     // TODO change password to request body
+    @PutMapping("/reset-password/{token}")
     public ResponseEntity<?> setNewPassword(@PathVariable("token") UUID token, @RequestBody String password) {
         return passwordService.setNewPassword(token, password);
     }
