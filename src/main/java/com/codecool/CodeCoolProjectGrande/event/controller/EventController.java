@@ -57,6 +57,7 @@ public class EventController {
 
     @GetMapping("/{eventId}&{userEmail}")
     public boolean isUserAssignToEvent(@PathVariable UUID eventId, @PathVariable String userEmail) {
+        System.out.println("Endpoint dziala :)");
         return eventService.isUserAssignToEvent(eventId, userEmail);
     }
 

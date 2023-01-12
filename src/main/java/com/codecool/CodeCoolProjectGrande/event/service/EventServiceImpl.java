@@ -207,13 +207,15 @@ public class EventServiceImpl implements EventService {
         User user = userRepository.findUserByEmail(email).get();
         Set<User> set = new HashSet<>();
         set.add(user);
-        System.out.println(set.size());
         return eventRepository.findAllByAssignedUsersIn(set);
     }
 
     public boolean isUserAssignToEvent(UUID eventId, String userEmail) {   // TODO dokończyć
         User user = userRepository.findUserByEmail(userEmail).get();
-        return eventRepository.getEventByEventIdAndAssignedUsersIn(eventId, user).isPresent();
+        Set<User> set = new HashSet<>();
+        set.add(user);
+        System.out.println("Service dziala");
+        return false; //eventRepository.getEventByEventIdAndAssignedUsersIn(eventId, set).isPresent();
     }
 
 
