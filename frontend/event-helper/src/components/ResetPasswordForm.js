@@ -1,17 +1,27 @@
 import {useParams} from "react-router-dom";
 import {useState} from "react";
 import React from "react";
+import {useNavigate} from "react-router-dom";
+import RegistrationForm from "./RegistrationForm";
 
 function ResetPasswordForm() {
 
     let { token } = useParams()
+    let navigate = useNavigate();
     const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState("");
+    const [error, setError] = useState(null);
+
+    const letters = /[a-z]/i;
+    const numbers = /[0-9]/;
+    const special = /[!@#$%]/;
+    const minValue = 8;
+
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("1")
-        try {
+        if (passwordValidationMsg() === true) {
             await fetch(`http://localhost:3000/api/reset-password/?token=${token}`,{
                 method:"PUT",
                 headers:{"Content-Type":"application/json",
@@ -22,10 +32,43 @@ function ResetPasswordForm() {
                     password: password
                 })
             })
-        } catch (error) {
-            console.log("3")
+            setPassword("");
+            setRepeatPassword("");
+            setError(null);
+            navigate('/home')
+        }
+        else {
+            passwordValidationMsg();
         }
     };
+
+
+    const passwordValidationMsg = () => {
+        if (password != null) {
+            if (password.length >= minValue && password.match(letters) && password.match(numbers)
+                && password.match(special)) {
+                setError('Perfect Password!')
+                return true
+            } else if (password.length >= minValue && password.match(letters) && password.match(numbers)) {
+                setError('Good Password')
+                return true
+            } else if (password.length === 0) {
+                return false
+            } else if (password.length >= minValue) {
+                setError('Weak password!')
+                return false
+            } else if (password !== repeatPassword) {
+                setError("Passwords do not match");
+                return false
+            }
+            else {
+                setError('Your password is too short')
+                return false
+            }
+        }
+    }
+
+
 
 
 
@@ -52,10 +95,21 @@ function ResetPasswordForm() {
                                 <form onSubmit={handleSubmit}>
                                     <input
                                         placeholder="password"
+                                        id="password-signup"
                                         type="password"
-                                        value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        value={password}
                                     />
+                                    <input
+                                        type="password"
+                                        placeholder="repeat password"
+                                        id="confirm-password-input"
+                                        value={repeatPassword}
+                                        onChange={(event) => setRepeatPassword(event.target.value)}
+                                    />
+
+                                    {error && <div style={{ color: "red" }}>{error}</div>}
+
                                     <button type="submit">CHANGE PASSWORD</button>
                                 </form>
                             </div>

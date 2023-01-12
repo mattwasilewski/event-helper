@@ -1,8 +1,9 @@
 import React, {useState,useEffect} from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+import "swiper/modules/navigation/navigation";
+import "swiper/modules/pagination/pagination";
 import {Pagination, Navigation, Autoplay} from "swiper";
 import EventTile from "./EventTile"
 

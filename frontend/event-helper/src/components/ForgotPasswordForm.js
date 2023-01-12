@@ -2,10 +2,13 @@ import {useState} from "react";
 import React from "react";
 import AuthService from "../auth.serivce";
 import authSerivce from "../auth.serivce";
+import {useNavigate} from "react-router-dom";
 
 
 function ForgotPasswordForm() {
 
+
+    let navigate = useNavigate();
     const[email,setEmail]=useState('')
     const [message, setMessage] = useState('');
 
@@ -23,6 +26,7 @@ function ForgotPasswordForm() {
                 body:JSON.stringify(email)
             })
             setMessage("Password reset link sent to your email");
+            navigate('/home');
         } catch (error) {
             console.log("3")
             setMessage("Error occured please try again later");
@@ -55,7 +59,6 @@ function ForgotPasswordForm() {
                                     <input
                                         placeholder="E-mail Address"
                                         type="email"
-                                        value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                     <button type="submit">SEND EMAIL</button>

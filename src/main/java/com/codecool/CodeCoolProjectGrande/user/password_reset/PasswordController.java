@@ -1,5 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.user.password_reset;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class PasswordController {
     }
 
     @PutMapping("reset-password")
-    public ResponseEntity<?> setNewPassword(@RequestParam("token") UUID token, @RequestBody String password) {
+    public ResponseEntity<?> setNewPassword(@RequestParam("token") UUID token, @RequestBody String password) throws JsonProcessingException {
         System.out.println(token);
         System.out.println(password);
         return passwordService.setNewPassword(token, password);

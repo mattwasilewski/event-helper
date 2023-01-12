@@ -10,6 +10,7 @@ import com.codecool.CodeCoolProjectGrande.user.password_reset.PasswordServiceImp
 import com.codecool.CodeCoolProjectGrande.user.password_reset.ResetPasswordToken;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import static org.mockito.Mockito.when;
 
 
@@ -76,6 +76,12 @@ public class UserTests {
         Assertions.assertEquals(2, userService.getUsers().size());
     }
 
+    @Test
+    public void getUserByEmailTest() {
+        when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Assertions.assertEquals(userService.getUserByEmail(user.getEmail()), Optional.of(user));
+    }
+
 
 //Password service tests
 
@@ -98,7 +104,7 @@ public class UserTests {
 
 
     @Test
-    public void changePasswordWhenTokenExistTest() {
+    public void changePasswordWhenTokenExistTest() throws JsonProcessingException {
         String newPassword = "testing";
         when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
         Assertions.assertEquals(passwordService.setNewPassword(user.getResetPasswordToken().getTokenId(), newPassword), new ResponseEntity<>(HttpStatus.OK));
@@ -107,7 +113,7 @@ public class UserTests {
 
 
     @Test
-    public void notChangePasswordWhenTokenNotExistTest() {
+    public void notChangePasswordWhenTokenNotExistTest() throws JsonProcessingException {
         String newPassword = "testing";
         passwordService.setNewPassword(user.getUserId(), newPassword);
         Assertions.assertEquals(passwordService.setNewPassword(user.getUserId(), newPassword), new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -123,7 +129,7 @@ public class UserTests {
     }
 
     @Test
-    public void setNewPasswordPathTest() {
+    public void setNewPasswordPathTest() throws JsonProcessingException {
         String mockPassword = "test";
         when(userService.getUserByToken(user.getResetPasswordToken().getTokenId())).thenReturn(Optional.of(user));
         Assertions.assertEquals(passwordController.setNewPassword(user.getResetPasswordToken().getTokenId(), mockPassword), new ResponseEntity<>(HttpStatus.OK));
@@ -136,7 +142,7 @@ public class UserTests {
     }
 
     @Test
-    public void notChangePasswordWhenTokenIsExpiredTest() {
+    public void notChangePasswordWhenTokenIsExpiredTest() throws JsonProcessingException {
         ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
         LocalDate pastDate = LocalDate.now().minusDays(5);
         ZoneId systemTimeZone = ZoneId.systemDefault();
