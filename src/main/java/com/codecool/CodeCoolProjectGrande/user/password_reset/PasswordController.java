@@ -21,6 +21,7 @@ public class PasswordController {
 
     @PostMapping("forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody String email){
+        System.out.println("testowy");
         return passwordService.forgotPassword(email);
 
     }
