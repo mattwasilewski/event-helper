@@ -38,28 +38,31 @@ public class PasswordServiceImpl {
     public ResponseEntity<?> forgotPassword(String userEmail) {
         Optional<User> user = userService.getUserByEmail(userEmail.replaceAll("\"", ""));
         if (user.isPresent()) {
-            ResetPasswordToken token = setResetPasswordToken(user);
-            SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
-            String appUrl = "http://localhost:3000";
-            passwordResetEmail.setFrom("support@demo.com");
-            passwordResetEmail.setTo(user.get().getEmail());
-            passwordResetEmail.setSubject("Password Reset Request");
-            passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
-                    + "/reset-password/" + token.getTokenId());
-            emailService.sendEmail(passwordResetEmail);
-            logger.info("Email for password reset send successfully");
+            ResetPasswordToken token = setResetPasswordToken(user.get());
+            sendResetPasswordEmail(user.get(), token);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @NotNull
-    private ResetPasswordToken setResetPasswordToken(Optional<User> user) {
+    private void sendResetPasswordEmail(User user, ResetPasswordToken token) {
+        SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+        String appUrl = "http://localhost:3000";
+        passwordResetEmail.setFrom("support@demo.com");
+        passwordResetEmail.setTo(user.getEmail());
+        passwordResetEmail.setSubject("Password Reset Request");
+        passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
+                + "/reset-password/" + token.getTokenId());
+        emailService.sendEmail(passwordResetEmail);
+    }
+
+    private ResetPasswordToken setResetPasswordToken(User user) {
         ResetPasswordToken token = new ResetPasswordToken();
-        user.get().setResetPasswordToken(token);
-        userService.saveUser(user.get());
+        user.setResetPasswordToken(token);
+        userService.saveUser(user);
         return token;
     }
+
 
     public ResponseEntity<?> setNewPassword(UUID token, String password) throws JsonProcessingException{
         Optional<User> user = userService.getUserByToken(token);

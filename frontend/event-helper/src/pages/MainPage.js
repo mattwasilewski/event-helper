@@ -22,9 +22,7 @@ export default function MainPage() {
             <Navbar/>
             <div className="section-1 box">
                 <div id="app-desc" className="app-desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                    mollis nibh quis malesuada viverra. Quisque fringilla sollicitudin est ac consectetur. Nam bibendum
-                    dolor malesuada egestas tristique. Praesent feugiat posuere dapibus.
+                    "Event Helper: Your go-to platform for event discovery & participation" - Discover and join events in Wroclaw and around the world. Create an account to add, manage and participate in events.
                 </div>
                 <a href="/add-event">
                     <button id="add-event" className="add-event">Create Event</button>
