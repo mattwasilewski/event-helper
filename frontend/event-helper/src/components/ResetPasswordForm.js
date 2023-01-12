@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import RegistrationForm from "./RegistrationForm";
+import RegisterForm from "./RegisterForm";
 
 function ResetPasswordForm() {
 

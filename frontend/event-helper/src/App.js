@@ -6,7 +6,6 @@ import AdminPage from "./pages/AdminPage";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
 import AddEventPage from "./pages/AddEventPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UserPage from "./pages/UserPage";
 import EventPage from "./pages/EventPage";
 import RegisterForm from "./components/RegisterForm";
@@ -48,7 +47,6 @@ function App() {
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/event/:id" element={<EventPage/>}/>
                     <Route path="/chat" element={<ChatRoom/>}/>
-                    <Route path="/event/:id" element={<EventPage2/>}/>
                     <Route path="/forgot-password" element={<ForgotPasswordForm/>}/>
                     <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
                 </Routes>
