@@ -6,6 +6,7 @@ import CalendarTile from "../components/utils/CalendarTile";
 import Footer from "../components/utils/Footer";
 import AllEvents from "../components/event/AllEvents";
 import RecommendedEvents from "../components/event/RecommendedEvents";
+import authSerivce from "../auth.serivce";
 
 export default function MainPage() {
     window.addEventListener("scroll", function () {
@@ -15,6 +16,11 @@ export default function MainPage() {
         addEventButton.classList.toggle("hidden", window.scrollY > 500);
 
     })
+    const isLoggedIn = authSerivce.getCurrentUser();
+    let userDetails;
+    if (isLoggedIn) {
+        userDetails = authSerivce.parseJwt(isLoggedIn.value)
+    }
 
     return (
 
@@ -22,11 +28,22 @@ export default function MainPage() {
             <Navbar/>
             <div className="section-1 box">
                 <div id="app-desc" className="app-desc">
+                    {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer*/}
+                    {/*mollis nibh quis malesuada viverra. Quisque fringilla sollicitudin est ac consectetur. Nam bibendum*/}
+                    {/*dolor malesuada egestas tristique. Praesent feugiat posuere dapibus.*/}
                     "Event Helper: Your go-to platform for event discovery & participation" - Discover and join events in Wroclaw and around the world. Create an account to add, manage and participate in events.
+
                 </div>
-                <a href="/add-event">
-                    <button id="add-event" className="add-event">Create Event</button>
-                </a>
+                {userDetails?
+                    <a href="/add-event">
+                        <button id="add-event" className="add-event">Create Event</button>
+                    </a>
+                    :
+                    <a href="/login">
+                        <button id="add-event" className="add-event">Create Event</button>
+                    </a>
+
+                }
             </div>
             <div className="section-2 box">
 

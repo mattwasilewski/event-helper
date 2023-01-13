@@ -104,14 +104,13 @@ export default function EventPage() {
                     </div>
 
                     <div className="projects">
-                        <h3>Events</h3>
+                        <h3>Description {button}</h3>
                         <div className="projects_data">
                             <div className="data">
-                                <h4>Description {button}</h4>
                                 {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
                                 <p  id="event-descs" contentEditable={editable} dangerouslySetInnerHTML={{__html: event.description}}></p>
                             </div>
-
+                            <ChatRoom eventId={event.eventId}/>
                         </div>
                     </div>
                 </div>
