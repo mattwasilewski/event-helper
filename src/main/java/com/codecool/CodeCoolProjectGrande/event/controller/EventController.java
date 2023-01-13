@@ -55,10 +55,17 @@ public class EventController {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
-    @GetMapping("/checker/{eventId}&{userEmail}")
-    public boolean isUserAssignToEvent(@PathVariable UUID eventId, @PathVariable String userEmail) {
+    @GetMapping("/checker/{eventId}")
+    public boolean isUserAssignToEvent(@PathVariable String eventId) {
         System.out.println("Endpoint dziala :)");
-        return eventService.isUserAssignToEvent(eventId, userEmail);
+        System.out.println(eventId);
+        return false;//eventService.isUserAssignToEvent(eventId, userEmail);
+    }
+
+    @GetMapping("/dupa/{dupa}")
+    public void dupa(@PathVariable String dupa) {
+        System.out.println("dupa dziala");
+        System.out.println(dupa);
     }
 
     @PutMapping("/assign-user-to-event")
