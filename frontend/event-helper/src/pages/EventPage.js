@@ -33,11 +33,23 @@ export default function EventPage() {
         if (isLoggedIn) {
             console.log("JESTEM ZALOGOWANY");
             userDetails = authSerivce.parseJwt(isLoggedIn.value)
-            const response = await fetch(`http://localhost:3000/api/events/${id}&${userDetails.sub}`, {
-                method: 'GET'
-            })
-            const data = await response.json();
-            setUserAssignToEvent(data)
+            const requestOptions = {
+                method: 'POST', headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }, body: JSON.stringify({
+                    eventId: id,
+                    userEmail: userDetails.sub
+                })
+            }
+            fetch(`http://localhost:3000/api/events/check-user-assign`, requestOptions)
+                .then(async response => {
+                    const data = response.json()
+                    setUserAssignToEvent(await data)
+                    console.log("Uwaga wynik posta 1:")
+                    console.log(data)
+                })
+            console.log("Uwaga wynik posta 2:")
+            console.log(userAssignToEvent)
         }
     }
 
