@@ -96,8 +96,13 @@ public class EventServiceImpl implements EventService {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByEmail(String.valueOf(data.get("userEmail")));
         if (event.isPresent() && user.isPresent()) {
-            event.get().assignUser(user.get());
-            eventRepository.save(event.get());
+            if (isUserAssignToEvent(UUID.fromString(String.valueOf(data.get("eventId"))), String.valueOf(data.get("userEmail")))) {
+                event.get().removeUSer(user.get());
+                eventRepository.save(event.get());
+            } else {
+                event.get().assignUser(user.get());
+                eventRepository.save(event.get());
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

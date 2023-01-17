@@ -12,6 +12,7 @@ export default function EventPage() {
     const [event, setEvent] = useState([]);
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [userAssignToEvent, setUserAssignToEvent] = useState([])
+    let isAssign;
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
@@ -37,12 +38,19 @@ export default function EventPage() {
             })
             const data = await response.json();
             setUserAssignToEvent(data)
-            console.log(data)
+            isAssign = data
+            console.log("Uwaga log xD")
+            console.log(isAssign)
+            if (data) {
+                setButtonText("Leave Event")
+            } else {
+                setButtonText("Join Event")
+            }
             console.log("isAssignToEvent executed")
         }
     }
 
-    const assignToEvent = async (e) => {
+    const assignLeaveEvent = async (e) => {
         const isLoggedIn = authSerivce.getCurrentUser();
         let userDetails;
         if (isLoggedIn) {
@@ -61,7 +69,7 @@ export default function EventPage() {
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
             .then(response => console.log(response.status))
-        setButtonText("Leave Event");
+        isAssignToEvent().then(r => console.log(r))
     }
 
     const [editable, setEditable] = useState(["false"]);
@@ -97,7 +105,7 @@ export default function EventPage() {
                 <div className="left">
                     <img src={event.logo} width="80%"/>
                     <h4>{event.name}</h4>
-                    <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignToEvent(e)}>
+                    <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
                         {buttonText}
                     </button>
                 </div>
