@@ -31,7 +31,7 @@ public class EventController {
         return eventService.getEvents();
     }
 
-    @GetMapping("{eventID}")
+    @GetMapping("get-event/{eventID}")
     public Optional<Event> getEventByID(@PathVariable UUID eventID) {
         return eventService.getEventByID(eventID);
     }
@@ -55,17 +55,11 @@ public class EventController {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
-    @PostMapping("check-user-assign")
-    public boolean isUserAssignToEvent(@RequestBody String json) {
-        System.out.println("Endpoint dziala :)");
-        System.out.println(json);
-        return false;//eventService.isUserAssignToEvent(eventId, userEmail);
-    }
-
-    @GetMapping("test/{test}")
-    public void test(@PathVariable String test) {
+    @GetMapping("/test/{sss}")
+    public boolean test(@PathVariable String sss){
         System.out.println("test dziala");
-        System.out.println(test);
+        System.out.println(sss);
+        return false;
     }
 
     @PutMapping("/assign-user-to-event")
