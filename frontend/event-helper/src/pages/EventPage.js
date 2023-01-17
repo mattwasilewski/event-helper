@@ -39,8 +39,6 @@ export default function EventPage() {
             const data = await response.json();
             setUserAssignToEvent(data)
             isAssign = data
-            console.log("Uwaga log xD")
-            console.log(isAssign)
             if (data) {
                 setButtonText("Leave Event")
             } else {
@@ -68,8 +66,10 @@ export default function EventPage() {
                 userEmail: userDetails.sub })
         }
         fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
-            .then(response => console.log(response.status))
-        isAssignToEvent().then(r => console.log(r))
+            .then(response => {
+                console.log(response.status)
+                isAssignToEvent().then(r => console.log(r))
+            })
     }
 
     const [editable, setEditable] = useState(["false"]);
