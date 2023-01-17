@@ -4,6 +4,7 @@ import EventTile from "../components/event/EventTile";
 import React from "react";
 import {useEffect, useState} from "react";
 import authSerivce from "../auth.serivce";
+import CalendarTile from "../components/utils/CalendarTile";
 
 export default function UserPage(props) {
 
@@ -85,6 +86,9 @@ export default function UserPage(props) {
                             </div>
 
                         </div>
+                    </div>
+                    <div className="calendar-background">
+                        <CalendarTile name="user" userId={userDetails.sub}/>
                     </div>
 
                 </div>

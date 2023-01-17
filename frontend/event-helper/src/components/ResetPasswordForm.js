@@ -1,30 +1,71 @@
 import {useParams} from "react-router-dom";
 import {useState} from "react";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import RegisterForm from "./RegisterForm";
 
 function ResetPasswordForm() {
 
     let { token } = useParams()
-    const [password, setPassword] = useState(null)
+    let navigate = useNavigate();
+    const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState("");
+    const [error, setError] = useState(null);
 
-    const handleInputChange = (e) => {
-        const {id, value} = e.target;
-        if (id === "password-signup") {
-            setPassword(value);
+    const letters = /[a-z]/i;
+    const numbers = /[0-9]/;
+    const special = /[!@#$%]/;
+    const minValue = 8;
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (passwordValidationMsg() === true) {
+            await fetch(`http://localhost:3000/api/reset-password/?token=${token}`,{
+                method:"PUT",
+                headers:{"Content-Type":"application/json",
+                    'Accept': 'application/json',
+                    'Origin': 'http://localhost:3000',
+                    "Access-Control-Allow-Origin": "*"},
+                body: JSON.stringify({
+                    password: password
+                })
+            })
+            setPassword("");
+            setRepeatPassword("");
+            setError(null);
+            navigate('/home')
         }
-    }
+        else {
+            passwordValidationMsg();
+        }
+    };
 
 
-    const sendEmail = async () =>{
-    await fetch(`http://localhost:3000/reset-password/${token}`,{
-        method:"PUT",
-        headers:{"Content-Type":"application/json",
-            'Accept': 'application/json',
-            'Origin': 'http://localhost:3000',
-            "Access-Control-Allow-Origin": "*"},
-        body: JSON.stringify({
-            password: password,
-        })
-    })
+    const passwordValidationMsg = () => {
+        if (password != null) {
+            if (password.length >= minValue && password.match(letters) && password.match(numbers)
+                && password.match(special)) {
+                setError('Perfect Password!')
+                return true
+            } else if (password.length >= minValue && password.match(letters) && password.match(numbers)) {
+                setError('Good Password')
+                return true
+            } else if (password.length === 0) {
+                return false
+            } else if (password.length >= minValue) {
+                setError('Weak password!')
+                return false
+            } else if (password !== repeatPassword) {
+                setError("Passwords do not match");
+                return false
+            }
+            else {
+                setError('Your password is too short')
+                return false
+            }
+        }
     }
 
 
@@ -32,27 +73,51 @@ function ResetPasswordForm() {
 
 
     return(
-        // onSubmit={ sendEmail }
-        // <button value="Submit">Reset password</button>
-        <div>
-        <div className="password">
-            <p id="pass-info">Too short password</p>
-            <label className="form__label" htmlFor="password"></label>
-            <input className="form__input password-input" type="password" id="password-signup"
-                   value={password}
-                   onChange={(e) => handleInputChange(e)} placeholder="Password"/>
-        </div>
-    <div className="password">
-        <p id="confirm-pass-info">Password not match!</p>
-        <label className="form__label" htmlFor="password"></label>
-        <input className="form__input password-input" type="password" id="confirm-password-input"
-               onChange={(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-    </div>
+        <>
+            <div className="section-1">
+                <div className="parent clearfix">
+                    <div className="bg-illustration">
+                        <a href="/home"><img src={require("../assets/logo-duza-rozdzielczosc-jasne.png")} alt="logo"></img></a>
 
-            <div className="register-button">
-                <button onClick={() => sendEmail()} type="submit" id="signup-btn" className="btn">Submit password</button>
+                        <div className="burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                    <div className="login">
+                        <div className="container">
+                            <h1>Reset Password</h1>
+
+                            <div className="login-form">
+                                <form onSubmit={handleSubmit}>
+                                    <input
+                                        placeholder="password"
+                                        id="password-signup"
+                                        type="password"
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={password}
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="repeat password"
+                                        id="confirm-password-input"
+                                        value={repeatPassword}
+                                        onChange={(event) => setRepeatPassword(event.target.value)}
+                                    />
+
+                                    {error && <div style={{ color: "red" }}>{error}</div>}
+
+                                    <button type="submit">CHANGE PASSWORD</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

@@ -1,0 +1,35 @@
+version: '3'
+networks:
+  mynetwork:
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=eventhelper_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+  backend:
+    image: working:latest
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    networks:
+      - mynetwork
+  react:
+    image: my-react-app:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - mynetwork
+    depends_on:
+      - backend
+
+

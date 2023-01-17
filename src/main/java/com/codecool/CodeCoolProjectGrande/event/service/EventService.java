@@ -20,15 +20,15 @@ public interface EventService {
 
     Optional<Event> getEventByID(UUID eventID);
 
-    ResponseEntity<?>  createEvent(Event event);
+    Optional<Event> createEvent(Event event);
 
     List<Event> findEventsByEventType(EventType eventType, int page, int size);
 
     List<Event> sortEvents(String sortBy, boolean ascending, String phrase, int page, int size);
 
-    ResponseEntity<?> assignUserToEvent(Map data);
+    Optional<Event> assignUserToEvent(Map data);
 
-    ResponseEntity<?> editEventDescriptionByEventId(Map data);
+    Optional<Event> editEventDescriptionByEventId(Map data);
 
     Event serializeWroclawData(WroclawEvent event);
     Event serializeGlobalData(GlobalEvent event);

@@ -14,13 +14,19 @@ moment.locale('pl', {
 const localizer = momentLocalizer(moment)
 
 
-export default function CalendarTile() {
+export default function CalendarTile(props) {
     const [events, setEvents] = useState([]);
     let navigate = useNavigate();
     const getEvents = async () => {
-        const response = await fetch(`http://localhost:3000/api/events/`);
-        const data = await response.json();
-        setEvents(data)
+        if(props.name==="user"){
+            const response = await fetch(`http://localhost:3000/api/events/assign-to-user/${props.userId}&10&10`);
+            const data = await response.json();
+            setEvents(data)
+        }else{
+            const response = await fetch(`http://localhost:3000/api/events/`);
+            const data = await response.json();
+            setEvents(data)
+        }
     }
 
     const [selected, setSelected] = useState();

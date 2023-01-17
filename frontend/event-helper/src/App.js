@@ -6,12 +6,13 @@ import AdminPage from "./pages/AdminPage";
 import * as Sentry from "@sentry/react";
 import { CaptureConsole } from '@sentry/integrations';
 import AddEventPage from "./pages/AddEventPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UserPage from "./pages/UserPage";
 import EventPage from "./pages/EventPage";
 import RegisterForm from "./components/RegisterForm";
 import authSerivce from "./auth.serivce";
 import ChatRoom from "./pages/ChatRoom";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -46,7 +47,8 @@ function App() {
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/event/:id" element={<EventPage/>}/>
                     <Route path="/chat" element={<ChatRoom/>}/>
-                    <Route path="/reset-password/:token" element={<ResetPasswordPage/>}/>
+                    <Route path="/forgot-password" element={<ForgotPasswordForm/>}/>
+                    <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
                 </Routes>
             </Router>
         </div>
