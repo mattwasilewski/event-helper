@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,17 +56,12 @@ public class EventController {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
-    @GetMapping("/checker/{eventId}")
-    public boolean isUserAssignToEvent(@PathVariable String eventId) {
-        System.out.println("Endpoint dziala :)");
-        System.out.println(eventId);
-        return false;//eventService.isUserAssignToEvent(eventId, userEmail);
-    }
-
-    @GetMapping("/dupa/{dupa}")
-    public void dupa(@PathVariable String dupa) {
-        System.out.println("dupa dziala");
-        System.out.println(dupa);
+    @GetMapping("/is-assign/{id}&{userEmail}")
+    public boolean isAssignToEvent(@PathVariable UUID id, @PathVariable String userEmail) {
+        System.out.println("ej dziala :)");
+        System.out.println(id);
+        System.out.println(userEmail);
+        return eventService.isUserAssignToEvent(id, userEmail);
     }
 
     @PutMapping("/assign-user-to-event")

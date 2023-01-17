@@ -31,13 +31,14 @@ export default function EventPage() {
         const isLoggedIn = authSerivce.getCurrentUser();
         let userDetails;
         if (isLoggedIn) {
-            console.log("JESTEM ZALOGOWANY");
             userDetails = authSerivce.parseJwt(isLoggedIn.value)
-            const response = await fetch(`http://localhost:3000/api/events/${id}&${userDetails.sub}`, {
+            const response = await fetch(`http://localhost:3000/api/events/is-assign/${id}&${userDetails.sub}`, {
                 method: 'GET'
             })
             const data = await response.json();
             setUserAssignToEvent(data)
+            console.log(data)
+            console.log("isAssignToEvent executed")
         }
     }
 
