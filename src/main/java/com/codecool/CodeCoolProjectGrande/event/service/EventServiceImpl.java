@@ -48,6 +48,7 @@ public class EventServiceImpl implements EventService {
         this.userRepository = userRepository;
     }
 
+
     public List<Event> getEvents(){
         return eventRepository.findAll();
     }
