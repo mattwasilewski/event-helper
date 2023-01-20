@@ -48,7 +48,6 @@ public class EventServiceImpl implements EventService {
         this.userRepository = userRepository;
     }
 
-
     public List<Event> getEvents(){
         return eventRepository.findAll();
     }
@@ -101,8 +100,13 @@ public class EventServiceImpl implements EventService {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
         Optional<User> user = userRepository.findUserByEmail(String.valueOf(data.get("userEmail")));
         if (event.isPresent() && user.isPresent()) {
-            event.get().assignUser(user.get());
-            eventRepository.save(event.get());
+            if (isUserAssignToEvent(UUID.fromString(String.valueOf(data.get("eventId"))), String.valueOf(data.get("userEmail")))) {
+                event.get().removeUSer(user.get());
+                eventRepository.save(event.get());
+            } else {
+                event.get().assignUser(user.get());
+                eventRepository.save(event.get());
+            }
             return event;
         }
         return Optional.empty();
@@ -211,8 +215,14 @@ public class EventServiceImpl implements EventService {
         User user = userRepository.findUserByEmail(email).get();
         Set<User> set = new HashSet<>();
         set.add(user);
-        System.out.println(set.size());
         return eventRepository.findAllByAssignedUsersIn(set);
+    }
+
+    public boolean isUserAssignToEvent(UUID eventId, String userEmail) {
+        User user = userRepository.findUserByEmail(userEmail).get();
+        Set<User> userSet = new HashSet<>();
+        userSet.add(user);
+        return eventRepository.getEventByEventIdAndAssignedUsersIn(eventId, userSet).isPresent();
     }
 
 

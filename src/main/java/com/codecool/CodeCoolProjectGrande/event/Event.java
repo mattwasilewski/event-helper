@@ -72,6 +72,11 @@ public class Event {
     public void assignUser(User user) {
         assignedUsers.add(user);
     }
+
+    public void removeUSer(User user) {
+        assignedUsers.remove(user);
+    }
+
     public LocalDateTime parseStringToLocalDate(String date) {
             return LocalDateTime.parse(date);
     }

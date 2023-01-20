@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,11 @@ public class EventController {
     public List<Event> sortEvents(@PathVariable String sortBy, @PathVariable boolean ascending, @PathVariable String phrase,
                                   @PathVariable int page, @PathVariable int size) {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
+    }
+
+    @GetMapping("/is-assign/{id}&{userEmail}")
+    public boolean isAssignToEvent(@PathVariable UUID id, @PathVariable String userEmail) {
+        return eventService.isUserAssignToEvent(id, userEmail);
     }
 
     @PutMapping("/assign-user-to-event")

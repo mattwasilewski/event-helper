@@ -33,6 +33,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     Optional<Event> removeEventByEventId(UUID eventId);
 
+    Optional<Event> getEventByEventIdAndAssignedUsersIn(UUID eventId, Set<User> user);
 
 
 }
