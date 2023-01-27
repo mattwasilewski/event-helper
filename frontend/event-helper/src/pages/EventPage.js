@@ -1,5 +1,4 @@
 import Navbar from "../components/utils/Navbar";
-import EventTile from "../components/event/EventTile";
 import React, {useEffect, useState} from "react";
 import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
@@ -8,7 +7,7 @@ import ChatRoom from "./ChatRoom";
 export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
-
+    const [image, setImage] = useState(null)
     const [buttonText, setButtonText] = useState(["Join Event"]);
 
     useEffect(() => {
@@ -22,8 +21,10 @@ export default function EventPage() {
         });
         const data = await response.json();
         setEvent(data);
+        setImage(data.image.imageData)
 
     }
+
 
     const assignToEvent = async (e) => {
         const isLoggedIn = authSerivce.getCurrentUser();
@@ -78,7 +79,7 @@ export default function EventPage() {
             <Navbar/>
             <div className="wrapper">
                 <div className="left">
-                    <img src={event.logo} width="80%"/>
+                    {image && <img width="80%" src={`data:image/jpeg;base64,${image}`} />}
                     <h4>{event.name}</h4>
                     <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignToEvent(e)}>
                         {buttonText}

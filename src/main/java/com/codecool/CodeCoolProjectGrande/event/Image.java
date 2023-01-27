@@ -3,21 +3,25 @@ package com.codecool.CodeCoolProjectGrande.event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Table;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "images")
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID imageId = UUID.randomUUID();
+    @Column(name = "name")
     private String name;
     @Lob
-    private byte[] data;
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] imageData;
 
 
 

@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Service
@@ -226,8 +225,12 @@ public class EventServiceImpl implements EventService {
     public Image addImageToEvent(String name, MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(name);
-        image.setData(file.getBytes());
+        image.setImageData(file.getBytes());
         imageRepository.save(image);
+        if(eventRepository.findEventByName(name).isPresent()){
+            eventRepository.findEventByName(name).get().setImage(image);
+            eventRepository.save(eventRepository.findEventByName(name).get());
+        }
         return image;
     }
 

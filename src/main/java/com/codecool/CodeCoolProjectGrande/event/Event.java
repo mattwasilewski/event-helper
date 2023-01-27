@@ -45,6 +45,7 @@ public class Event {
     private Double latitude;
     private Double longitude;
     private String source;
+    @JoinColumn(name = "data")
     @OneToOne(cascade=CascadeType.ALL)
     private Image image;
     @ManyToMany
