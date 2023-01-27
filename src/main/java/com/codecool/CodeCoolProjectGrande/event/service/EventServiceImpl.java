@@ -2,10 +2,12 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.event.Image;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
+import com.codecool.CodeCoolProjectGrande.event.repository.ImageRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +20,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -27,6 +33,7 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     @Value("${apiWro}")
     private String apiKey;
 
@@ -43,9 +50,10 @@ public class EventServiceImpl implements EventService {
     private String[] globalArtists;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, ImageRepository imageRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.imageRepository = imageRepository;
     }
 
 
@@ -213,6 +221,14 @@ public class EventServiceImpl implements EventService {
         set.add(user);
         System.out.println(set.size());
         return eventRepository.findAllByAssignedUsersIn(set);
+    }
+
+    public Image addImageToEvent(String name, MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setName(name);
+        image.setData(file.getBytes());
+        imageRepository.save(image);
+        return image;
     }
 
 

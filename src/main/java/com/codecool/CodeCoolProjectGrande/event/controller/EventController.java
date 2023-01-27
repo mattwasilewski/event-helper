@@ -9,6 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.io.IOException;
 import java.util.*;
 
 
@@ -21,10 +33,12 @@ public class EventController {
     private final EventServiceImpl eventService;
 
 
+
     @Autowired
     public EventController(EventServiceImpl eventService) {
         this.eventService = eventService;
     }
+
 
     @GetMapping()
     public List<Event> getEvents(){
@@ -41,6 +55,15 @@ public class EventController {
         eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping(value = "upload-image")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) throws IOException {
+        eventService.addImageToEvent(name, file);
+        System.out.println(name);
+        System.out.println((String.format("File name '%s' uploaded successfully.", file.getOriginalFilename())));
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/getEventByType/{eventType}&{page}&{size}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType, @PathVariable int page,

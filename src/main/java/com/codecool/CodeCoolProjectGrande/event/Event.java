@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.*;
@@ -44,6 +45,8 @@ public class Event {
     private Double latitude;
     private Double longitude;
     private String source;
+    @OneToOne(cascade=CascadeType.ALL)
+    private Image image;
     @ManyToMany
     @JoinTable(
             name = "assigned_users",

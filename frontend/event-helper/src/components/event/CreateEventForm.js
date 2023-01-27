@@ -16,6 +16,8 @@ function CreateEventForm() {
     const [price, setPrice] = useState("");
     const [publicEvent, setPublicEvent] = useState("");
     const [logo, setLogo] = useState("");
+    const [file, setFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
 
 
     const handleInputChange = (e) => {
@@ -54,6 +56,27 @@ function CreateEventForm() {
         }
     }
 
+    const handleUploadClick = event => {
+        let file = event.target.files[0];
+        const imageData = new FormData();
+        imageData.append('file', file);
+        imageData.append('name', name)
+        setFile(imageData);
+        setImagePreview(URL.createObjectURL(file));
+    };
+
+
+    const onFileChangeHandler = () => {
+        const requestOptions = {
+            method: 'POST',
+            body: file
+        };
+        fetch('http://localhost:3000/api/events/upload-image', requestOptions)
+            .then(response => response.json())
+
+    }
+
+
     const handleSubmit = (e) => {
         if (!authSerivce.getCurrentUser()) {
             navigate('/login')
@@ -76,13 +99,15 @@ function CreateEventForm() {
                 price: price,
                 publicEvent: publicEvent,
                 logo: logo,
-                eventStatus: "TO_VERIFICATION"
+                eventStatus: "TO_VERIFICATION",
             })   // TODO add userId after login implementation
         };
         fetch('http://localhost:3000/api/events/create-event', requestOptions)
             .then(response => console.log(response.status))
+        onFileChangeHandler();
         navigate('/home');
     }
+
 
     return (<>
             <div className="add-event-form">
@@ -113,11 +138,18 @@ function CreateEventForm() {
                     <option value="true">PRIVATE</option>
                     <option value="false">PUBLIC</option>
                 </select>
+
+                <input className="image" type="file" onChange={handleUploadClick} />
+                <img className="uploadImage" width={200} height={200} src={imagePreview}/>
+
+
+
                 <textarea value={description} onChange={(e) => handleInputChange(e)}
                           id="description" className="big-input" placeholder="Description"/>
                 <button onClick={(e) => handleSubmit(e)} type="submit" id="submit-btn" className="btn">
                     Create Event
                 </button>
+
             </div>
         </>)
 }
