@@ -4,10 +4,11 @@ import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import ChatRoom from "./ChatRoom";
+import imageDefault from "../assets/logociemne.png"
 export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
 
     useEffect(() => {
@@ -72,14 +73,21 @@ export default function EventPage() {
         setButton(editButton);
     }
 
-
-
+    function setDefaultImage() {
+        if(event.logo) {
+            return <img src={event.logo} width="80%"/>
+        } else if (image === imageDefault) {
+            return <img src={image} width="80%"/>
+        } else {
+            return <img width="80%" src={`data:image/jpeg;base64,${image}`} />
+        }
+    }
     return (
         <>
             <Navbar/>
             <div className="wrapper">
                 <div className="left">
-                    {image && <img width="80%" src={`data:image/jpeg;base64,${image}`} />}
+                    {setDefaultImage()}
                     <h4>{event.name}</h4>
                     <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignToEvent(e)}>
                         {buttonText}

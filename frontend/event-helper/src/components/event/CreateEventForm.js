@@ -63,17 +63,21 @@ function CreateEventForm() {
         imageData.append('name', name)
         setFile(imageData);
         setImagePreview(URL.createObjectURL(file));
+
     };
 
 
-    const onFileChangeHandler = () => {
-        const requestOptions = {
-            method: 'POST',
-            body: file
-        };
-        fetch('http://localhost:3000/api/events/upload-image', requestOptions)
-            .then(response => response.json())
 
+
+    const onFileChangeHandler = () => {
+        if(file) {
+            const requestOptions = {
+                method: 'POST',
+                body: file
+            };
+            fetch('http://localhost:3000/api/events/upload-image', requestOptions)
+                .then(response => response.json())
+        }
     }
 
 
@@ -103,7 +107,7 @@ function CreateEventForm() {
             })   // TODO add userId after login implementation
         };
         fetch('http://localhost:3000/api/events/create-event', requestOptions)
-            .then(response => console.log(response.status), onFileChangeHandler)
+            .then(response => console.log(response.status))
         onFileChangeHandler();
         navigate('/home');
     }
