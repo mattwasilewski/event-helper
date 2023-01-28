@@ -12,13 +12,25 @@ export default function EventPage() {
     const [event, setEvent] = useState([]);
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [userAssignToEvent, setUserAssignToEvent] = useState([])
+    const [numOfAttendees, setNumOfAttendees] = useState([])
     let isAssign;
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
+        numberOfAttendees().then(r => console.log(r))
         console.log(userAssignToEvent)
     }, []);
+
+    const numberOfAttendees = async  () => {
+        const response = await fetch(`http://localhost:3000/api/events/get-num-attendees/${id}`, {
+            method: 'GET',
+        });
+        const data = await response.json()
+        console.log("number of attendees:")
+        console.log(data)
+        setNumOfAttendees(data)
+    }
 
     const getEvents = async () =>{
         const response = await fetch(`http://localhost:3000/api/events/${id}`, {
@@ -44,7 +56,6 @@ export default function EventPage() {
             } else {
                 setButtonText("Join Event")
             }
-            console.log("isAssignToEvent executed")
         }
     }
 
@@ -69,6 +80,7 @@ export default function EventPage() {
             .then(response => {
                 console.log(response.status)
                 isAssignToEvent().then(r => console.log(r))
+                numberOfAttendees().then(r => console.log(r))
             })
     }
 
@@ -124,6 +136,10 @@ export default function EventPage() {
                             <div className="data">
                                 <h4>Link</h4>
                                 <p><a href={event.linkToEventPage}>Link to official page</a> </p>
+                            </div>
+                            <div className="data">
+                                <h4>Number of attendees</h4>
+                                <p>{numOfAttendees}</p>
                             </div>
                         </div>
                     </div>

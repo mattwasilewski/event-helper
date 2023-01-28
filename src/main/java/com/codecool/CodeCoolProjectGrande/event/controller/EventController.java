@@ -101,13 +101,15 @@ public class EventController {
         }
     }
 
-
     @GetMapping("assign-to-user/{email}&{page}&{size}")
     public List<Event> getAssignedEvents(@PathVariable String email, @PathVariable int page, @PathVariable int size) {
         return eventService.getAssignedEvents(email);
     }
 
-
+    @GetMapping("get-num-attendees/{eventId}")
+    public int getNumOfAttendees(@PathVariable UUID eventId) {
+        return eventService.getNumOfAttendees(eventId);
+    }
 
 }
 

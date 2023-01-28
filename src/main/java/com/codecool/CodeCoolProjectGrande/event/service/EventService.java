@@ -39,5 +39,6 @@ public interface EventService {
 
     boolean isUserAssignToEvent(UUID eventId, String userEmail);
 
+    int getNumOfAttendees(UUID eventId);
 
 }
