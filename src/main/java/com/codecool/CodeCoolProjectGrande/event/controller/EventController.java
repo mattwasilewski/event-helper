@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.*;
 
 
@@ -27,8 +28,9 @@ public class EventController {
         this.eventService = eventService;
     }
 
+
     @GetMapping()
-    public List<Event> getEvents(){
+    public List<Event> getEvents() {
         return eventService.getEvents();
     }
 
@@ -42,6 +44,7 @@ public class EventController {
         eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     @GetMapping("/getEventByType/{eventType}&{page}&{size}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType, @PathVariable int page,
@@ -64,7 +67,7 @@ public class EventController {
     @PutMapping("/assign-user-to-event")
     public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
         Optional<Event> event = eventService.assignUserToEvent(data);
-        if(event.isEmpty()) {
+        if (event.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -72,9 +75,9 @@ public class EventController {
     }
 
     @PutMapping("/edit-event-description")
-    public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
+    public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data) {
         Optional<Event> event = eventService.editEventDescriptionByEventId(data);
-        if(event.isEmpty()){
+        if (event.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -84,7 +87,7 @@ public class EventController {
     @GetMapping("data")
     public ResponseEntity<?> saveWroclawData() {
         List<String> saveWroclawData = eventService.saveWroclawData();
-        if(saveWroclawData == null) {
+        if (saveWroclawData == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -94,7 +97,7 @@ public class EventController {
     @GetMapping("global-data")
     public ResponseEntity<?> saveGlobalData() {
         List<String> saveGlobalEvents = eventService.saveGlobalData();
-        if(saveGlobalEvents == null) {
+        if (saveGlobalEvents == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -106,7 +109,6 @@ public class EventController {
     public List<Event> getAssignedEvents(@PathVariable String email, @PathVariable int page, @PathVariable int size) {
         return eventService.getAssignedEvents(email);
     }
-
 
 
 }
