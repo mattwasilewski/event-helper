@@ -2,6 +2,7 @@ import {useState} from "react";
 import EventTile from "./EventTile";
 import React from "react";
 import {useEffect} from "react";
+import imageDefault from "../../assets/logociemne.png";
 
 export default function RecommendedEvents() {
     const [events, setEvents] = useState([]);
@@ -62,6 +63,16 @@ export default function RecommendedEvents() {
         )
     }
 
+    function setDefaultImage(event) {
+        if(event.image && event.image.standard && event.image.standard !== "defaultUrl") {
+            return <img src={event.image.standard}/>
+        } else if (event.image && event.image.imageData) {
+            return <img src={`data:image/jpeg;base64,${event.image.imageData}`}/>
+        } else {
+            return <img src={imageDefault}/>
+        }
+    }
+
 
     return (
         <>
@@ -74,7 +85,7 @@ export default function RecommendedEvents() {
                 <EventTile name={event.name}
                            location={event.location}
                            eventId={event.eventId}
-                           logo={event.logo}
+                           logo={setDefaultImage(event)}
                            startDate={event.startDate}
                            eventType={event.eventType}
                            description={event.description}
