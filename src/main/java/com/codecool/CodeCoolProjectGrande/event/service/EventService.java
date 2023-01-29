@@ -3,9 +3,9 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
+import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +34,9 @@ public interface EventService {
     Event serializeGlobalData(GlobalEvent event);
     List<String> saveGlobalData();
     List<String> saveWroclawData();
+    EventStorage saveWroclawEvent(EventStorage storage);
+    List<GlobalEvent> setArtistNameToGlobalEvents(List<GlobalEvent> events);
+    List<Event> saveSerializedGlobalEvents(List<GlobalEvent> events);
 
     List<Event> getAssignedEvents(String email);
 

@@ -1,16 +1,18 @@
 import Navbar from "../components/utils/Navbar";
-import EventTile from "../components/event/EventTile";
 import React, {useEffect, useState} from "react";
 import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import ChatRoom from "./ChatRoom";
+import imageDefault from "../assets/logociemne.png"
 
 
 export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
+    const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
+    const [imageUrl, setImageUrl] = useState("")
     const [userAssignToEvent, setUserAssignToEvent] = useState([])
     let isAssign;
 
@@ -26,7 +28,8 @@ export default function EventPage() {
         });
         const data = await response.json();
         setEvent(data);
-    }
+        setImageFile(data.image.imageData)
+        setImageUrl(data.image.standard)
 
     const isAssignToEvent = async () => {
         const isLoggedIn = authSerivce.getCurrentUser();
@@ -96,14 +99,21 @@ export default function EventPage() {
         setButton(editButton);
     }
 
-
-
+    function setDefaultImage() {
+        if(imageUrl && imageUrl !== "defaultUrl") {
+            return <img src={imageUrl} width="80%"/>
+        } else if (imageFile === imageDefault) {
+            return <img src={imageFile} width="80%"/>
+        } else {
+            return <img width="80%" src={`data:image/jpeg;base64,${imageFile}`} />
+        }
+    }
     return (
         <>
             <Navbar/>
             <div className="wrapper">
                 <div className="left">
-                    <img src={event.logo} width="80%"/>
+                    {setDefaultImage()}
                     <h4>{event.name}</h4>
                     <button  type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
                         {buttonText}

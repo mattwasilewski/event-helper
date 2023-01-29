@@ -10,7 +10,7 @@ export default function EventTile(props) {
         <a href={'/event/' + props.eventId}>
             <div className="card">
                 <div className="card-header">
-                    <img src={props.logo} alt="rover"/>
+                    {props.logo}
                 </div>
                 <div className="card-body">
                     <span className={`tag ${props.eventType}`} id="event-type">{props.eventType}</span>

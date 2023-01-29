@@ -47,7 +47,7 @@ export default function MainPage() {
             </div>
             <div className="section-2 box">
 
-                <h1>Recommended Events</h1>
+                <h1>Newest events</h1>
                 <Events sortBy="startDate" asc="descending" phrase=""/>
 
             </div>
