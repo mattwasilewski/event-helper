@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "../../css/App.css"
 import {useNavigate} from "react-router-dom";
 import authSerivce from "../../auth.serivce";
+import imageDefault from "../../assets/logociemne.png";
 
 
 function CreateEventForm() {
@@ -17,6 +18,8 @@ function CreateEventForm() {
     const [publicEvent, setPublicEvent] = useState("");
     const [file, setFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const [validImage, setValidImage] = useState(true);
+    const [error, setError] = useState("");
 
 
     const handleInputChange = (e) => {
@@ -52,19 +55,44 @@ function CreateEventForm() {
         }
     }
 
+
+
     const handleUploadClick = event => {
         let file = event.target.files[0];
         const imageData = new FormData();
+        fileValidator(file)
         imageData.append('file', file);
         imageData.append('name', name)
+
         setFile(imageData);
         setImagePreview(URL.createObjectURL(file));
 
     };
 
+    function fileValidator(file) {
+        if (file.size > 5 * 1024 * 1024) {
+            setError("File size is too large, max 5 MB allowed");
+            setFile(null)
+            setImagePreview(URL.createObjectURL(imageDefault))
+            setValidImage(false)
+            return;
+        }
+
+        const fileType = file.type.split('/')[1];
+        if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
+            setError("File type not supported, only jpg/jpeg/png allowed");
+            setFile(null)
+            setImagePreview(URL.createObjectURL(imageDefault))
+            setValidImage(false)
+            return;
+        }
+        setError(null);
+        setValidImage(true)
+    }
+
 
     const onFileChangeHandler = () => {
-        if (file) {
+        if (file && validImage) {
             const requestOptions = {
                 method: 'POST',
                 body: file
@@ -135,6 +163,7 @@ function CreateEventForm() {
             </select>
 
             <input className="image" type="file" onChange={handleUploadClick}/>
+            {error && <p className="error">{error}</p>}
             <img className="uploadImage" width={200} height={200} src={imagePreview}/>
 
 
