@@ -92,7 +92,7 @@ function CreateEventForm() {
 
 
     const onFileChangeHandler = () => {
-        if (file && validImage) {
+        if (file && validImage === true) {
             const requestOptions = {
                 method: 'POST',
                 body: file
