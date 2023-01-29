@@ -8,8 +8,9 @@ import imageDefault from "../assets/logociemne.png"
 export default function EventPage() {
     let { id } = useParams()
     const [event, setEvent] = useState([]);
-    const [image, setImage] = useState(imageDefault)
+    const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
+    const [imageUrl, setImageUrl] = useState("")
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
@@ -22,7 +23,8 @@ export default function EventPage() {
         });
         const data = await response.json();
         setEvent(data);
-        setImage(data.image.imageData)
+        setImageFile(data.image.imageData)
+        setImageUrl(data.image.standard)
 
     }
 
@@ -74,12 +76,12 @@ export default function EventPage() {
     }
 
     function setDefaultImage() {
-        if(event.logo) {
-            return <img src={event.logo} width="80%"/>
-        } else if (image === imageDefault) {
-            return <img src={image} width="80%"/>
+        if(imageUrl && imageUrl !== "defaultUrl") {
+            return <img src={imageUrl} width="80%"/>
+        } else if (imageFile === imageDefault) {
+            return <img src={imageFile} width="80%"/>
         } else {
-            return <img width="80%" src={`data:image/jpeg;base64,${image}`} />
+            return <img width="80%" src={`data:image/jpeg;base64,${imageFile}`} />
         }
     }
     return (

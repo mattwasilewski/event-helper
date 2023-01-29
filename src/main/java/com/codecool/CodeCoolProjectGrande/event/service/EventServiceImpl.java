@@ -2,12 +2,11 @@ package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
-import com.codecool.CodeCoolProjectGrande.event.Image;
+import com.codecool.CodeCoolProjectGrande.image.Image;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
-import com.codecool.CodeCoolProjectGrande.event.repository.ImageRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -20,9 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,7 +28,6 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private final ImageRepository imageRepository;
     @Value("${apiWro}")
     private String apiKey;
 
@@ -49,14 +44,13 @@ public class EventServiceImpl implements EventService {
     private String[] globalArtists;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, ImageRepository imageRepository) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.imageRepository = imageRepository;
     }
 
 
-    public List<Event> getEvents(){
+    public List<Event> getEvents() {
         return eventRepository.findAll();
     }
 
@@ -86,12 +80,12 @@ public class EventServiceImpl implements EventService {
         return Optional.empty();
     }
 
-    public List<Event> saveAll(List<Event> events){
+    public List<Event> saveAll(List<Event> events) {
         eventRepository.saveAll(events);
         return events;
     }
 
-    public List<Event> findEventsByEventType(EventType eventType, int page, int size){
+    public List<Event> findEventsByEventType(EventType eventType, int page, int size) {
         return eventRepository.findEventsByEventType(eventType, PageRequest.of(page, size));
     }
 
@@ -117,7 +111,7 @@ public class EventServiceImpl implements EventService {
 
     public Optional<Event> editEventDescriptionByEventId(Map data) {
         Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
-        if(event.isPresent()){
+        if (event.isPresent()) {
             event.get().setDescription(String.valueOf(data.get("description")));
             eventRepository.save(event.get());
             return event;
@@ -140,8 +134,9 @@ public class EventServiceImpl implements EventService {
     }
 
 
-    private void saveWroclawEvent(EventStorage storage) {
+    public EventStorage saveWroclawEvent(EventStorage storage) {
         storage.getItems().forEach(event -> createEvent(serializeWroclawData(event)));
+        return storage;
     }
 
 
@@ -163,30 +158,36 @@ public class EventServiceImpl implements EventService {
         return successfullyAddedEvents;
     }
 
-    private void saveSerializedGlobalEvents(List<GlobalEvent> events) {
+    public List<Event> saveSerializedGlobalEvents(List<GlobalEvent> events) {
         List<Event> serializedEvents = events.stream().map(this::serializeGlobalData).toList();
         saveAll(eventsWithoutDuplicateName(serializedEvents));
+        return serializedEvents;
     }
 
 
-    private void setArtistNameToGlobalEvents(List<GlobalEvent> events) {
+    public List<GlobalEvent> setArtistNameToGlobalEvents(List<GlobalEvent> events) {
         events.forEach(event -> event.setArtist(events.get(0).getArtist()));
+        return events;
     }
 
-    public List<Event> eventsWithoutDuplicateName(List<Event> events){
+    public List<Event> eventsWithoutDuplicateName(List<Event> events) {
         return events.stream()
                 .collect(Collectors.collectingAndThen(
-                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Event:: getName))),
+                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Event::getName))),
                         ArrayList::new));
     }
 
     public Event serializeWroclawData(WroclawEvent event) {
+        Image image = Image.builder()
+                .imageId(UUID.randomUUID())
+                .imageUrl(event.offer.mainImage.imageUrl)
+                .build();
         return new Event(
                 event.offer.title,
                 event.offer.longDescription,
                 event.offer.url,
                 String.format("%s, %s", event.address.street, event.address.city),
-                event.offer.mainImage.standard,
+                image,
                 EventType.OTHER,
                 event.startDate,
                 event.endDate,
@@ -198,13 +199,17 @@ public class EventServiceImpl implements EventService {
 
     @NotNull
     public Event serializeGlobalData(GlobalEvent event) {
+        Image image = Image.builder()
+                .imageId(UUID.randomUUID())
+                .imageUrl(event.artist.imageUrl)
+                .build();
         return new Event(
                 event.artist.name,
                 String.format("%s%s%s", event.description,
                         String.format("<br><a href=\"%s\">Click for event page</a><br><br>", event.url), "<br><br> Generated by bandsintown.com"),
                 event.url,
                 String.format("%s, %s, %s", event.venue.streetAddress, event.venue.city, event.venue.country),
-                event.artist.imageUrl,
+                image,
                 EventType.CONCERT,
                 event.datetime,
                 event.datetime,
@@ -220,18 +225,6 @@ public class EventServiceImpl implements EventService {
         set.add(user);
         System.out.println(set.size());
         return eventRepository.findAllByAssignedUsersIn(set);
-    }
-
-    public Image addImageToEvent(String name, MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(name);
-        image.setImageData(file.getBytes());
-        imageRepository.save(image);
-        if(eventRepository.findEventByName(name).isPresent()){
-            eventRepository.findEventByName(name).get().setImage(image);
-            eventRepository.save(eventRepository.findEventByName(name).get());
-        }
-        return image;
     }
 
 
