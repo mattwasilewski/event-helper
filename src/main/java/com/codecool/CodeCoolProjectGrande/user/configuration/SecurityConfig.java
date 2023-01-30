@@ -42,18 +42,7 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-    //    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/**")
-//                .permitAll().anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .and()
-//                .csrf().disable();
-//        return http.build();
-//    }
+
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
