@@ -4,6 +4,8 @@ import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,7 +38,6 @@ public class EventController {
 
     @GetMapping()
     public List<Event> getEvents() {
-        saveCities();
         return eventService.getEvents();
     }
 
@@ -88,7 +91,9 @@ public class EventController {
         }
     }
 
-    public void saveCities(){
+    @GetMapping("/cities")
+    public List<String> getCities(){
+        List<String> cityNames = new ArrayList<>();
         try{
             URL url = new URL("http://api.geonames.org/searchJSON?country=PL&featureCode=PPLA&username=devgraba");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -98,18 +103,19 @@ public class EventController {
             if (responseCode != 200){
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
-                StringBuilder informationString = new StringBuilder();
-                Scanner scanner = new Scanner(url.openStream());
-                while (scanner.hasNext()){
-                    informationString.append(scanner.nextLine());
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(conn.getInputStream());
+                JsonNode citiesNode = rootNode.path("geonames");
+                for (JsonNode cityNode : citiesNode) {
+                    cityNames.add(cityNode.path("name").asText());
                 }
-                scanner.close();
-                System.out.println("to chyba moje miasta: " + informationString);
             }
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
+        return cityNames;
     }
+
 
     @GetMapping("data")
     public ResponseEntity<?> saveWroclawData() {
