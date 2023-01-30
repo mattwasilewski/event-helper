@@ -5,6 +5,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import authSerivce from "../auth.serivce";
 import CalendarTile from "../components/utils/CalendarTile";
+import AuthService from "../auth.serivce";
 
 export default function UserPage(props) {
 
@@ -34,22 +35,11 @@ export default function UserPage(props) {
     }
 
     const deleteAccount = async () => {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'},
-            body: JSON.stringify({
-                user: userDetails.sub })
-        }
-        fetch('http://localhost:3000/api/delete-user', requestOptions)
-            .then(response => {
-                console.log(response.status)
-            })
-
-        console.log("Konto usuniete")
-        alert("konto usunięte")
-        window.location.href = "/logout"
+        await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`, {
+            method: 'DELETE'
+        })
+        AuthService.logout();
+        window.location.replace("/home")
     }
 
     return (
