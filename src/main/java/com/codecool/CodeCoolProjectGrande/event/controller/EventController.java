@@ -93,6 +93,7 @@ public class EventController {
 
     @GetMapping("/cities")
     public List<String> getCities(){
+        System.out.println("in getcities method");
         List<String> cityNames = new ArrayList<>();
         try{
             URL url = new URL("http://api.geonames.org/searchJSON?country=PL&featureCode=PPLA&username=devgraba");

@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "../../css/App.css"
 import {useNavigate} from "react-router-dom";
 import authSerivce from "../../auth.serivce";
 import imageDefault from "../../assets/logociemne.png";
-
 
 function CreateEventForm() {
     let navigate = useNavigate();
@@ -20,6 +19,14 @@ function CreateEventForm() {
     const [imagePreview, setImagePreview] = useState(null);
     const [validImage, setValidImage] = useState(true);
     const [error, setError] = useState("");
+    const [cities, setCities] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/api/events/cities')
+            .then(response => response.json())
+            .then(data => setCities(data));
+    }, []);
+
 
 
     const handleInputChange = (e) => {
@@ -152,8 +159,12 @@ function CreateEventForm() {
                    id="endDate" className="input"/>
             <input type="number" value={price} onChange={(e) => handleInputChange(e)}
                    id="price" className="input" placeholder="Price"/>
-            <input type="text" value={location} onChange={(e) => handleInputChange(e)}
-                   id="location" className="input" placeholder="Location"/>
+            <select id="location" className="input" value={location}
+                    onChange={(e) => handleInputChange(e)}>
+                {cities.map(city => (
+                    <option value={city} key={city}>{city}</option>
+                ))}
+            </select>
             <input type="text" value={link} onChange={(e) => handleInputChange(e)}
                    id="link" className="input" placeholder="Link to event page"/>
             <select id="publicEvent" className="input" value={publicEvent}
