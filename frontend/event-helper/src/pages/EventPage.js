@@ -15,13 +15,30 @@ export default function EventPage() {
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [imageUrl, setImageUrl] = useState("")
     const [numOfAttendees, setNumOfAttendees] = useState([])
+    const [editButtonVisibility, setEditButtonVisibility] = useState(false)
+
+    const isLoggedIn = authSerivce.getCurrentUser();
+    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
+    const [userId, setUserId] = useState("")
     let isAssign;
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
+        getUser().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
         numberOfAttendees().then(r => console.log(r))
+        isOwner()
     }, []);
+
+
+
+    const getUser = async () =>{
+        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+        const data = await response.json();
+        setUserId(data.userId)
+        console.log("User:")
+        console.log(userId)
+    }
 
     const getEvents = async () => {
         const response = await fetch(`http://localhost:3000/api/events/${id}`, {
@@ -85,6 +102,16 @@ export default function EventPage() {
         } else {
             window.location.href = "/login"
         }
+    }
+
+    const isOwner = () => {
+        if (userId == id) {
+            setEditButtonVisibility(true)
+        }
+        console.log("---------------------")
+        console.log(userId)
+        console.log(id)
+        console.log(editButtonVisibility)
     }
 
         const [editable, setEditable] = useState(["false"]);
@@ -159,7 +186,10 @@ export default function EventPage() {
                         </div>
 
                         <div className="projects">
-                            <h3>Description {button}</h3>
+                            <h3>
+                                Description
+                                <div className="edit-button">{button}</div>
+                            </h3>
                             <div className="projects_data">
                                 <div className="data">
                                     {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
