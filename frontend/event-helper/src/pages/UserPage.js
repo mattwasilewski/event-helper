@@ -34,10 +34,20 @@ export default function UserPage(props) {
     }
 
     const deleteAccount = async () => {
-        const response = await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`)
-        const data = await response.json()
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'},
+            body: JSON.stringify({
+                user: userDetails.sub })
+        }
+        fetch('http://localhost:3000/api/delete-user', requestOptions)
+            .then(response => {
+                console.log(response.status)
+            })
+
         console.log("Konto usuniete")
-        console.log(data)
         alert("konto usunięte")
         window.location.href = "/logout"
     }
