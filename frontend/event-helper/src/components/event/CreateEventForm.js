@@ -22,12 +22,15 @@ function CreateEventForm() {
     const [cities, setCities] = useState([]);
 
     useEffect(() => {
+        getUser().then(console.log(user))
         fetch('http://localhost:3000/api/events/cities')
             .then(response => response.json())
             .then(data => setCities(data));
     }, []);
 
-
+    const [user, setUser] = useState([]);
+    const isLoggedIn = authSerivce.getCurrentUser();
+    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
 
     const handleInputChange = (e) => {
         const {id, value} = e.target;
@@ -62,7 +65,11 @@ function CreateEventForm() {
         }
     }
 
-
+    const getUser = async () =>{
+        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+        const data = await response.json();
+        setUser(data);
+    }
 
     const handleUploadClick = event => {
         let file = event.target.files[0];
@@ -134,7 +141,8 @@ function CreateEventForm() {
                 eventStatus: "TO_VERIFICATION",
             })
         };
-        fetch('http://localhost:3000/api/events/create-event', requestOptions)
+        alert(userDetails.sub)
+        fetch(`http://localhost:3000/api/events/create-event/${userDetails.sub}`, requestOptions)
             .then(response => console.log(response.status))
         onFileChangeHandler();
         navigate('/home');

@@ -25,7 +25,6 @@ export default function UserPage(props) {
         const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
         const data = await response.json();
         setUser(data);
-
     }
 
     const getEvents = async() =>{

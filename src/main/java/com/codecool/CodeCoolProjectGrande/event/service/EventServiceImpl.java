@@ -63,8 +63,16 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findEventByEventId(eventID);
     }
 
-
     public Optional<Event> createEvent(Event event) {
+        return createEvent(event, null);
+    }
+
+    public Optional<Event> createEvent(Event event, String userEmail) {
+        if (userEmail != null) {
+            User user = userRepository.findUserByEmail(userEmail).get();
+            event.setUserId(user.getUserId());
+            System.out.println(user.getUserId());
+        }
         if (checkEventName(event)) {
             eventRepository.save(event);
             return Optional.of(event);

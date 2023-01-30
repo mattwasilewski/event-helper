@@ -20,7 +20,7 @@ public interface EventService {
 
     Optional<Event> getEventByID(UUID eventID);
 
-    Optional<Event> createEvent(Event event);
+    Optional<Event> createEvent(Event event, String userEmail);
 
     List<Event> findEventsByEventType(EventType eventType, int page, int size);
 
