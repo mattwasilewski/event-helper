@@ -1,4 +1,5 @@
 import Navbar from "../components/utils/Navbar";
+import EventTile from "../components/event/EventTile";
 import React, {useEffect, useState} from "react";
 import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
@@ -13,13 +14,13 @@ export default function EventPage() {
     const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [imageUrl, setImageUrl] = useState("")
-    const [userAssignToEvent, setUserAssignToEvent] = useState([])
+    const [numOfAttendees, setNumOfAttendees] = useState([])
     let isAssign;
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
-        console.log(userAssignToEvent)
+        numberOfAttendees().then(r => console.log(r))
     }, []);
 
     const getEvents = async () => {
@@ -32,52 +33,59 @@ export default function EventPage() {
         setImageUrl(data.image.standard)
     }
 
-        const isAssignToEvent = async () => {
-            const isLoggedIn = authSerivce.getCurrentUser();
-            let userDetails;
-            if (isLoggedIn) {
-                userDetails = authSerivce.parseJwt(isLoggedIn.value)
-                const response = await fetch(`http://localhost:3000/api/events/is-assign/${id}&${userDetails.sub}`, {
-                    method: 'GET'
-                })
-                const data = await response.json();
-                setUserAssignToEvent(data)
-                isAssign = data
-                if (data) {
-                    setButtonText("Leave Event")
-                } else {
-                    setButtonText("Join Event")
-                }
-                console.log("isAssignToEvent executed")
-            }
-        }
+    const numberOfAttendees = async  () => {
+        const response = await fetch(`http://localhost:3000/api/events/get-num-attendees/${id}`, {
+            method: 'GET',
+        });
+        const data = await response.json()
+        setNumOfAttendees(data)
+    }
 
-        const assignLeaveEvent = async (e) => {
-            const isLoggedIn = authSerivce.getCurrentUser();
-            let userDetails;
-            if (isLoggedIn) {
-                console.log("JESTEM ZALOGOWANY");
-                userDetails = authSerivce.parseJwt(isLoggedIn.value)
+    const isAssignToEvent = async () => {
+        const isLoggedIn = authSerivce.getCurrentUser();
+        let userDetails;
+        if (isLoggedIn) {
+            userDetails = authSerivce.parseJwt(isLoggedIn.value)
+            const response = await fetch(`http://localhost:3000/api/events/is-assign/${id}&${userDetails.sub}`, {
+                method: 'GET'
+            })
+            const data = await response.json();
+            isAssign = data
+            if (data) {
+                setButtonText("Leave Event")
+            } else {
+                setButtonText("Join Event")
             }
+        } else {
+            setButtonText("Login to Join Event")
+        }
+    }
+
+    const assignLeaveEvent = async (e) => {
+        const isLoggedIn = authSerivce.getCurrentUser();
+        let userDetails;
+        if (isLoggedIn) {
+            userDetails = authSerivce.parseJwt(isLoggedIn.value)
             e.preventDefault()
             const requestOptions = {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8',
                     'Access-Control-Allow-Origin': 'http://localhost:3000',
-                    'Access-Control-Allow-Credentials': 'true'
-                },
+                    'Access-Control-Allow-Credentials': 'true'},
                 body: JSON.stringify({
                     eventId: id,
-                    userEmail: userDetails.sub
-                })
+                    userEmail: userDetails.sub })
             }
             fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
                 .then(response => {
                     console.log(response.status)
                     isAssignToEvent().then(r => console.log(r))
+                    numberOfAttendees().then(r => console.log(r))
                 })
+        } else {
+            window.location.href = "/login"
         }
+    }
 
         const [editable, setEditable] = useState(["false"]);
         const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
@@ -143,6 +151,10 @@ export default function EventPage() {
                                     <h4>Link</h4>
                                     <p><a href={event.linkToEventPage}>Link to official page</a></p>
                                 </div>
+                                <div className="data">
+                                    <h4>Number of attendees</h4>
+                                    <p>{numOfAttendees}</p>
+                                </div>
                             </div>
                         </div>
 
@@ -154,7 +166,7 @@ export default function EventPage() {
                                     <p id="event-descs" contentEditable={editable}
                                        dangerouslySetInnerHTML={{__html: event.description}}></p>
                                 </div>
-                                <ChatRoom eventId={event.eventId}/>
+                                {/*<ChatRoom eventId={event.eventId}/>*/}
                             </div>
                         </div>
                     </div>
