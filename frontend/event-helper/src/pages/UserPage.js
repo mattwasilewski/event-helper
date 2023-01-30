@@ -33,6 +33,15 @@ export default function UserPage(props) {
         setEvents(data2);
     }
 
+    const deleteAccount = async () => {
+        const response = await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`)
+        const data = await response.json()
+        console.log("Konto usuniete")
+        console.log(data)
+        alert("konto usunięte")
+        window.location.href = "/logout"
+    }
+
     return (
         <>
             <Navbar/>
@@ -47,6 +56,9 @@ export default function UserPage(props) {
                             <li><a href="#"><i className="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
+                    <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteAccount(e)}>
+                        Delete account
+                    </button>
                 </div>
                 <div className="right">
                     <div className="info">
