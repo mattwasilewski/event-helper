@@ -14,7 +14,6 @@ export default function EventPage() {
     const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [imageUrl, setImageUrl] = useState("")
-    const [userAssignToEvent, setUserAssignToEvent] = useState([])
     const [numOfAttendees, setNumOfAttendees] = useState([])
     let isAssign;
 
@@ -22,7 +21,6 @@ export default function EventPage() {
         getEvents().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
         numberOfAttendees().then(r => console.log(r))
-        console.log(userAssignToEvent)
     }, []);
 
     const getEvents = async () => {
@@ -40,8 +38,6 @@ export default function EventPage() {
             method: 'GET',
         });
         const data = await response.json()
-        console.log("number of attendees:")
-        console.log(data)
         setNumOfAttendees(data)
     }
 
@@ -54,13 +50,14 @@ export default function EventPage() {
                 method: 'GET'
             })
             const data = await response.json();
-            setUserAssignToEvent(data)
             isAssign = data
             if (data) {
                 setButtonText("Leave Event")
             } else {
                 setButtonText("Join Event")
             }
+        } else {
+            setButtonText("Login to Join Event")
         }
     }
 
@@ -68,25 +65,26 @@ export default function EventPage() {
         const isLoggedIn = authSerivce.getCurrentUser();
         let userDetails;
         if (isLoggedIn) {
-            console.log("JESTEM ZALOGOWANY");
             userDetails = authSerivce.parseJwt(isLoggedIn.value)
+            e.preventDefault()
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'Access-Control-Allow-Credentials': 'true'},
+                body: JSON.stringify({
+                    eventId: id,
+                    userEmail: userDetails.sub })
+            }
+            fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
+                .then(response => {
+                    console.log(response.status)
+                    isAssignToEvent().then(r => console.log(r))
+                    numberOfAttendees().then(r => console.log(r))
+                })
+        } else {
+            window.location.href = "/login"
         }
-        e.preventDefault()
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'},
-            body: JSON.stringify({
-                eventId: id,
-                userEmail: userDetails.sub })
-        }
-        fetch('http://localhost:3000/api/events/assign-user-to-event', requestOptions)
-            .then(response => {
-                console.log(response.status)
-                isAssignToEvent().then(r => console.log(r))
-                numberOfAttendees().then(r => console.log(r))
-            })
     }
 
         const [editable, setEditable] = useState(["false"]);
@@ -168,7 +166,7 @@ export default function EventPage() {
                                     <p id="event-descs" contentEditable={editable}
                                        dangerouslySetInnerHTML={{__html: event.description}}></p>
                                 </div>
-                                <ChatRoom eventId={event.eventId}/>
+                                {/*<ChatRoom eventId={event.eventId}/>*/}
                             </div>
                         </div>
                     </div>
