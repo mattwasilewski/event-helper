@@ -93,28 +93,7 @@ public class EventController {
 
     @GetMapping("/cities")
     public List<String> getCities(){
-        System.out.println("in getcities method");
-        List<String> cityNames = new ArrayList<>();
-        try{
-            URL url = new URL("http://api.geonames.org/searchJSON?country=PL&featureCode=PPLA&username=devgraba");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            if (responseCode != 200){
-                throw new RuntimeException("HttpResponseCode: " + responseCode);
-            } else {
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode rootNode = mapper.readTree(conn.getInputStream());
-                JsonNode citiesNode = rootNode.path("geonames");
-                for (JsonNode cityNode : citiesNode) {
-                    cityNames.add(cityNode.path("name").asText());
-                }
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return cityNames;
+        return eventService.getPolandCities();
     }
 
 
