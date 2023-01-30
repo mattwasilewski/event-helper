@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.removeReferenceFromAssignedUsers(String.valueOf(user.getUserId()));
         } catch (Exception e) {
-            System.out.println("Exception UserServiceImpl -> :101");
+            System.out.println("Exception UserServiceImpl -> :101  |  w wolnej chwili ogarnąć    ↓ ↓ ↓ ↓ ↓ ↓");
             System.out.println(e);
         }
         userRepository.deleteUserByEmail(userEmail);
