@@ -266,5 +266,8 @@ public class EventServiceImpl implements EventService {
         return eventRepository.getEventByEventIdAndAssignedUsersIn(eventId, userSet).isPresent();
     }
 
+    public int getNumOfAttendees(UUID eventId) {
+        return eventRepository.getNumOfAttendees(String.valueOf(eventId));
+    }
 
 }

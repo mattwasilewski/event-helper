@@ -35,7 +35,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-
     @GetMapping()
     public List<Event> getEvents() {
         return eventService.getEvents();
@@ -51,7 +50,6 @@ public class EventController {
         eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
     @GetMapping("/getEventByType/{eventType}&{page}&{size}")
     public List<Event> getEventsByEventType(@PathVariable EventType eventType, @PathVariable int page,
@@ -123,6 +121,10 @@ public class EventController {
         return eventService.getAssignedEvents(email);
     }
 
+    @GetMapping("get-num-attendees/{eventId}")
+    public int getNumOfAttendees(@PathVariable UUID eventId) {
+        return eventService.getNumOfAttendees(eventId);
+    }
 
 }
 
