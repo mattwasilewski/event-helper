@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 
@@ -31,6 +34,7 @@ public class EventController {
 
     @GetMapping()
     public List<Event> getEvents() {
+        saveCities();
         return eventService.getEvents();
     }
 
@@ -81,6 +85,29 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    public void saveCities(){
+        try{
+            URL url = new URL("http://api.geonames.org/searchJSON?country=PL&featureCode=PPLA&username=devgraba");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200){
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+                while (scanner.hasNext()){
+                    informationString.append(scanner.nextLine());
+                }
+                scanner.close();
+                System.out.println("to chyba moje miasta: " + informationString);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

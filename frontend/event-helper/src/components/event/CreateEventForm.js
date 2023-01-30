@@ -125,7 +125,7 @@ function CreateEventForm() {
                 price: price,
                 publicEvent: publicEvent,
                 eventStatus: "TO_VERIFICATION",
-            })   // TODO add userId after login implementation
+            })
         };
         fetch('http://localhost:3000/api/events/create-event', requestOptions)
             .then(response => console.log(response.status))
