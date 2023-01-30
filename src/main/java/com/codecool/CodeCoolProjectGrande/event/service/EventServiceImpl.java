@@ -9,6 +9,8 @@ import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.Wro
 import com.codecool.CodeCoolProjectGrande.event.repository.EventRepository;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,6 +117,29 @@ public class EventServiceImpl implements EventService {
             return event;
         }
         return Optional.empty();
+    }
+    public List<String> getPolandCities(){
+        List<String> cityNames = new ArrayList<>();
+        try{
+            URL url = new URL("http://api.geonames.org/searchJSON?country=PL&featureCode=PPLA&username=devgraba");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200){
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(conn.getInputStream());
+                JsonNode citiesNode = rootNode.path("geonames");
+                for (JsonNode cityNode : citiesNode) {
+                    cityNames.add(cityNode.path("name").asText());
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return cityNames;
     }
 
     public Optional<Event> editEventDescriptionByEventId(Map data) {
