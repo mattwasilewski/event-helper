@@ -57,7 +57,7 @@ export default function MainPage() {
             </div>
             <div className="section-4 box">
 
-                <h1>Recommended Events</h1>
+                <h1>Popular Events</h1>
                 <RecommendedEvents/>
 
             </div>
