@@ -16,28 +16,49 @@ export default function EventPage() {
     const [imageUrl, setImageUrl] = useState("")
     const [numOfAttendees, setNumOfAttendees] = useState([])
     const [editButtonVisibility, setEditButtonVisibility] = useState(false)
+    const [editButtonLoaded, setEditButtonLoaded] = useState(false)
 
     const isLoggedIn = authSerivce.getCurrentUser();
     const userDetails = authSerivce.parseJwt(isLoggedIn.value)
     const [userId, setUserId] = useState("")
     let isAssign;
 
+
+
     useEffect(() => {
         getEvents().then(r => console.log(r))
-        getUser().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
         numberOfAttendees().then(r => console.log(r))
-        isOwner()
+        setButtonVisibility()
+        // isOwner()
+
     }, []);
 
+    useEffect(() => {
+        setButtonVisibility()
+    }, [event])
 
 
-    const getUser = async () =>{
+    const getUser = async () => {
         const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
-        const data = await response.json();
-        setUserId(data.userId)
-        console.log("User:")
-        console.log(userId)
+        response.json().then(r => {
+            console.log("funkcja get user. Id:  " + r.userId)
+            console.log("zwykłe id:             " + event.userId)
+            if (event.userId == r.userId) {
+                console.log("if dizła ;d")
+                setEditButtonVisibility(true)
+            }
+            console.log(editButtonVisibility)
+        });
+
+    }
+
+    const setButtonVisibility = () => {
+        if (event !== []) {
+            getUser().then(r => {
+                setEditButtonLoaded(true)
+            })
+        }
     }
 
     const getEvents = async () => {
@@ -186,9 +207,9 @@ export default function EventPage() {
                         </div>
 
                         <div className="projects">
-                            <h3>
+                            <h3 id="description">
                                 Description
-                                <div className="edit-button">{button}</div>
+                                {editButtonVisibility && <div className="edit-button">{button}</div>}
                             </h3>
                             <div className="projects_data">
                                 <div className="data">
