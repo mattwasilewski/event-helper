@@ -5,12 +5,16 @@ import React from "react";
 import {useEffect, useState} from "react";
 import authSerivce from "../auth.serivce";
 import CalendarTile from "../components/utils/CalendarTile";
+import UsersChat  from "./UsersChat";
 
 export default function UserPage(props) {
 
     const [user, setUser] = useState([]);
 
     const [events, setEvents] = useState([]);
+    const [informationButtonStyle, setInformationButtonStyle] = useState("information active");
+    const [chatButtonStyle, setChatButtonStyle] = useState("information");
+    const [showInformation, setShowInformation]= useState(true);
 
     useEffect(() => {
         getUser().then(getEvents)
@@ -33,6 +37,19 @@ export default function UserPage(props) {
         setEvents(data2);
     }
 
+    const changeButton = async() =>{
+        if(informationButtonStyle === "information active"){
+            setChatButtonStyle("information active");
+            setInformationButtonStyle("information");
+            setShowInformation(false);
+        }else{
+            setInformationButtonStyle("information active")
+            setChatButtonStyle("information")
+            setShowInformation(true);
+        }
+    }
+
+
     return (
         <>
             <Navbar/>
@@ -50,7 +67,9 @@ export default function UserPage(props) {
                 </div>
                 <div className="right">
                     <div className="info">
-                        <h3>Information</h3>
+                        <button className={informationButtonStyle} onClick={changeButton}><h3>Information</h3></button>
+                        <button className={chatButtonStyle} onClick={changeButton}><h3>Chat</h3></button>
+                        {showInformation?
                         <div className="info_data">
                             <div className="data">
                                 <h4>Email</h4>
@@ -65,6 +84,7 @@ export default function UserPage(props) {
                                 <p>{user.age}</p>
                             </div>
                         </div>
+                            : <UsersChat/>}
                     </div>
 
                     <div className="projects">
@@ -90,6 +110,7 @@ export default function UserPage(props) {
                     <div className="calendar-background">
                         <CalendarTile name="user" userId={userDetails.sub}/>
                     </div>
+
 
                 </div>
             </div>

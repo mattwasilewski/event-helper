@@ -4,12 +4,14 @@ import React, {useEffect, useState} from "react";
 import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
-import ChatRoom from "./ChatRoom";
-import imageDefault from "../assets/logociemne.png"
+import EventChat from "./EventChat";
+import imageDefault from "../assets/logociemne.png"\
+
 
 
 export default function EventPage() {
-    let {id} = useParams()
+    const isLoggedIn = authSerivce.getCurrentUser();
+    let { id } = useParams()
     const [event, setEvent] = useState([]);
     const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
@@ -130,7 +132,7 @@ export default function EventPage() {
                 <div className="wrapper">
                     <div className="left">
                         {setDefaultImage()}
-                        <h4>{event.name}</h4>
+                         <h4 className="name">{event.name}</h4>
                         <button type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
                             {buttonText}
                         </button>
@@ -168,6 +170,9 @@ export default function EventPage() {
                                 </div>
                                 {/*<ChatRoom eventId={event.eventId}/>*/}
                             </div>
+                            {isLoggedIn?
+                            <EventChat eventId={event.eventId}/>
+                                :<p>You must be logged In to join chat</p>}
                         </div>
                     </div>
                 </div>

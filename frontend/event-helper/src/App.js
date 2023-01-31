@@ -10,7 +10,7 @@ import UserPage from "./pages/UserPage";
 import EventPage from "./pages/EventPage";
 import RegisterForm from "./components/RegisterForm";
 import authSerivce from "./auth.serivce";
-import ChatRoom from "./pages/ChatRoom";
+import EventChat from "./pages/EventChat";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import ResetPasswordForm from "./components/ResetPasswordForm";
 
@@ -46,7 +46,7 @@ function App() {
                     <Route path="/admin" element={<AdminPage/>}/>
                     <Route path="/user" element={<UserPage/>}/>
                     <Route path="/event/:id" element={<EventPage/>}/>
-                    <Route path="/chat" element={<ChatRoom/>}/>
+                    <Route path="/chat" element={<EventChat/>}/>
                     <Route path="/forgot-password" element={<ForgotPasswordForm/>}/>
                     <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
                 </Routes>
