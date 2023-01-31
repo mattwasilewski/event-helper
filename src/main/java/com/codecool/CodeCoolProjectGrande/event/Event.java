@@ -1,13 +1,12 @@
 package com.codecool.CodeCoolProjectGrande.event;
+import com.codecool.CodeCoolProjectGrande.image.Image;
 import com.codecool.CodeCoolProjectGrande.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.*;
@@ -28,7 +27,6 @@ public class Event {
     private String name;
     @Column(columnDefinition="TEXT")
     private String description;
-    private String logo;
     private String linkToEventPage;
     private int price;
     private String location;
@@ -44,6 +42,9 @@ public class Event {
     private Double latitude;
     private Double longitude;
     private String source;
+    @JoinColumn(name = "data")
+    @OneToOne(cascade=CascadeType.ALL)
+    private Image image;
     @ManyToMany
     @JoinTable(
             name = "assigned_users",
@@ -51,13 +52,13 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignedUsers = new HashSet<>();
 
-    public Event(String name, String description, String url, String location, String logo, EventType eventType,
+    public Event(String name, String description, String url, String location, Image image, EventType eventType,
                  String startDate, String endDate, Double latitude, Double longitude, String source, Set<User> assignedUsers) {
         this.name = name;
         this.description = description;
         this.linkToEventPage = url;
         this.location = location;
-        this.logo = logo;
+        this.image = image;
         this.eventType =eventType;
         this.eventStatus = EventStatus.TO_VERIFICATION;
         this.startDate = parseStringToLocalDate(startDate);
@@ -72,6 +73,11 @@ public class Event {
     public void assignUser(User user) {
         assignedUsers.add(user);
     }
+
+    public void removeUSer(User user) {
+        assignedUsers.remove(user);
+    }
+
     public LocalDateTime parseStringToLocalDate(String date) {
             return LocalDateTime.parse(date);
     }

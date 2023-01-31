@@ -3,12 +3,21 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 
@@ -27,7 +36,7 @@ public class EventController {
     }
 
     @GetMapping()
-    public List<Event> getEvents(){
+    public List<Event> getEvents() {
         return eventService.getEvents();
     }
 
@@ -55,10 +64,15 @@ public class EventController {
         return eventService.sortEvents(sortBy, ascending, phrase, page, size);
     }
 
+    @GetMapping("/is-assign/{id}&{userEmail}")
+    public boolean isAssignToEvent(@PathVariable UUID id, @PathVariable String userEmail) {
+        return eventService.isUserAssignToEvent(id, userEmail);
+    }
+
     @PutMapping("/assign-user-to-event")
     public ResponseEntity<?> assignUserToEvent(@RequestBody Map data) {
         Optional<Event> event = eventService.assignUserToEvent(data);
-        if(event.isEmpty()) {
+        if (event.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -66,19 +80,25 @@ public class EventController {
     }
 
     @PutMapping("/edit-event-description")
-    public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data){
+    public ResponseEntity<?> editEventDescriptionByEventId(@RequestBody Map data) {
         Optional<Event> event = eventService.editEventDescriptionByEventId(data);
-        if(event.isEmpty()){
+        if (event.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
+    @GetMapping("/cities")
+    public List<String> getCities(){
+        return eventService.getPolandCities();
+    }
+
+
     @GetMapping("data")
     public ResponseEntity<?> saveWroclawData() {
         List<String> saveWroclawData = eventService.saveWroclawData();
-        if(saveWroclawData == null) {
+        if (saveWroclawData == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -88,7 +108,7 @@ public class EventController {
     @GetMapping("global-data")
     public ResponseEntity<?> saveGlobalData() {
         List<String> saveGlobalEvents = eventService.saveGlobalData();
-        if(saveGlobalEvents == null) {
+        if (saveGlobalEvents == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -101,7 +121,10 @@ public class EventController {
         return eventService.getAssignedEvents(email);
     }
 
-
+    @GetMapping("get-num-attendees/{eventId}")
+    public int getNumOfAttendees(@PathVariable UUID eventId) {
+        return eventService.getNumOfAttendees(eventId);
+    }
 
 }
 
