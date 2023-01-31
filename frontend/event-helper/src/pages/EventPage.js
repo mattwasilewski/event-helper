@@ -5,25 +5,44 @@ import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import EventChat from "./EventChat";
-import imageDefault from "../assets/logociemne.png"\
+import imageDefault from "../assets/logociemne.png"
 
 
 
 export default function EventPage() {
-    const isLoggedIn = authSerivce.getCurrentUser();
     let { id } = useParams()
     const [event, setEvent] = useState([]);
     const [imageFile, setImageFile] = useState(imageDefault)
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [imageUrl, setImageUrl] = useState("")
     const [numOfAttendees, setNumOfAttendees] = useState([])
+    const [editButtonVisibility, setEditButtonVisibility] = useState(false)
+
+    const isLoggedIn = authSerivce.getCurrentUser();
+    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
     let isAssign;
+
+
 
     useEffect(() => {
         getEvents().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
         numberOfAttendees().then(r => console.log(r))
     }, []);
+
+    useEffect(() => {
+        setEditButton().then(r => console.log(r))
+    }, [event])
+
+
+    const setEditButton = async () => {
+        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+        response.json().then(r => {
+            if (event.userId === r.userId) {
+                setEditButtonVisibility(true)
+            }
+        });
+    }
 
     const getEvents = async () => {
         const response = await fetch(`http://localhost:3000/api/events/${id}`, {
@@ -161,7 +180,10 @@ export default function EventPage() {
                         </div>
 
                         <div className="projects">
-                            <h3>Description {button}</h3>
+                            <h3 id="description">
+                                Description
+                                {editButtonVisibility && <div className="edit-button">{button}</div>}
+                            </h3>
                             <div className="projects_data">
                                 <div className="data">
                                     {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}

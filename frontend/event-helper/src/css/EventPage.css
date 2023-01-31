@@ -128,7 +128,10 @@
 .wrapper .right .projects_data .data {
     display: inline-block;
     margin: 3%;
+}
 
+.edit-button {
+    display: inline-block;
 }
 .information{
     width: 200px;
