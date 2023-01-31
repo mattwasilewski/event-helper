@@ -16,11 +16,9 @@ export default function EventPage() {
     const [imageUrl, setImageUrl] = useState("")
     const [numOfAttendees, setNumOfAttendees] = useState([])
     const [editButtonVisibility, setEditButtonVisibility] = useState(false)
-    const [editButtonLoaded, setEditButtonLoaded] = useState(false)
 
     const isLoggedIn = authSerivce.getCurrentUser();
     const userDetails = authSerivce.parseJwt(isLoggedIn.value)
-    const [userId, setUserId] = useState("")
     let isAssign;
 
 
@@ -29,36 +27,20 @@ export default function EventPage() {
         getEvents().then(r => console.log(r))
         isAssignToEvent().then(r => console.log(r))
         numberOfAttendees().then(r => console.log(r))
-        setButtonVisibility()
-        // isOwner()
-
     }, []);
 
     useEffect(() => {
-        setButtonVisibility()
+        setEditButton().then(r => console.log(r))
     }, [event])
 
 
-    const getUser = async () => {
+    const setEditButton = async () => {
         const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
         response.json().then(r => {
-            console.log("funkcja get user. Id:  " + r.userId)
-            console.log("zwykłe id:             " + event.userId)
-            if (event.userId == r.userId) {
-                console.log("if dizła ;d")
+            if (event.userId === r.userId) {
                 setEditButtonVisibility(true)
             }
-            console.log(editButtonVisibility)
         });
-
-    }
-
-    const setButtonVisibility = () => {
-        if (event !== []) {
-            getUser().then(r => {
-                setEditButtonLoaded(true)
-            })
-        }
     }
 
     const getEvents = async () => {
@@ -123,16 +105,6 @@ export default function EventPage() {
         } else {
             window.location.href = "/login"
         }
-    }
-
-    const isOwner = () => {
-        if (userId == id) {
-            setEditButtonVisibility(true)
-        }
-        console.log("---------------------")
-        console.log(userId)
-        console.log(id)
-        console.log(editButtonVisibility)
     }
 
         const [editable, setEditable] = useState(["false"]);
