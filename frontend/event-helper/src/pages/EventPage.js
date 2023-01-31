@@ -5,12 +5,11 @@ import "../css/EventPage.css";
 import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import EventChat from "./EventChat";
-import imageDefault from "../assets/logociemne.png"\
+import imageDefault from "../assets/logociemne.png"
 
 
 
 export default function EventPage() {
-    const isLoggedIn = authSerivce.getCurrentUser();
     let { id } = useParams()
     const [event, setEvent] = useState([]);
     const [imageFile, setImageFile] = useState(imageDefault)

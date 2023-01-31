@@ -45,9 +45,9 @@ public class EventController {
         return eventService.getEventByID(eventID);
     }
 
-    @PostMapping("create-event/{userEmail}")
-    public ResponseEntity<?> createEvent(@RequestBody Event event, @PathVariable String userEmail) {
-        eventService.createEvent(event, userEmail);
+    @PostMapping("create-event")
+    public ResponseEntity<?> createEvent(@RequestBody Event event) {
+        eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
