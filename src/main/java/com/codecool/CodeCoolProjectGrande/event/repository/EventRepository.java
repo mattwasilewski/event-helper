@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 import java.util.*;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
@@ -30,10 +32,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findAllByAssignedUsersIn(Set<User> assignedUsers);
 
+    @Transactional
     Optional<Event> removeEventByEventId(UUID eventId);
 
     Optional<Event> getEventByEventIdAndAssignedUsersIn(UUID eventId, Set<User> user);
 
+    Optional<Event> getEventByEventIdAndUserId(UUID eventId, UUID userId);
 
 
 

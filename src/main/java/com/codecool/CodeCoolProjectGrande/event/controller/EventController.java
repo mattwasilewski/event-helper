@@ -126,6 +126,25 @@ public class EventController {
         return eventService.getNumOfAttendees(eventId);
     }
 
+    @DeleteMapping("delete-event/{userEmail}&{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable String userEmail, @PathVariable UUID eventId) {
+        return eventService.deleteEvent(userEmail, eventId);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

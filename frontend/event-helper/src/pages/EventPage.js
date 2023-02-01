@@ -16,7 +16,7 @@ export default function EventPage() {
     const [buttonText, setButtonText] = useState(["Join Event"]);
     const [imageUrl, setImageUrl] = useState("")
     const [numOfAttendees, setNumOfAttendees] = useState([])
-    const [editButtonVisibility, setEditButtonVisibility] = useState(false)
+    const [buttonVisibility, setButtonVisibility] = useState(false)
 
     const isLoggedIn = authSerivce.getCurrentUser();
     const userDetails = (isLoggedIn === null) ? null : authSerivce.parseJwt(isLoggedIn.value)
@@ -31,16 +31,16 @@ export default function EventPage() {
     }, []);
 
     useEffect(() => {
-        setEditButton().then(r => console.log(r))
+        setButtonsVisibility().then(r => console.log(r))
     }, [event])
 
 
-    const setEditButton = async () => {
+    const setButtonsVisibility = async () => {
         if (isLoggedIn) {
             const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
             response.json().then(r => {
                 if (event.userId === r.userId) {
-                    setEditButtonVisibility(true)
+                    setButtonVisibility(true)
                 }
             });
         }
@@ -82,10 +82,7 @@ export default function EventPage() {
     }
 
     const assignLeaveEvent = async (e) => {
-        const isLoggedIn = authSerivce.getCurrentUser();
-        let userDetails;
         if (isLoggedIn) {
-            userDetails = authSerivce.parseJwt(isLoggedIn.value)
             e.preventDefault()
             const requestOptions = {
                 method: 'PUT',
@@ -104,6 +101,15 @@ export default function EventPage() {
                 })
         } else {
             window.location.href = "/login"
+        }
+    }
+
+    const deleteEvent = async (e) => {
+        if (isLoggedIn && window.confirm("Are you sure you want delete your event?")) {
+            await fetch(`http://localhost:3000/api/events/delete-event/${userDetails.sub}&${id}`, {
+                method: 'DELETE'
+            })
+            window.location.replace("/home")
         }
     }
 
@@ -154,6 +160,10 @@ export default function EventPage() {
                         <button type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
                             {buttonText}
                         </button>
+                        {buttonVisibility &&
+                            <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteEvent(e)}>
+                            Delete event
+                        </button>}
                     </div>
                     <div className="right">
                         <div className="info">
@@ -181,7 +191,7 @@ export default function EventPage() {
                         <div className="projects">
                             <h3 id="description">
                                 Description
-                                {editButtonVisibility && <div className="edit-button">{button}</div>}
+                                {buttonVisibility && <div className="edit-button">{button}</div>}
                             </h3>
                             <div className="projects_data">
                                 <div className="data">
