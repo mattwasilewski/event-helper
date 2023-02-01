@@ -6,6 +6,7 @@ import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.global_model.GlobalEvent;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.wroclaw_model.WroclawEvent;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +44,7 @@ public interface EventService {
     boolean isUserAssignToEvent(UUID eventId, String userEmail);
 
     int getNumOfAttendees(UUID eventId);
+
+    ResponseEntity<?> deleteEvent(String userEmail, UUID eventId);
 
 }

@@ -45,9 +45,9 @@ public class EventController {
         return eventService.getEventByID(eventID);
     }
 
-    @PostMapping("create-event")
-    public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventService.createEvent(event);
+    @PostMapping("create-event/{userEmail}")
+    public ResponseEntity<?> createEvent(@RequestBody Event event, @PathVariable String userEmail) {
+        eventService.createEvent(event, userEmail);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -126,6 +126,25 @@ public class EventController {
         return eventService.getNumOfAttendees(eventId);
     }
 
+    @DeleteMapping("delete-event/{userEmail}&{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable String userEmail, @PathVariable UUID eventId) {
+        return eventService.deleteEvent(userEmail, eventId);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

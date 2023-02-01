@@ -122,7 +122,6 @@ function CreateEventForm() {
             navigate('/login')
             return
         }
-        console.log("przeszlo jest user")
         e.preventDefault()
         const requestOptions = {
             method: 'POST', headers: {
@@ -141,7 +140,6 @@ function CreateEventForm() {
                 eventStatus: "TO_VERIFICATION",
             })
         };
-        alert(userDetails.sub)
         fetch(`http://localhost:3000/api/events/create-event/${userDetails.sub}`, requestOptions)
             .then(response => console.log(response.status))
         onFileChangeHandler();

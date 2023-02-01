@@ -69,9 +69,8 @@ public class EventServiceImpl implements EventService {
 
     public Optional<Event> createEvent(Event event, String userEmail) {
         if (userEmail != null) {
-            User user = userRepository.findUserByEmail(userEmail).get();
-            event.setUserId(user.getUserId());
-            System.out.println(user.getUserId());
+            Optional<User> user = userRepository.findUserByEmail(userEmail);
+            user.ifPresent(value -> event.setUserId(value.getUserId()));
         }
         if (checkEventName(event)) {
             eventRepository.save(event);
@@ -91,6 +90,19 @@ public class EventServiceImpl implements EventService {
             return Optional.of(event);
         }
         return Optional.empty();
+    }
+
+    public ResponseEntity<?> deleteEvent(String userEmail, UUID eventId) {
+        Optional<User> user = userRepository.findUserByEmail(userEmail);
+        if (user.isPresent() && checkOwner(user.get().getUserId(), eventId)) {
+            eventRepository.removeEventByEventId(eventId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    private boolean checkOwner(UUID userId, UUID eventId) {
+        return eventRepository.getEventByEventIdAndUserId(eventId, userId).isPresent();
     }
 
     public List<Event> saveAll(List<Event> events){
@@ -277,5 +289,7 @@ public class EventServiceImpl implements EventService {
     public int getNumOfAttendees(UUID eventId) {
         return eventRepository.getNumOfAttendees(String.valueOf(eventId));
     }
+
+
 
 }

@@ -39,7 +39,7 @@ export default function UserPage(props) {
     }
 
     const deleteAccount = async () => {
-        if (window.confirm("Are you sure you want permanently remove your account")) {
+        if (window.confirm("Are you sure that you want permanently remove your account")) {
             await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`, {
                 method: 'DELETE'
             })
