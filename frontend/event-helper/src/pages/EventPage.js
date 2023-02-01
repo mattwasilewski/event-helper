@@ -19,7 +19,7 @@ export default function EventPage() {
     const [editButtonVisibility, setEditButtonVisibility] = useState(false)
 
     const isLoggedIn = authSerivce.getCurrentUser();
-    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
+    const userDetails = (isLoggedIn === null) ? null : authSerivce.parseJwt(isLoggedIn.value)
     let isAssign;
 
 
@@ -36,12 +36,14 @@ export default function EventPage() {
 
 
     const setEditButton = async () => {
-        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
-        response.json().then(r => {
-            if (event.userId === r.userId) {
-                setEditButtonVisibility(true)
-            }
-        });
+        if (isLoggedIn) {
+            const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+            response.json().then(r => {
+                if (event.userId === r.userId) {
+                    setEditButtonVisibility(true)
+                }
+            });
+        }
     }
 
     const getEvents = async () => {
@@ -63,10 +65,7 @@ export default function EventPage() {
     }
 
     const isAssignToEvent = async () => {
-        const isLoggedIn = authSerivce.getCurrentUser();
-        let userDetails;
         if (isLoggedIn) {
-            userDetails = authSerivce.parseJwt(isLoggedIn.value)
             const response = await fetch(`http://localhost:3000/api/events/is-assign/${id}&${userDetails.sub}`, {
                 method: 'GET'
             })
