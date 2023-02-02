@@ -24,12 +24,6 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @GetMapping("/oauthtest")
-    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-        System.out.println("weszlo mi do current user --------------------");
-        System.out.println(oAuth2AuthenticationToken.getPrincipal().getAttributes());
-        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-    }
 
     @PostMapping("/registration")
     public ResponseEntity<?> registerAccount(@RequestBody User user){

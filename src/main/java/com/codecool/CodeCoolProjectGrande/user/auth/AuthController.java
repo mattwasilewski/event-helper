@@ -14,10 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -46,6 +48,12 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .body(jwtCookie);
     }
+
+//    @GetMapping("/google")
+//    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+//        System.out.println(oAuth2AuthenticationToken.getPrincipal().getAttributes());
+//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+//    }
 
 
 

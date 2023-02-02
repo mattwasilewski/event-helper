@@ -5,6 +5,7 @@ import com.codecool.CodeCoolProjectGrande.user.jwt.AuthEntryPointJwt;
 import com.codecool.CodeCoolProjectGrande.user.jwt.AuthTokenFilter;
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserDetailsServiceImpl;
+import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -49,8 +51,6 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-
-
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -71,25 +71,26 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/oauthtest").authenticated()
+                .antMatchers("/api/auth/google").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .oauth2Login();
+                .oauth2Login()
+                .defaultSuccessUrl("http://localhost:3000/", true)
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+                        userDetailsService.processOauthUser(oAuth2User);
+                        System.out.println("co to jest? : " + oAuth2User.getAttributes());
+                        System.out.println("jakies get name xd: " + oAuth2User.getName() );
+                        System.out.println("chyba email: " + oAuth2User.getAttributes().get("email"));
+                        response.sendRedirect("http://localhost:3000/");
+                    }
+                });
 
         return http.build();
     }
 
-//    @Bean
-//    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/api/oauthtest").authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .oauth2Login();
-//
-//        return http.build();
-//    }
 
 
     @Bean
