@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -19,6 +22,13 @@ public class RegisterController {
     @Autowired
     public RegisterController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/oauthtest")
+    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+        System.out.println("weszlo mi do current user --------------------");
+        System.out.println(oAuth2AuthenticationToken.getPrincipal().getAttributes());
+        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
     }
 
     @PostMapping("/registration")

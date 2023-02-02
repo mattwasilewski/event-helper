@@ -14,14 +14,21 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -46,7 +53,8 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        http
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .cors().configurationSource(new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -59,19 +67,29 @@ public class SecurityConfig {
                 config.setMaxAge(3600L);
                 return config;
             }
-        }).and().csrf().disable()
+        })
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/events/create-event", "/api/registration").permitAll()
-                .antMatchers("/css/**","/js/**","/images/**").permitAll()
-                .antMatchers( "/applications").authenticated()
-                .antMatchers("/home").permitAll()
-                .and().formLogin()
-                .and().httpBasic();
+                .antMatchers("/api/oauthtest").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login();
 
         return http.build();
     }
 
-
+//    @Bean
+//    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/api/oauthtest").authenticated()
+//                .anyRequest().permitAll()
+//                .and()
+//                .oauth2Login();
+//
+//        return http.build();
+//    }
 
 
     @Bean
