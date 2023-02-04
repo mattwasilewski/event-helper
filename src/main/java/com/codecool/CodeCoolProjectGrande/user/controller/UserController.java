@@ -39,7 +39,7 @@ public class UserController {
         System.out.println(userEmail);
         System.out.println(userService.getUserByEmail(userEmail).get().getEmail());
 
-        return userService.getUserByEmail(userEmail);
+        return userService.getUserById(UUID.fromString(userEmail));
     }
 
     @PostMapping("user")

@@ -3,6 +3,7 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
+import com.sun.tools.jconsole.JConsoleContext;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -126,6 +127,19 @@ public class EventController {
         return eventService.getNumOfAttendees(eventId);
     }
 
+
+    @PutMapping("set-status")
+    public ResponseEntity<?> setEventStatus(@RequestBody Map data) {
+        Optional<Event> event = eventService.setEventStatus(data);
+        if (event.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+    }
+
 }
+
+
 
 
