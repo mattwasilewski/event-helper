@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import ChatRoom from "./ChatRoom";
 import imageDefault from "../assets/logociemne.png"
+import DOMPurify from 'dompurify';
 
 
 export default function EventPage() {
@@ -124,6 +125,7 @@ export default function EventPage() {
             }
         }
 
+
         return (
             <>
                 <Navbar/>
@@ -163,9 +165,8 @@ export default function EventPage() {
                             <div className="projects_data">
                                 <div className="data">
                                     {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
-                                    <p id="event-descs" contentEditable={editable}>
-                                        {event.description}
-                                    </p>
+                                    <p id="event-descs" contentEditable={editable}
+                                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(event.description)}}></p>
                                 </div>
                                 {/*<ChatRoom eventId={event.eventId}/>*/}
                             </div>
