@@ -24,7 +24,7 @@ public interface UserService {
     Optional<User> createUser(User user);
     boolean isUserDataValid(User user);
 
-
+    void deleteUser(String userEmail);
 
 
 }

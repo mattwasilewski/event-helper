@@ -5,11 +5,10 @@ import '../css/ChatRoom.css';
 import authSerivce from "../auth.serivce";
 
 let stompClient =null;
-const ChatRoom = (props) => {
+const EventChat = (props) => {
     const eventId = props.eventId;
     const isLoggedIn = authSerivce.getCurrentUser();
     let userDetails = authSerivce.parseJwt(isLoggedIn.value);
-    const [privateChats, setPrivateChats] = useState([]);
     const [publicChats, setPublicChats] = useState([]);
     const [tab,setTab] =useState("CHATROOM");
     const [userData, setUserData] = useState({
@@ -32,7 +31,6 @@ const ChatRoom = (props) => {
 
     const onConnected = () => {
         setUserData({...userData,"connected": true});
-        // stompClient.subscribe('/chatroom/public', onMessageReceived);
         stompClient.subscribe('/user/'+eventId+'/private', onPrivateMessage);
         userJoin();
     }
@@ -78,7 +76,6 @@ const ChatRoom = (props) => {
                 status:"MESSAGE"
             };
             stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-            console.log("WYSŁALEM PRYWATNYM");
             setUserData({...userData,"message": ""});
         }
     }
@@ -105,25 +102,9 @@ const ChatRoom = (props) => {
                             <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
                         </div>
                     </div>}
-                    {tab!=="CHATROOM" && <div className="chat-content">
-                        <ul className="chat-messages">
-                            {[...privateChats.get(tab)].map((chat,index)=>(
-                                <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
-                                    {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                    <div className="message-data">{chat.message}</div>
-                                    {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="send-message">
-                            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} />
-                            <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
-                        </div>
-                    </div>}
                 </div>
                 :
-                    <button type="button" onClick={registerUser}>
+                    <button type="button" onClick={registerUser} className="send-button">
                         Join Chat
                     </button>
             }
@@ -131,4 +112,4 @@ const ChatRoom = (props) => {
     )
 }
 
-export default ChatRoom
+export default EventChat

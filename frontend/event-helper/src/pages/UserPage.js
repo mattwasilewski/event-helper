@@ -5,12 +5,17 @@ import React from "react";
 import {useEffect, useState} from "react";
 import authSerivce from "../auth.serivce";
 import CalendarTile from "../components/utils/CalendarTile";
+import AuthService from "../auth.serivce";
+import UsersChat  from "./UsersChat";
 
 export default function UserPage(props) {
 
     const [user, setUser] = useState([]);
 
     const [events, setEvents] = useState([]);
+    const [informationButtonStyle, setInformationButtonStyle] = useState("information active");
+    const [chatButtonStyle, setChatButtonStyle] = useState("information");
+    const [showInformation, setShowInformation]= useState(true);
 
     useEffect(() => {
         getUser().then(getEvents)
@@ -33,6 +38,29 @@ export default function UserPage(props) {
         setEvents(data2);
     }
 
+    const deleteAccount = async () => {
+        if (window.confirm("Are you sure that you want permanently remove your account")) {
+            await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`, {
+                method: 'DELETE'
+            })
+            AuthService.logout();
+            window.location.replace("/home")
+        }
+    }
+
+    const changeButton = async() =>{
+        if(informationButtonStyle === "information active"){
+            setChatButtonStyle("information active");
+            setInformationButtonStyle("information");
+            setShowInformation(false);
+        }else{
+            setInformationButtonStyle("information active")
+            setChatButtonStyle("information")
+            setShowInformation(true);
+        }
+    }
+
+
     return (
         <>
             <Navbar/>
@@ -47,10 +75,15 @@ export default function UserPage(props) {
                             <li><a href="#"><i className="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
+                    <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteAccount(e)}>
+                        Delete account
+                    </button>
                 </div>
                 <div className="right">
                     <div className="info">
-                        <h3>Information</h3>
+                        <button className={informationButtonStyle} onClick={changeButton}><h3>Information</h3></button>
+                        <button className={chatButtonStyle} onClick={changeButton}><h3>Chat</h3></button>
+                        {showInformation?
                         <div className="info_data">
                             <div className="data">
                                 <h4>Email</h4>
@@ -65,6 +98,7 @@ export default function UserPage(props) {
                                 <p>{user.age}</p>
                             </div>
                         </div>
+                            : <UsersChat/>}
                     </div>
 
                     <div className="projects">

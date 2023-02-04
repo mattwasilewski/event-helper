@@ -3,7 +3,6 @@ package com.codecool.CodeCoolProjectGrande.event.controller;
 import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.event.service.EventServiceImpl;
-import com.sun.tools.jconsole.JConsoleContext;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -46,9 +45,9 @@ public class EventController {
         return eventService.getEventByID(eventID);
     }
 
-    @PostMapping("create-event")
-    public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventService.createEvent(event);
+    @PostMapping("create-event/{userEmail}")
+    public ResponseEntity<?> createEvent(@RequestBody Event event, @PathVariable String userEmail) {
+        eventService.createEvent(event, userEmail);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -127,6 +126,11 @@ public class EventController {
         return eventService.getNumOfAttendees(eventId);
     }
 
+    @DeleteMapping("delete-event/{userEmail}&{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable String userEmail, @PathVariable UUID eventId) {
+        return eventService.deleteEvent(userEmail, eventId);
+    }
+
 
     @PutMapping("set-status")
     public ResponseEntity<?> setEventStatus(@RequestBody Map data) {
@@ -139,7 +143,5 @@ public class EventController {
     }
 
 }
-
-
 
 

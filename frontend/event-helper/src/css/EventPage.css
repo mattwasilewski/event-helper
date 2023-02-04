@@ -128,7 +128,27 @@
 .wrapper .right .projects_data .data {
     display: inline-block;
     margin: 3%;
+}
 
+.edit-button {
+    display: inline-block;
+}
+.information{
+    width: 200px;
+    display: inline;
+    margin-right: 20px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    cursor: pointer;
+
+}
+.active{
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+.name{
+    height: auto;
 }
 
 .verify-icon {
