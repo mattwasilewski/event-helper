@@ -7,6 +7,7 @@ import authSerivce from "../auth.serivce";
 import ChatRoom from "./ChatRoom";
 import imageDefault from "../assets/logociemne.png"
 import DOMPurify from 'dompurify';
+import verifyIcon from "../assets/verify.png";
 
 
 export default function EventPage() {
@@ -125,6 +126,12 @@ export default function EventPage() {
             }
         }
 
+        function setVerifyIcon() {
+            if(event && event.eventStatus === "VERIFIED") {
+                return <img className="verify-icon" src={verifyIcon}/>
+            }
+        }
+
 
         return (
             <>
@@ -139,7 +146,7 @@ export default function EventPage() {
                     </div>
                     <div className="right">
                         <div className="info">
-                            <h3>Information</h3>
+                            <h3>Information    {setVerifyIcon()}</h3>
                             <div className="info_data">
                                 <div className="data">
                                     <h4>Start Date</h4>
