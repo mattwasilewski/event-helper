@@ -7,6 +7,7 @@ import {TableHead} from  '@mui/material';
 import {TableRow} from  '@mui/material';
 import {Paper} from  '@mui/material';
 import "../../css/App.css"
+import AdminNavbar from "../AdminNavbar";
 
 
 export default function EventList() {
@@ -72,6 +73,7 @@ export default function EventList() {
 
     return (
         <div>
+            <AdminNavbar/>
             <div className="list-header"><h1>Event List</h1></div>
         <div className="event-list-form">
         <TableContainer component={Paper}>

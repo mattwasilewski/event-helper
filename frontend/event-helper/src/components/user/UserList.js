@@ -7,6 +7,7 @@ import {TableHead} from  '@mui/material';
 import {TableRow} from  '@mui/material';
 import {Paper} from  '@mui/material';
 import "../../css/App.css"
+import AdminNavbar from "../AdminNavbar";
 
 
 export default function UserList() {
@@ -32,6 +33,7 @@ export default function UserList() {
 
     return (
         <div>
+            <AdminNavbar/>
             <div className="list-header"><h1>User List</h1></div>
             <div className="event-list-form">
                 <TableContainer component={Paper}>
@@ -41,32 +43,16 @@ export default function UserList() {
                                 <TableCell>User ID</TableCell>
                                 <TableCell align="right">Name</TableCell>
                                 <TableCell align="right">Email</TableCell>
-                                <TableCell align="right">Price</TableCell>
-                                <TableCell align="right">Location</TableCell>
-                                <TableCell align="right">Start Date</TableCell>
-                                <TableCell align="right">End Date</TableCell>
-                                <TableCell align="right">Event Type</TableCell>
-                                <TableCell align="right">User ID</TableCell>
-                                {/*<TableCell align="right">Image</TableCell>*/}
-                                <TableCell align="right">Event Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {users.map((user) => (
                                 <TableRow key={user.userId}>
                                     <TableCell component="th" scope="row">
-                                        <a href={'/user/' + user.userId}>{user.userId.substring(0, 15)}...</a>
+                                        <a href={'/user/' + user.userId}>{user.userId}</a>
                                     </TableCell>
                                     <TableCell align="right">{user.name}</TableCell>
-                                    <TableCell align="right">{cutHtmlTags(user.email).substring(0, 20)}...</TableCell>
-                                    <TableCell align="right">{user.price}</TableCell>
-                                    {/*<TableCell align="right">{user.location.substring(0, 30)}...</TableCell>*/}
-                                    {/*<TableCell align="right">{user.startDate}</TableCell>*/}
-                                    {/*<TableCell align="right">{user.endDate}</TableCell>*/}
-                                    {/*<TableCell align="right">{user.eventType}</TableCell>*/}
-                                    {/*<TableCell align="right">{user.userId}</TableCell>*/}
-                                    {/*/!*<TableCell align="right">{event.image}</TableCell>*!/*/}
-                                    {/*<TableCell align="right">{user.eventStatus}</TableCell>*/}
+                                    <TableCell align="right">{cutHtmlTags(user.email)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
