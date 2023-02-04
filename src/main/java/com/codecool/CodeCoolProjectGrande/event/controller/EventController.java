@@ -131,20 +131,17 @@ public class EventController {
         return eventService.deleteEvent(userEmail, eventId);
     }
 
+
+    @PutMapping("set-status")
+    public ResponseEntity<?> setEventStatus(@RequestBody Map data) {
+        Optional<Event> event = eventService.setEventStatus(data);
+        if (event.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

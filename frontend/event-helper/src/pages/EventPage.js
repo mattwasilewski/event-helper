@@ -6,6 +6,8 @@ import {useParams} from "react-router-dom";
 import authSerivce from "../auth.serivce";
 import EventChat from "./EventChat";
 import imageDefault from "../assets/logociemne.png"
+import DOMPurify from 'dompurify';
+import verifyIcon from "../assets/verify.png";
 
 
 
@@ -150,6 +152,13 @@ export default function EventPage() {
             }
         }
 
+        function setVerifyIcon() {
+            if(event && event.eventStatus === "VERIFIED") {
+                return <img className="verify-icon" src={verifyIcon}/>
+            }
+        }
+
+
         return (
             <>
                 <Navbar/>
@@ -167,7 +176,7 @@ export default function EventPage() {
                     </div>
                     <div className="right">
                         <div className="info">
-                            <h3>Information</h3>
+                            <h3>Information    {setVerifyIcon()}</h3>
                             <div className="info_data">
                                 <div className="data">
                                     <h4>Start Date</h4>
@@ -197,7 +206,7 @@ export default function EventPage() {
                                 <div className="data">
                                     {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
                                     <p id="event-descs" contentEditable={editable}
-                                       dangerouslySetInnerHTML={{__html: event.description}}></p>
+                                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(event.description)}}></p>
                                 </div>
                                 {/*<ChatRoom eventId={event.eventId}/>*/}
                             </div>

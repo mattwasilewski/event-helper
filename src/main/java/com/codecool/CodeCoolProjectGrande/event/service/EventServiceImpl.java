@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.EventStatus;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.image.Image;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.HttpURLConnection;
@@ -170,6 +172,17 @@ public class EventServiceImpl implements EventService {
             return event;
         }
         return Optional.empty();
+    }
+
+    public Optional<Event> setEventStatus(@RequestBody Map data) {
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        if(event.isPresent()){
+            event.get().setEventStatus(EventStatus.valueOf(String.valueOf(data.get("eventStatus"))));
+            eventRepository.save(event.get());
+            return event;
+        } else {
+            return Optional.empty();
+        }
     }
 
     public List<String> saveWroclawData() {

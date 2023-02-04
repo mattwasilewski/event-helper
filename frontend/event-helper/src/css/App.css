@@ -907,3 +907,17 @@ ul li:focus {
   margin-bottom: 2%;
 }
 
+
+.event-table {
+  margin: auto;
+}
+
+.event-list-form {
+
+}
+
+.list-header {
+  padding-top: 100px;
+  color: ghostwhite;
+}
+

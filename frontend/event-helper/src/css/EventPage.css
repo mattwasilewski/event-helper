@@ -150,3 +150,8 @@
 .name{
     height: auto;
 }
+
+.verify-icon {
+    width: 5%;
+    float: right;
+}
