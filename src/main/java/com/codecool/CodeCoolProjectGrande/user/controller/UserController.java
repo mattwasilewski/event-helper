@@ -1,9 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.user.controller;
 
-import com.codecool.CodeCoolProjectGrande.event.Event;
 import com.codecool.CodeCoolProjectGrande.user.User;
-import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
-import com.codecool.CodeCoolProjectGrande.user.service.UserService;
 
 import com.codecool.CodeCoolProjectGrande.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @ResponseBody
@@ -36,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping("user/{userEmail}")
-    public Optional<User> getUserById(@PathVariable String userEmail) {
-        return userService.getUserById(UUID.fromString(userEmail));
+    public Optional<User> getUserByEmail(@PathVariable String userEmail) {
+        return userService.getUserByEmail(userEmail);
     }
 
     @PostMapping("user")
