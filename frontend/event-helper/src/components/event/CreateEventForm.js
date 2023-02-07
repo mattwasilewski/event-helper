@@ -180,16 +180,14 @@ function CreateEventForm() {
                    id="price" className="input" placeholder="Price"/>
             <input type="text" value={link} onChange={(e) => handleInputChange(e)}
                    id="link" className="input" placeholder="Link to event page"/>
-
-                <input type="text" id="location" className="input" value={location} onChange={handleCityChange}/>
-                <ul className="suggestion-options">
-                    {filteredCities.map((c) => (
-                        <li key={c} onClick={ () => handleCitySelect(c)}>
-                            {c}
-                        </li>
-                    ))}
-                </ul>
-
+            <input type="text" id="location" className="input" value={location} placeholder="Location" onChange={handleCityChange}/>
+            <ul className="suggestion-options">
+                {filteredCities.map((c) => (
+                    <li key={c} onClick={ () => handleCitySelect(c)}>
+                        {c}
+                    </li>
+                ))}
+            </ul>
             <select id="publicEvent" className="input" value={publicEvent}
                     onChange={(e) => handleInputChange(e)}>
                 <option value="true">PRIVATE</option>
