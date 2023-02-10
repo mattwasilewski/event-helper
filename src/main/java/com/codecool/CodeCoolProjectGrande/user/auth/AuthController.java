@@ -1,22 +1,20 @@
 package com.codecool.CodeCoolProjectGrande.user.auth;
 
+import com.codecool.CodeCoolProjectGrande.user.auth.ReCaptchaV3.ReCAPTCHAv3Exception;
+import com.codecool.CodeCoolProjectGrande.user.auth.ReCaptchaV3.ReCAPTCHAv3Response;
+import com.codecool.CodeCoolProjectGrande.user.auth.ReCaptchaV3.ReCAPTCHAv3Utils;
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -30,6 +28,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtUtils jwtUtils;
+    private final static double SCORES_LEVEL = 0.7;
 
     public AuthController(UserRepository userRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, UserService userService, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
@@ -57,10 +56,31 @@ public class AuthController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseCookie> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        ResponseCookie jwtCookie = userService.authenticateUser(loginRequest);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(jwtCookie);
+    public ResponseEntity<ResponseCookie> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+        String token = loginRequest.getToken();
+        String address = request.getRemoteAddr();
+        System.out.println(token);
+        System.out.println(address);
+
+        try {
+            ReCAPTCHAv3Response response = ReCAPTCHAv3Utils.request(token, address);
+            System.out.println(token);
+            if (response.getSuccess()) {
+                System.out.println("2");
+                if (response.getScore() > SCORES_LEVEL) {
+                    ResponseCookie jwtCookie = userService.authenticateUser(loginRequest);
+                    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                            .body(jwtCookie);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (ReCAPTCHAv3Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
 
