@@ -5,6 +5,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import authSerivce from "../auth.serivce";
 import CalendarTile from "../components/utils/CalendarTile";
+import AuthService from "../auth.serivce";
 import UsersChat  from "./UsersChat";
 
 export default function UserPage(props) {
@@ -37,6 +38,16 @@ export default function UserPage(props) {
         setEvents(data2);
     }
 
+    const deleteAccount = async () => {
+        if (window.confirm("Are you sure that you want permanently remove your account")) {
+            await fetch(`http://localhost:3000/api/delete-account/${userDetails.sub}`, {
+                method: 'DELETE'
+            })
+            AuthService.logout();
+            window.location.replace("/home")
+        }
+    }
+
     const changeButton = async() =>{
         if(informationButtonStyle === "information active"){
             setChatButtonStyle("information active");
@@ -64,6 +75,9 @@ export default function UserPage(props) {
                             <li><a href="#"><i className="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
+                    <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteAccount(e)}>
+                        Delete account
+                    </button>
                 </div>
                 <div className="right">
                     <div className="info">
@@ -112,7 +126,6 @@ export default function UserPage(props) {
                         <CalendarTile name="user" userId={userDetails.sub}/>
                     </div>
                         :<></>}
-
 
                 </div>
             </div>

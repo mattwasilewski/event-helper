@@ -11,7 +11,7 @@ export default function Navbar() {
         header.classList.toggle("sticky",window.scrollY >0);
     })
 
-    function handleLogout(e){
+function handleLogout(e){
         e.preventDefault()
         AuthService.logout();
         navigate('/home');

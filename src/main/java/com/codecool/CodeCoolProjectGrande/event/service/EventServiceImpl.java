@@ -1,6 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.event.service;
 
 import com.codecool.CodeCoolProjectGrande.event.Event;
+import com.codecool.CodeCoolProjectGrande.event.EventStatus;
 import com.codecool.CodeCoolProjectGrande.event.EventType;
 import com.codecool.CodeCoolProjectGrande.image.Image;
 import com.codecool.CodeCoolProjectGrande.event.event_provider.EventStorage;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.HttpURLConnection;
@@ -63,8 +65,15 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findEventByEventId(eventID);
     }
 
-
     public Optional<Event> createEvent(Event event) {
+        return createEvent(event, null);
+    }
+
+    public Optional<Event> createEvent(Event event, String userEmail) {
+        if (userEmail != null) {
+            Optional<User> user = userRepository.findUserByEmail(userEmail);
+            user.ifPresent(value -> event.setUserId(value.getUserId()));
+        }
         if (checkEventName(event)) {
             eventRepository.save(event);
             return Optional.of(event);
@@ -83,6 +92,19 @@ public class EventServiceImpl implements EventService {
             return Optional.of(event);
         }
         return Optional.empty();
+    }
+
+    public ResponseEntity<?> deleteEvent(String userEmail, UUID eventId) {
+        Optional<User> user = userRepository.findUserByEmail(userEmail);
+        if (user.isPresent() && checkOwner(user.get().getUserId(), eventId)) {
+            eventRepository.removeEventByEventId(eventId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    private boolean checkOwner(UUID userId, UUID eventId) {
+        return eventRepository.getEventByEventIdAndUserId(eventId, userId).isPresent();
     }
 
     public List<Event> saveAll(List<Event> events){
@@ -150,6 +172,17 @@ public class EventServiceImpl implements EventService {
             return event;
         }
         return Optional.empty();
+    }
+
+    public Optional<Event> setEventStatus(@RequestBody Map data) {
+        Optional<Event> event = eventRepository.findEventByEventId(UUID.fromString(String.valueOf(data.get("eventId"))));
+        if(event.isPresent()){
+            event.get().setEventStatus(EventStatus.valueOf(String.valueOf(data.get("eventStatus"))));
+            eventRepository.save(event.get());
+            return event;
+        } else {
+            return Optional.empty();
+        }
     }
 
     public List<String> saveWroclawData() {
@@ -269,5 +302,7 @@ public class EventServiceImpl implements EventService {
     public int getNumOfAttendees(UUID eventId) {
         return eventRepository.getNumOfAttendees(String.valueOf(eventId));
     }
+
+
 
 }

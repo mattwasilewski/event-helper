@@ -20,14 +20,30 @@ function CreateEventForm() {
     const [validImage, setValidImage] = useState(true);
     const [error, setError] = useState("");
     const [cities, setCities] = useState([]);
+    const [filteredCities, setFilteredCities] = useState([])
 
     useEffect(() => {
+        getUser().then(console.log(user))
         fetch('http://localhost:3000/api/events/cities')
             .then(response => response.json())
             .then(data => setCities(data));
     }, []);
 
+    const handleCityChange = (e) => {
+        setLocation(e.target.value)
+        setFilteredCities(
+            cities.filter((c) => c.toLowerCase().includes(e.target.value.toLowerCase()))
+        )
+    }
 
+    const handleCitySelect = (city) => {
+        setLocation(city)
+        setFilteredCities([])
+    }
+
+    const [user, setUser] = useState([]);
+    const isLoggedIn = authSerivce.getCurrentUser();
+    const userDetails = authSerivce.parseJwt(isLoggedIn.value)
 
     const handleInputChange = (e) => {
         const {id, value} = e.target;
@@ -62,7 +78,11 @@ function CreateEventForm() {
         }
     }
 
-
+    const getUser = async () =>{
+        const response = await fetch(`http://localhost:3000/api/user/${userDetails.sub}`);
+        const data = await response.json();
+        setUser(data);
+    }
 
     const handleUploadClick = event => {
         let file = event.target.files[0];
@@ -115,7 +135,6 @@ function CreateEventForm() {
             navigate('/login')
             return
         }
-        console.log("przeszlo jest user")
         e.preventDefault()
         const requestOptions = {
             method: 'POST', headers: {
@@ -134,7 +153,7 @@ function CreateEventForm() {
                 eventStatus: "TO_VERIFICATION",
             })
         };
-        fetch('http://localhost:3000/api/events/create-event', requestOptions)
+        fetch(`http://localhost:3000/api/events/create-event/${userDetails.sub}`, requestOptions)
             .then(response => console.log(response.status))
         onFileChangeHandler();
         navigate('/home');
@@ -159,14 +178,16 @@ function CreateEventForm() {
                    id="endDate" className="input"/>
             <input type="number" value={price} onChange={(e) => handleInputChange(e)}
                    id="price" className="input" placeholder="Price"/>
-            <select id="location" className="input" value={location}
-                    onChange={(e) => handleInputChange(e)}>
-                {cities.map(city => (
-                    <option value={city} key={city}>{city}</option>
-                ))}
-            </select>
             <input type="text" value={link} onChange={(e) => handleInputChange(e)}
                    id="link" className="input" placeholder="Link to event page"/>
+            <input type="text" id="location" className="input" value={location} placeholder="Location" onChange={handleCityChange}/>
+            <ul className="suggestion-options">
+                {filteredCities.map((c) => (
+                    <li key={c} onClick={ () => handleCitySelect(c)}>
+                        {c}
+                    </li>
+                ))}
+            </ul>
             <select id="publicEvent" className="input" value={publicEvent}
                     onChange={(e) => handleInputChange(e)}>
                 <option value="true">PRIVATE</option>

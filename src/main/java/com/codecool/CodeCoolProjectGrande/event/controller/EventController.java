@@ -45,9 +45,9 @@ public class EventController {
         return eventService.getEventByID(eventID);
     }
 
-    @PostMapping("create-event")
-    public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventService.createEvent(event);
+    @PostMapping("create-event/{userEmail}")
+    public ResponseEntity<?> createEvent(@RequestBody Event event, @PathVariable String userEmail) {
+        eventService.createEvent(event, userEmail);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -124,6 +124,22 @@ public class EventController {
     @GetMapping("get-num-attendees/{eventId}")
     public int getNumOfAttendees(@PathVariable UUID eventId) {
         return eventService.getNumOfAttendees(eventId);
+    }
+
+    @DeleteMapping("delete-event/{userEmail}&{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable String userEmail, @PathVariable UUID eventId) {
+        return eventService.deleteEvent(userEmail, eventId);
+    }
+
+
+    @PutMapping("set-status")
+    public ResponseEntity<?> setEventStatus(@RequestBody Map data) {
+        Optional<Event> event = eventService.setEventStatus(data);
+        if (event.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
 }
