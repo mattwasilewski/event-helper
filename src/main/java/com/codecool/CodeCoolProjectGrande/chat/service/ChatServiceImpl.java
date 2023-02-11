@@ -1,7 +1,7 @@
 package com.codecool.CodeCoolProjectGrande.chat.service;
 
-import com.codecool.CodeCoolProjectGrande.chat.Model.Message;
-import com.codecool.CodeCoolProjectGrande.chat.Model.Status;
+import com.codecool.CodeCoolProjectGrande.chat.Message;
+import com.codecool.CodeCoolProjectGrande.chat.Status;
 import com.codecool.CodeCoolProjectGrande.chat.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

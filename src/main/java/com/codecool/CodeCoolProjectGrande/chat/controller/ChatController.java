@@ -1,6 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.chat.controller;
 
-import com.codecool.CodeCoolProjectGrande.chat.Model.Message;
+import com.codecool.CodeCoolProjectGrande.chat.Message;
 import com.codecool.CodeCoolProjectGrande.chat.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

@@ -1,6 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.chat.service;
 
-import com.codecool.CodeCoolProjectGrande.chat.Model.Message;
+import com.codecool.CodeCoolProjectGrande.chat.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

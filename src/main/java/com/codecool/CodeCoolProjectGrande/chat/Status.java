@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.chat.Model;
+package com.codecool.CodeCoolProjectGrande.chat;
 
 public enum Status {
     JOIN,

@@ -1,4 +1,4 @@
-package com.codecool.CodeCoolProjectGrande.chat.Model;
+package com.codecool.CodeCoolProjectGrande.chat;
 
 import lombok.*;
 import org.hibernate.annotations.Type;

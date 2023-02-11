@@ -1,6 +1,6 @@
 package com.codecool.CodeCoolProjectGrande.chat.repository;
 
-import com.codecool.CodeCoolProjectGrande.chat.Model.Message;
+import com.codecool.CodeCoolProjectGrande.chat.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
