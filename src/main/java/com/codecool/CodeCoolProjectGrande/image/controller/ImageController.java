@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @ResponseBody
@@ -33,6 +34,12 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+//
+//    @GetMapping("get-by-eventId/{eventId}")
+//    public ResponseEntity<?> getImagesByEventId(@PathVariable UUID eventId) {
+//
+//        return
+//    }
 
 
 }

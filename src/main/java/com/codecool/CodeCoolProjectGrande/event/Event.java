@@ -42,9 +42,18 @@ public class Event {
     private Double latitude;
     private Double longitude;
     private String source;
+
     @JoinColumn(name = "data")
     @OneToOne(cascade=CascadeType.ALL)
     private Image image;
+
+    @OneToMany
+    @JoinTable(
+            name = "gallery",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private Set<Image> gallery = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "assigned_users",
@@ -53,7 +62,8 @@ public class Event {
     private Set<User> assignedUsers = new HashSet<>();
 
     public Event(String name, String description, String url, String location, Image image, EventType eventType,
-                 String startDate, String endDate, Double latitude, Double longitude, String source, Set<User> assignedUsers) {
+                 String startDate, String endDate, Double latitude, Double longitude, String source,
+                 Set<User> assignedUsers, Set<Image> gallery) {
         this.name = name;
         this.description = description;
         this.linkToEventPage = url;
@@ -67,7 +77,7 @@ public class Event {
         this.longitude = longitude;
         this.source = source;
         this.assignedUsers = assignedUsers;
-
+        this.gallery = gallery;
     }
 
     public void assignUser(User user) {
