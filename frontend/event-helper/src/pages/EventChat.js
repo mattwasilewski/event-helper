@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 import '../css/ChatRoom.css';
@@ -21,7 +21,25 @@ const EventChat = (props) => {
         console.log(userData);
     }, [userData]);
 
+    useEffect(() => {
+        scrollToNewestMessage();
+    }, [publicChats]);
 
+    const scrollToNewestMessage = () => {
+        const chatMessagesList = document.querySelector('.chat-messages');
+        if (chatMessagesList) {
+            const lastMessage = chatMessagesList.lastChild;
+            if (lastMessage) {
+                lastMessage.scrollIntoView();
+            }
+        }
+    };
+
+    const loadChatFromDb = async () => {
+        const response = await fetch(`http://localhost:3000/api/chat/event/${props.eventId}`);
+        const data = await response.json();
+        setPublicChats(data);
+    }
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8080/ws');
@@ -29,9 +47,10 @@ const EventChat = (props) => {
         stompClient.connect({},onConnected, onError);
     }
 
-    const onConnected = () => {
-        setUserData({...userData,"connected": true});
-        stompClient.subscribe('/user/'+eventId+'/private', onPrivateMessage);
+    const onConnected = async () => {
+        setUserData({...userData, "connected": true});
+        stompClient.subscribe('/user/' + eventId + '/private', onPrivateMessage);
+        await loadChatFromDb();
         userJoin();
     }
 
@@ -50,8 +69,7 @@ const EventChat = (props) => {
             case "JOIN":
                 break;
             case "MESSAGE":
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
+                setPublicChats(prevPublicChats => [...prevPublicChats, payloadData]);
                 break;
         }
     }

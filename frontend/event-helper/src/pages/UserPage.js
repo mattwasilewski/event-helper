@@ -100,7 +100,7 @@ export default function UserPage(props) {
                         </div>
                             : <UsersChat/>}
                     </div>
-
+                    {showInformation?
                     <div className="projects">
                         <h3>Events</h3>
                         <div className="projects_data">
@@ -120,10 +120,12 @@ export default function UserPage(props) {
                             </div>
 
                         </div>
-                    </div>
+                    </div> :<></>}
+                    {showInformation?
                     <div className="calendar-background">
                         <CalendarTile name="user" userId={userDetails.sub}/>
                     </div>
+                        :<></>}
 
                 </div>
             </div>

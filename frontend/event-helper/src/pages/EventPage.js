@@ -115,106 +115,106 @@ export default function EventPage() {
         }
     }
 
-        const [editable, setEditable] = useState(["false"]);
-        const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
-        const enableEditing = () => {
-            setEditable("true");
-            setButton(saveButton)
+    const [editable, setEditable] = useState(["false"]);
+    const saveButton = <button onClick={(e) => editEventDescription(e)}>Save</button>;
+    const enableEditing = () => {
+        setEditable("true");
+        setButton(saveButton)
+    }
+    const editButton = <button onClick={enableEditing}>Edit</button>;
+    const [button, setButton] = useState([editButton]);
+    const editEventDescription = async () => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'
+            },
+            body: JSON.stringify({
+                eventId: id,
+                description: document.getElementById("event-descs").innerText
+            })
         }
-        const editButton = <button onClick={enableEditing}>Edit</button>;
-        const [button, setButton] = useState([editButton]);
-        const editEventDescription = async () => {
-            const requestOptions = {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Access-Control-Allow-Origin': 'http://localhost:3000',
-                    'Access-Control-Allow-Credentials': 'true'
-                },
-                body: JSON.stringify({
-                    eventId: id,
-                    description: document.getElementById("event-descs").innerText
-                })
-            }
-            fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
-                .then(response => console.log(response.status))
-            setEditable("false");
-            setButton(editButton);
+        fetch('http://localhost:3000/api/events/edit-event-description', requestOptions)
+            .then(response => console.log(response.status))
+        setEditable("false");
+        setButton(editButton);
+    }
+
+    function setDefaultImage() {
+        if (imageUrl && imageUrl !== "defaultUrl") {
+            return <img src={imageUrl} width="80%"/>
+        } else if (imageFile === imageDefault) {
+            return <img src={imageFile} width="80%"/>
+        } else {
+            return <img width="80%" src={`data:image/jpeg;base64,${imageFile}`}/>
         }
+    }
 
-        function setDefaultImage() {
-            if (imageUrl && imageUrl !== "defaultUrl") {
-                return <img src={imageUrl} width="80%"/>
-            } else if (imageFile === imageDefault) {
-                return <img src={imageFile} width="80%"/>
-            } else {
-                return <img width="80%" src={`data:image/jpeg;base64,${imageFile}`}/>
-            }
+    function setVerifyIcon() {
+        if(event && event.eventStatus === "VERIFIED") {
+            return <img className="verify-icon" src={verifyIcon}/>
         }
-
-        function setVerifyIcon() {
-            if(event && event.eventStatus === "VERIFIED") {
-                return <img className="verify-icon" src={verifyIcon}/>
-            }
-        }
+    }
 
 
-        return (
-            <>
-                <Navbar/>
-                <div className="wrapper">
-                    <div className="left">
-                        {setDefaultImage()}
-                         <h4 className="name">{event.name}</h4>
-                        <button type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
-                            {buttonText}
-                        </button>
-                        {buttonVisibility &&
-                            <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteEvent(e)}>
+    return (
+        <>
+            <Navbar/>
+            <div className="wrapper">
+                <div className="left">
+                    {setDefaultImage()}
+                    <h4 className="name">{event.name}</h4>
+                    <button type="submit" id="submit-btn" className="btn" onClick={(e) => assignLeaveEvent(e)}>
+                        {buttonText}
+                    </button>
+                    {buttonVisibility &&
+                        <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteEvent(e)}>
                             Delete event
                         </button>}
+                </div>
+                <div className="right">
+                    <div className="info">
+                        <h3>Information    {setVerifyIcon()}</h3>
+                        <div className="info_data">
+                            <div className="data">
+                                <h4>Start Date</h4>
+                                <p>{event.startDate}</p>
+                            </div>
+                            <div className="data">
+                                <h4>Location</h4>
+                                <p>{event.location}</p>
+                            </div>
+                            <div className="data">
+                                <h4>Link</h4>
+                                <p><a href={event.linkToEventPage}>Link to official page</a></p>
+                            </div>
+                            <div className="data">
+                                <h4>Number of attendees</h4>
+                                <p>{numOfAttendees}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="right">
-                        <div className="info">
-                            <h3>Information    {setVerifyIcon()}</h3>
-                            <div className="info_data">
-                                <div className="data">
-                                    <h4>Start Date</h4>
-                                    <p>{event.startDate}</p>
-                                </div>
-                                <div className="data">
-                                    <h4>Location</h4>
-                                    <p>{event.location}</p>
-                                </div>
-                                <div className="data">
-                                    <h4>Link</h4>
-                                    <p><a href={event.linkToEventPage}>Link to official page</a></p>
-                                </div>
-                                <div className="data">
-                                    <h4>Number of attendees</h4>
-                                    <p>{numOfAttendees}</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="projects">
-                            <h3 id="description">
-                                Description
-                                {buttonVisibility && <div className="edit-button">{button}</div>}
-                            </h3>
-                            <div className="projects_data">
-                                <div className="data">
-                                    {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
-                                    <p id="event-descs" contentEditable={editable}
-                                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(event.description)}}></p>
-                                </div>
-                                {/*<ChatRoom eventId={event.eventId}/>*/}
+                    <div className="projects">
+                        <h3 id="description">
+                            Description
+                            {buttonVisibility && <div className="edit-button">{button}</div>}
+                        </h3>
+                        <div className="projects_data">
+                            <div className="data">
+                                {/*<label id="event-descs" contentEditable={editable}>{event.description}</label>*/}
+                                <p id="event-descs" contentEditable={editable}
+                                   dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(event.description)}}></p>
                             </div>
-                            {isLoggedIn?
-                            <EventChat eventId={event.eventId}/>
-                                :<p>You must be logged In to join chat</p>}
+                            {/*<ChatRoom eventId={event.eventId}/>*/}
                         </div>
+                        {isLoggedIn?
+                            <EventChat eventId={event.eventId}/>
+                            :<p>You must be logged In to join chat</p>}
                     </div>
                 </div>
-            </>)
+            </div>
+        </>)
 }
