@@ -1,7 +1,10 @@
 package com.codecool.CodeCoolProjectGrande.user.auth.ReCaptchaV3;
 
+import lombok.Data;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+
+@Data
 public class ReCAPTCHAv3Response {
 
     @JsonProperty( "success" )
@@ -22,39 +25,4 @@ public class ReCAPTCHAv3Response {
     @JsonProperty( "error-codes" )
     private String errors;
 
-    public String getErrors() {
-        return errors;
-    }
-
-    public boolean getSuccess() {
-        return this.success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public double getScore() {
-        return this.score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public String getAction() {
-        return this.action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getHostname() {
-        return this.hostname;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
 }

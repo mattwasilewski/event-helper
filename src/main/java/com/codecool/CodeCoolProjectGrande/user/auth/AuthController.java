@@ -38,35 +38,13 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-//        @PostMapping("/login")
-//    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest loginRequest) {
-//        System.out.println("MOJE WYNIKI: DLA EMAIL: "  + loginRequest.getEmail());
-//        System.out.println("MOJE WYNIKI: DLA USERNAME: "  + loginRequest.getUsername());
-//
-//        Authentication authentication = authenticationManager
-//                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//
-//        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-//
-//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(userDetails.getUsername());
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<ResponseCookie> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         String token = loginRequest.getToken();
         String address = request.getRemoteAddr();
-        System.out.println(token);
-        System.out.println(address);
-
         try {
             ReCAPTCHAv3Response response = ReCAPTCHAv3Utils.request(token, address);
-            System.out.println(token);
-            if (response.getSuccess()) {
-                System.out.println("2");
+            if (response.isSuccess()) {
                 if (response.getScore() > SCORES_LEVEL) {
                     ResponseCookie jwtCookie = userService.authenticateUser(loginRequest);
                     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
@@ -82,13 +60,9 @@ public class AuthController {
 
 
     }
-
-
-
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        System.out.println("wyczysciolo cookie ----------logout");
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body("You've been signed out!");
     }

@@ -2,21 +2,14 @@ import "../css/LoginAndRegister.css";
 import {useEffect, useState} from "react";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import AuthService from "../auth.serivce";
 import authSerivce from "../auth.serivce";
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 
 export default function LoginForm({Login, error}) {
 
     let navigate = useNavigate();
-
     const [errors, setErrors] = useState("");
-    const [token, setToken] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [response, setResponse] = useState(null);
-    const SITE_KEY = "";
-
+    const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
     const [form, setForm] = useState({
         email: "",
         password: ""
@@ -44,8 +37,6 @@ export default function LoginForm({Login, error}) {
         return axios
             .post("http://localhost:3000/api/auth/" + "login", json, customConfig).then((response) => {
                 localStorage.setItem("user", JSON.stringify(response.data))
-                setLoading(false);
-                setResponse(response);
                 const user = JSON.parse(localStorage.getItem('user'))
             }).then(res => {
                 console.log("Request complete! response:", res);
@@ -85,7 +76,6 @@ export default function LoginForm({Login, error}) {
 
     const handleOnClick = e => {
         e.preventDefault();
-        setLoading(true);
         window.grecaptcha.ready(() => {
             window.grecaptcha.execute(SITE_KEY, { action: 'submit' }).then(token => {
                 submitData(token).then(r => console.log(r));
