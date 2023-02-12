@@ -92,7 +92,7 @@ export default function LoginForm({Login, error}) {
 
     return (
         <>
-            <script src="https://www.google.com/recaptcha/api.js?render=6LcYmGwkAAAAAEV4nNBsUKlbiDdPKO0goO1um0QY"></script>
+            <script src={`https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`}></script>
             <div className="section-1">
                 <div className="parent clearfix">
                     <div className="bg-illustration">
