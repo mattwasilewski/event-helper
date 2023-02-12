@@ -6,6 +6,7 @@ import com.codecool.CodeCoolProjectGrande.user.auth.ReCaptchaV3.ReCAPTCHAv3Utils
 import com.codecool.CodeCoolProjectGrande.user.jwt.JwtUtils;
 import com.codecool.CodeCoolProjectGrande.user.repository.UserRepository;
 import com.codecool.CodeCoolProjectGrande.user.service.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -46,9 +47,7 @@ public class AuthController {
             ReCAPTCHAv3Response response = ReCAPTCHAv3Utils.request(token, address);
             if (response.isSuccess()) {
                 if (response.getScore() > SCORES_LEVEL) {
-                    ResponseCookie jwtCookie = userService.authenticateUser(loginRequest);
-                    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                            .body(jwtCookie);
+                    return loginUser(loginRequest);
                 } else {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
@@ -60,6 +59,14 @@ public class AuthController {
 
 
     }
+
+    @NotNull
+    private ResponseEntity<ResponseCookie> loginUser(LoginRequest loginRequest) {
+        ResponseCookie jwtCookie = userService.authenticateUser(loginRequest);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(jwtCookie);
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
