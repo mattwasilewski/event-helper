@@ -4,11 +4,21 @@ public class LoginRequest {
     private String username;
     private String password;
     private String email;
+    private String token;
 
-    public LoginRequest(String username, String password, String email) {
+    public LoginRequest(String username, String password, String email, String token) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public LoginRequest() {
