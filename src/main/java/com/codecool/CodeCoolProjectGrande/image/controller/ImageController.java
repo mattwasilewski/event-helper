@@ -34,12 +34,6 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-//
-//    @GetMapping("get-by-eventId/{eventId}")
-//    public ResponseEntity<?> getImagesByEventId(@PathVariable UUID eventId) {
-//
-//        return
-//    }
 
 
 }

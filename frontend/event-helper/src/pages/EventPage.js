@@ -173,6 +173,9 @@ export default function EventPage() {
                             <button type="submit" id="submit-btn" className="btn" onClick={(e) => deleteEvent(e)}>
                             Delete event
                         </button>}
+                        <a href={'/event/gallery' + id} id="submit-btn" className="btn">
+                            GALLERY
+                        </a>
                     </div>
                     <div className="right">
                         <div className="info">

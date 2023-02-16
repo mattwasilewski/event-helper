@@ -15,6 +15,7 @@ import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import ResetPasswordForm from "./components/ResetPasswordForm";
 import EventList from "./components/event/EventList";
 import UserList from "./components/user/UserList";
+import GalleryPage from "./pages/GalleryPage";
 
 Sentry.init({
     dsn: "https://1efe12e9375549e598bbf29b1b609468@o4504165382815744.ingest.sentry.io/4504165401100288",
@@ -53,6 +54,7 @@ function App() {
                     <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
                     <Route path="/event/event-list" element={<EventList/>}/>
                     <Route path="/user/user-list" element={<UserList/>}/>
+                    <Route path="/event/gallery" element={<GalleryPage/>}/>
                 </Routes>
             </Router>
         </div>
